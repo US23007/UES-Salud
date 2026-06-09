@@ -1,0 +1,34 @@
+.sidebar{
+    -fx-background-color: #002855;
+}
+
+.panel-title{
+    -fx-background-color: #0D47A1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8;
+}
+
+.title{
+
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.subtitle{
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: white;
+}
+
+.menu-button{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12;
+}
+
+.menu-button:hover{
+    -fx-background-color: #1565C0;
+}
