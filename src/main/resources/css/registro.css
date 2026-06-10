@@ -1,0 +1,81 @@
+.panel{
+    -fx-background-color: white;
+    -fx-border-color: #D6D6D6;
+    -fx-border-radius: 10;
+    -fx-background-radius: 5;
+}
+
+.panel-title{
+    -fx-background-color: #0D47A1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8;
+}
+
+.tab-pane {
+    -fx-background-color: #F4F6F9;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 10;
+}
+
+.tab-pane .tab-header-background {
+    -fx-background-color: #E9ECEF;
+}
+
+.tab {
+    -fx-background-color: #D6DDE5;
+    -fx-background-radius: 8 8 0 0;
+    -fx-padding: 5 15 5 15;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #2E2E2E;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab:selected {
+    -fx-background-color: #0D47A1;
+}
+
+.tab:hover {
+    -fx-background-color: #1565C0;
+}
+
+.tab:hover .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-content-area {
+    -fx-background-color: white;
+    -fx-border-color: #D6D6D6;
+    -fx-border-width: 1;
+}
+
+.text-field{
+    -fx-background-color: white;
+    -fx-border-color: #C0C0C0;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.combo-box{
+    -fx-background-color: white;
+    
+}
+
+.btn-continuar{
+    -fx-background-color: #0D47A1;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.btn-continuar:hover{
+    -fx-background-color: #1565C0;
+}

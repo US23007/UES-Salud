@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="bPrincipal" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.PrimaryController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -55,7 +54,7 @@
                   <Insets bottom="10.0" />
                </padding>
             </Label>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Registro de Pacientes">
+            <Button fx:id="btnRegistro" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Registro" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Registro de Pacientes">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -86,13 +85,6 @@
          </padding>
       </VBox>
    </left>
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <HBox prefHeight="76.0" prefWidth="430.0" BorderPane.alignment="CENTER" />
-         </top>
-      </BorderPane>
-   </center>
    <bottom>
       <GridPane prefHeight="31.0" prefWidth="644.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -110,14 +102,17 @@
             </Label>
             <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="163.0" spacing="5.0" GridPane.columnIndex="1" GridPane.vgrow="ALWAYS">
                <children>
-                  <Circle fill="#1fff2e" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label prefHeight="31.0" prefWidth="163.0" text="Conectado a UES_SALUD DB" wrapText="true" />
+                  <Label prefHeight="31.0" prefWidth="163.0" text="Conectado a UES_SALUD DB" wrapText="true">
+                     <graphic>
+                        <Circle fill="#1fff2e" radius="5.0" stroke="#00000004" strokeType="INSIDE" />
+                     </graphic>
+                  </Label>
                </children>
             </HBox>
          </children>
-         <padding>
+         <BorderPane.margin>
             <Insets left="5.0" />
-         </padding>
+         </BorderPane.margin>
       </GridPane>
    </bottom>
 </BorderPane>

@@ -32,3 +32,11 @@
 .menu-button:hover{
     -fx-background-color: #1565C0;
 }
+
+.panel{
+    -fx-background-color: white;
+    -fx-border-color: #D6D6D6;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    
+}
