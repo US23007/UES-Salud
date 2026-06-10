@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.*;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 
 public class PrimaryController implements Initializable{
@@ -18,6 +20,10 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private BorderPane bPrincipal;
+    
+    
+   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarPanel("triaje.fxml");
@@ -40,5 +46,7 @@ public class PrimaryController implements Initializable{
             ex.getMessage();
         }
     }
+    
+    
    
 }

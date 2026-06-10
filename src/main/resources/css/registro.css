@@ -79,3 +79,51 @@
 .btn-continuar:hover{
     -fx-background-color: #1565C0;
 }
+
+.urgencia-baja {
+    -fx-background-color: #28A745;
+    -fx-border-color: #28A745;
+
+}
+
+.urgencia-media {
+    -fx-background-color: #FF9800;
+    -fx-border-color: #FF9800;
+}
+
+.urgencia-alta {
+    -fx-background-color: #DC3545;
+     -fx-border-color: #DC3545;
+}
+
+.titlePane{
+    -fx-background-color: transparent;
+}
+
+.titlePane .text{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.titlePane .label{
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.urgencia-media > .title{
+    -fx-background-color: #f4ac41;
+    
+}
+
+.urgencia-alta > .title {
+    -fx-background-color: #DC3545;
+}
+
+.urgencia-baja > .title {
+    -fx-background-color: #28A745;
+}
+
+.text-field:focused{
+    -fx-border-color: #0D47A1;
+}
+

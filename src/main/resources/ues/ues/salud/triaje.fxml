@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -9,6 +11,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="panel" stylesheets="@../../../css/registro.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="ues.ues.salud.TriajeController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="panel" stylesheets="@../../../css/registro.css" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="ues.ues.salud.TriajeController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -29,7 +32,7 @@
       <VBox spacing="5.0" GridPane.columnSpan="2" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
          <children>
             <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="609.0" styleClass="panel-title" stylesheets="@../../../css/registro.css" text="Registro de Pacientes Triaje" />
-            <TabPane prefHeight="374.0" prefWidth="599.0" stylesheets="@../../../css/registro.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+            <TabPane fx:id="tabPane" prefHeight="374.0" prefWidth="599.0" stylesheets="@../../../css/registro.css" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
               <tabs>
                 <Tab fx:id="tDatos" text="Datos Personales">
                   <content>
@@ -97,16 +100,82 @@
                                           <TextArea prefHeight="52.0" prefWidth="349.0" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                                        </children>
                                     </HBox>
-                                    <Button mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Continuar" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                                    <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#Siguiente" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Continuar" GridPane.columnSpan="2" GridPane.rowIndex="7" />
                                  </children>
                               </GridPane>
                            </children>
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="tInfo" disable="true" text="Información Clinica">
+                <Tab fx:id="tInfo" text="Información Clinica">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../../../css/registro.css" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../../../css/registro.css">
+                           <children>
+                              <GridPane prefHeight="328.0" prefWidth="600.0" vgap="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="104.35849397740108" minHeight="0.0" prefHeight="36.0943265638559" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="219.58490787667716" minHeight="9.962263217979284" prefHeight="34.56603801831868" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="279.90567033848504" minHeight="0.0" prefHeight="31.84905928723459" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="279.90567033848504" minHeight="10.0" prefHeight="70.03775447032007" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="279.90567033848504" minHeight="10.0" prefHeight="102.64149817863637" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="279.90567033848504" minHeight="10.0" prefHeight="60.13207901343213" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2">
+                                       <children>
+                                          <Label styleClass="tab-label" stylesheets="@../../../css/registro.css" text="Especialidad: " />
+                                          <ChoiceBox prefHeight="25.0" prefWidth="182.0" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label text="Sintomas" />
+                                          <TextArea prefHeight="57.0" prefWidth="256.0" styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label text="Temperatura(°C)" />
+                                          <TextField styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label text="Presión Arterial" />
+                                          <TextField styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                                       </children>
+                                    </HBox>
+                                    <TitledPane fx:id="tabNivel" animated="false" styleClass="titlePane" stylesheets="@../../../css/registro.css" text="NIVEL DE URGENCIA" GridPane.rowIndex="4">
+                                      <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <HBox alignment="CENTER" layoutX="6.339622869657944" layoutY="19.924529018924964" prefHeight="38.0" prefWidth="278.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <Label styleClass="titlePane" text="URGENCIA" />
+                                                      <ComboBox fx:id="cbxUrgencia" editable="true" onAction="#cambiarColor" prefHeight="25.0" prefWidth="182.0" promptText="Seleccione la Urgencia" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </TitledPane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                                       <children>
+                                          <Button mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Atrás" />
+                                          <Button mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Guardar" />
+                                       </children>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
               </tabs>

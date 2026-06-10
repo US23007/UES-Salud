@@ -1,4 +1,4 @@
-package Clases;
+package ues.ues.salud.model;
 
 import java.time.LocalDate;
 
