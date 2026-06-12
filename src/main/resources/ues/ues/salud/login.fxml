@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="439.0" prefWidth="659.0" styleClass="background" stylesheets="@../../../css/login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.LoginController">
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <VBox id="login" prefHeight="412.0" prefWidth="459.0" spacing="9.0" styleClass="card" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox spacing="185.0">
+                     <children>
+                        <Label styleClass="h2" stylesheets="@css/styles.css" text="Iniciar Sesion" />
+                        <ImageView fx:id="imgConfig" fitHeight="24.0" fitWidth="24.0" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#Configurar" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img/subtitles_gear_24dp_000000_FILL0_wght400_GRAD0_opsz24.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Conexión a la base de datos" />
+                  <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Usuario" />
+                  <TextField fx:id="txtRoot" prefHeight="25.0" prefWidth="305.0" promptText="root" styleClass="input" stylesheets="@../../../css/login.css" />
+                  <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Contraseña" />
+                  <PasswordField fx:id="txtContrasenia" styleClass="input" stylesheets="@../../../css/login.css" />
+                  <GridPane hgap="10.0" vgap="5.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Configuracion de Conexión">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Servidor (Host)" GridPane.rowIndex="1" />
+                        <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Puerto" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtHost" promptText="127.0.0.1" styleClass="input" stylesheets="@../../../css/login.css" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtPuerto" promptText="3306" styleClass="input" stylesheets="@../../../css/login.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Base de Datos" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtDB" promptText="ues_salud" styleClass="input" stylesheets="@../../../css/login.css" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cbxMetodo" prefWidth="150.0" promptText="Default" stylesheets="@../../../css/login.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Método de Conexion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+                  <FlowPane>
+                     <children>
+                        <Button id="btn_login" fx:id="btnConectar" mnemonicParsing="false" onAction="#conectar" styleClass="btn_login" text="Conectar">
+                           <FlowPane.margin>
+                              <Insets right="20.0" />
+                           </FlowPane.margin>
+                        </Button>
+                        <Button id="btn_login" fx:id="btnGuardar" mnemonicParsing="false" onAction="#Guardar" styleClass="btn_login" text="Guardar" visible="false">
+                           <FlowPane.margin>
+                              <Insets right="20.0" />
+                           </FlowPane.margin>
+                        </Button>
+                        <Button id="btn_login" fx:id="btnCancelar" cancelButton="true" mnemonicParsing="false" onAction="#Cancelar" styleClass="btn_login" text="Cancelar" visible="false" />
+                     </children>
+                     <VBox.margin>
+                        <Insets right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </FlowPane>
+               </children>
+               <padding>
+                  <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+               </padding>
+            </VBox>
+         </center>
+         <left>
+            <VBox prefHeight="439.0" prefWidth="249.0" spacing="5.0" styleClass="left-panel" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" y="20.0">
+                     <image>
+                        <Image url="@../../../img/health_and_safety_130dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="50.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="175.0" styleClass="title" stylesheets="@css/styles.css" text="UES-SALUD">
+                     <padding>
+                        <Insets left="45.0" />
+                     </padding>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="206.0" styleClass="subtitle" stylesheets="@css/styles.css" text="Sistema de Salud UES">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <Separator prefHeight="0.0" prefWidth="152.0">
+                     <padding>
+                        <Insets bottom="20.0" />
+                     </padding>
+                  </Separator>
+                  <Label contentDisplay="CENTER" styleClass="subtitle" stylesheets="@css/styles.css" text="Ingrese sus credenciales para conectarse">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+                  <Label styleClass="subtitle" stylesheets="@css/styles.css" text="y acceder a los siguientes módulos">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" />
+                     </padding>
+                  </Label>
+                  <GridPane alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="32.84906404576046" minHeight="10.0" prefHeight="26.509433918807332" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="29.226413899276082" minHeight="10.0" prefHeight="21.075473957869832" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="subtitle" stylesheets="@css/styles.css" text="Pacientes" textAlignment="CENTER" GridPane.rowIndex="1" />
+                        <Label styleClass="subtitle" stylesheets="@css/styles.css" text="Triajes" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img/cognition_2_36dp_FFFFFF_FILL0_wght400_GRAD0_opsz40.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+                           <image>
+                              <Image url="@../../../img/clinical_notes_36dp_FFFFFF_FILL0_wght400_GRAD0_opsz40.png" />
+                           </image>
+                        </ImageView>
+                        <Label styleClass="subtitle" stylesheets="@css/styles.css" text="Reportes" textAlignment="CENTER" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin></Label>
+                        <Label styleClass="subtitle" stylesheets="@css/styles.css" text="Graficos" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin></Label>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../../../img/assignment_turned_in_36dp_FFFFFF_FILL0_wght400_GRAD0_opsz40.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <image>
+                              <Image url="@../../../img/analytics_36dp_FFFFFF_FILL0_wght400_GRAD0_opsz40.png" />
+                           </image>
+                           <GridPane.margin>
+                              <Insets top="20.0" />
+                           </GridPane.margin>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </GridPane>
+                  <Label styleClass="subtitle" stylesheets="@css/styles.css" />
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </left>
+      </BorderPane>
+   </center>
+</BorderPane>

@@ -1,0 +1,547 @@
+.btn_login{
+	-fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-background-radius: 7;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn_login:hover{
+
+    -fx-background-color: #1d4ed8;
+
+}
+
+.input{
+    -fx-border-color: #d1d5db;
+    -fx-background-color: white;
+
+}
+
+.input:focused{
+    -fx-border-color: #0D47A1;
+}
+
+.background{
+
+    -fx-background-color: #f5f7fb;
+
+}
+
+.left-panel{
+
+    -fx-background-color: #1e293b;
+    
+}
+
+
+.title{
+	-fx-font-size: 16px;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.subtitle{
+	-fx-font-size: 12px;
+	-fx-text-fill: white;
+}
+
+.card-dinamica {
+    -fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+/* El título de la tarjeta (ej: "Backups realizados") */
+.card-titulo {
+    -fx-text-fill: #b3c0ce; /* Gris claro para jerarquía secundaria */
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+
+.card-metrica {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+
+.card-subtexto {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 11px;
+}
+
+.h1{
+	-fx-font-size: 12px;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+}
+
+.h2{
+	-fx-font-size: 22px;
+	-fx-text-fill: #1e293b;
+	-fx-font-weight: bold;
+}
+
+.text-normal{
+	-fx-font-size: 12
+	px;
+	-fx-font-weight: bold;
+}
+
+.bank_title{
+	-fx-font-size: 20
+	px;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
+.options{
+	 -fx-background-color: #1e293b;
+	 -fx-font-size: 12px;
+	 -fx-text-fill: white;
+}
+
+.options-active{
+	-fx-background-color: #104a85;
+	 -fx-font-size: 12px;
+	 -fx-font-weight: bold;
+	 -fx-text-fill: white;
+}
+
+.options:hover{
+	-fx-background-color: #104a85;
+	 -fx-font-size: 12px;
+	 -fx-font-weight: bold;
+	 -fx-text-fill: white;
+}
+
+.panel-backup{
+	-fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.panel-data{
+	-fx-background-color: #25251d;
+    -fx-border-color: #d7c571; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(215,197,123,0.3), 10, 0, 0, 4);
+}
+
+.card-titulo-data {
+    -fx-text-fill: #d7c571; /* Gris claro para jerarquía secundaria */
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.panel-cobros{
+	-fx-background-color: #0b2929;
+    -fx-border-color: #90c6b4; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.card-titulo-cobro{
+    -fx-text-fill: #90c6b4; /* Gris claro para jerarquía secundaria */
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.panel-mora{
+	-fx-background-color: #221924;
+    -fx-border-color: #c7726b; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.card-titulo-mora{
+    -fx-text-fill: #c7726b;; /* Gris claro para jerarquía secundaria */
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+.panel-eventos{
+	-fx-background-color: #1c1c37;
+    -fx-border-color: #806f99; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.card-titulo-evento{
+    -fx-text-fill: #806f99; /* Gris claro para jerarquía secundaria */
+    -fx-font-size: 12px;
+    -fx-font-weight: 500;
+}
+
+
+.panel-registros-nulos{
+	--fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+
+}
+
+.panel-backup-per-day{
+	-fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.panel-cobros-exitoso{
+	-fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+.panel-proximos-eventos{
+	-fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+
+.panel-log-recientes{
+	-fx-background-color: #1a2533;
+    -fx-border-color: #2575fc; /* O el color de borde correspondiente (verde, rojo, etc.) */
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 14px;
+    -fx-background-radius: 14px;
+    
+    /* El truco mágico: Padding interno para que nada toque las esquinas */
+    -fx-padding: 15px; 
+    
+    /* Sombra sutil para darle profundidad */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+
+.panel-center{
+	-fx-background-color: #1418ff;
+}
+
+
+.border{
+	-fx-background-color: #0d1b29;
+}
+
+
+.panel-backup:hover{
+    -fx-transition: transform 0.15s ease-in-out;
+}
+
+.event{
+    -fx-background-color: transparent;
+}
+
+.event-title{
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.event-subtitle{
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+.event-btn{
+    -fx-text-fill: white;
+    -fx-background-color: #144433;
+    -fx-border-radius: 20px;
+    -fx-border-width: 1.5px;
+    -fx-background-radius: 14px;
+}
+
+.btn-backup{
+     -fx-background-color: #008000;
+     -fx-font-size: 14px;
+     -fx-text-fill: white;
+}
+
+.btn-backup:hover{
+    -fx-background-color: #004700;
+     -fx-font-weight: bold;
+     -fx-text-fill: white;
+}
+
+.lbl-notificacion{
+    -fx-background-color: #ef4444; /* Rojo vibrante */
+    -fx-text-fill: white;
+    -fx-background-radius: 10;     /* Lo hace completamente circular */
+    -fx-padding: 2px 5px;          /* Espaciado para el número */
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    /* Ajustes para moverlo a la esquina superior derecha de la campana */
+    -fx-translate-x: 8px;
+    -fx-translate-y: -8px;
+}
+
+.vbox{
+    -fx-background-color: transparent;
+
+}
+
+
+.accordion {
+    -fx-background-color: transparent;
+}
+
+.titled-pane {
+    -fx-background-color: transparent;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #1e293b;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #0d1b29;
+    -fx-border-width: 1;
+}
+
+.titled-pane > .title:hover {
+    -fx-background-color: #0d1b29;
+    -fx-cursor: hand;
+}
+
+.titled-pane > .title > .text {
+    -fx-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: #374B6D;
+    -fx-border-color: #0d1b29;
+    -fx-border-width: 0 1 1 1;
+    -fx-padding: 15;
+}
+
+.label-documentacion {
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+}
+
+
+.btn-alert{
+    -fx-background-color: #a2b23a;
+    -fx-text-fill: white;
+    -fx-background-radius: 7;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-alert:hover{
+
+    -fx-background-color: #76832a;
+
+}
+
+.btn-critical{
+    -fx-background-color: #ea3323;
+    -fx-text-fill: white;
+    -fx-background-radius: 7;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.btn-critical:hover{
+
+    -fx-background-color: #9d2217;
+
+}
+
+
+
+.title-doc{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.subtitle-doc{
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
+}
+
+
+.anchor{
+  -fx-background-color: #374B6D;
+
+}
+
+
+.check-box {
+    -fx-text-fill: #ffffff; /* Texto blanco para resaltar en tu fondo azul */
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-padding: 5px;
+    -fx-cursor: hand;
+}
+
+/* Estilo de la cajita del CheckBox (Desmarcado) */
+.check-box > .box {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco limpio */
+    -fx-background-radius: 4px; /* Bordes ligeramente curvos */
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-padding: 3px; 
+}
+
+/* Efecto Hover sobre la cajita */
+.check-box:hover > .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1a73e8; /* Borde azul al pasar el mouse */
+}
+
+/* Cuando el CheckBox está SELECCIONADO */
+.check-box:selected > .box {
+    -fx-background-color: #1a73e8; /* La cajita se vuelve azul */
+    -fx-border-color: #155cb4;
+}
+
+/* Color e icono de la palomita (El "Check mark") */
+.check-box > .box > .mark {
+    -fx-background-color: transparent; /* Invisible cuando no está seleccionado */
+    -fx-shape: "M1.73,12.91L8.1,19.28L22.79,4.59L21.38,3.18L8.1,16.46L3.14,11.5L1.73,12.91Z"; /* Path SVG de palomita estilizada */
+}
+
+/* Color de la palomita cuando se marca */
+.check-box:selected > .box > .mark {
+    -fx-background-color: #ffffff; /* Palomita blanca sobre fondo azul */
+}
+
+
+.button-mantenimiento {
+    -fx-background-color: #1a73e8; /* Azul tecnológico llamativo */
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand; /* Cambia el cursor a la manita */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 5, 0, 0, 2);
+}
+
+/* Efecto cuando el usuario pasa el mouse encima (Hover) */
+.button-mantenimiento:hover {
+    -fx-background-color: #155cb4; /* Azul más oscuro */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 8, 0, 0, 3);
+}
+
+/* Efecto cuando presionan el botón (Click activo) */
+.button-mantenimiento:pressed {
+    -fx-background-color: #0f4382;
+    -fx-translate-y: 1px; /* Simula hundimiento mecánico */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+/* Diferenciación para el botón "Limpiar Registros" (Acción de peligro/alerta) */
+/* Nota: En SceneBuilder agrégale la clase CSS "btn-danger" en la sección StyleClass */
+.button.btn-danger {
+    -fx-background-color: #d93025; /* Rojo alerta */
+}
+
+.button.btn-danger:hover {
+    -fx-background-color: #b3241b;
+}
+
+.button.btn-danger:pressed {
+    -fx-background-color: #8a1912;
+}
+
+.scroll-bar:vertical,
+.scroll-bar:horizontal{
+	-fx-background-color: transparent;
+
+}
+
+
+.scroll-bar .thumb {
+    -fx-background-color: #2c3e50;
+    -fx-background-radius: 5px;
+}
