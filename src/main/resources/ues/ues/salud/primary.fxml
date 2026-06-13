@@ -23,7 +23,9 @@
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="mNuevo" text="Nuevo Paciente" />
+                  <MenuItem text="Abrir Expediente" />
+                  <MenuItem text="Guardar Paciente" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Pacientes">
