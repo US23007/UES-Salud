@@ -107,7 +107,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="tInfo" text="Información Clinica">
+                <Tab fx:id="tInfo" disable="true" text="Información Clinica">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../../../css/registro.css">
                            <children>
@@ -153,6 +153,7 @@
                                        <children>
                                           <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#Retroceder" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Atrás" />
                                           <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#Guardar" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Guardar" />
+                                          <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#Modificar" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Modificar" visible="false" />
                                        </children>
                                        <padding>
                                           <Insets right="10.0" />

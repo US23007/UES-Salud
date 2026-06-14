@@ -30,85 +30,133 @@ import ues.ues.salud.model.Paciente;
  */
 public class ExpedienteXML {
     
-    public static void generarExpedienteXML(Paciente paciente , String Especialidad,String nivelUrgencia) throws ParserConfigurationException, TransformerConfigurationException, TransformerException{
-        DocumentBuilderFactory factor =  DocumentBuilderFactory.newInstance();
-        DocumentBuilder  builder = factor.newDocumentBuilder();
+    public static void generarExpedienteXML(Paciente paciente, String sintomas,String Especialidad, String nivelUrgencia) throws ParserConfigurationException, TransformerConfigurationException, TransformerException {
+        DocumentBuilderFactory factor = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factor.newDocumentBuilder();
         Document doc = builder.newDocument();
-        
+
+        // Elemento Raíz
         Element raiz = doc.createElement("expediente");
         doc.appendChild(raiz);
-        
+
+        // Nodo Paciente con Atributo Identificador Único
         Element nodoPaciente = doc.createElement("paciente");
         nodoPaciente.setAttribute("carnet", paciente.getCarnet());
-        
+
+        // Nombres (Como texto interno)
         Element nodeNombre = doc.createElement("nombres");
-        nodeNombre.setAttribute("nombres", paciente.getNombre_paciente());
+        nodeNombre.appendChild(doc.createTextNode(paciente.getNombre_paciente()));
         nodoPaciente.appendChild(nodeNombre);
-        
+
+        // Apellidos
         Element nodeApellido = doc.createElement("apellidos");
-        nodeApellido.setAttribute("apellidos", paciente.getApellido_paciente());
+        nodeApellido.appendChild(doc.createTextNode(paciente.getApellido_paciente()));
         nodoPaciente.appendChild(nodeApellido);
-        
+
+        // Fecha de Nacimiento
         Element nodeFechaNacimiento = doc.createElement("fechaNacimiento");
-        nodeFechaNacimiento.setAttribute("fechaNacimiento",paciente.getFecha_nacimiento().toString());
+        nodeFechaNacimiento.appendChild(doc.createTextNode(paciente.getFecha_nacimiento().toLocalDate().toString()));
         nodoPaciente.appendChild(nodeFechaNacimiento);
-        
-        LocalDate fechaNacimiento = paciente.getFecha_nacimiento();
-        
-        Period periodo = Period.between(fechaNacimiento,LocalDate.now());
-        
+
+        // Cálculo de Edad
+        LocalDateTime fechaNacimiento = paciente.getFecha_nacimiento();
+        Period periodo = Period.between(fechaNacimiento.toLocalDate(), LocalDate.now());
         int edad = periodo.getYears();
+
         Element nodeEdad = doc.createElement("edad");
-        nodeEdad.setAttribute("edad",String.valueOf(edad));
+        nodeEdad.appendChild(doc.createTextNode(String.valueOf(edad)));
         nodoPaciente.appendChild(nodeEdad);
-        
-        Element sexo = doc.createElement("sexo");
-        sexo.setAttribute("sexo",paciente.getSexo());
-        nodoPaciente.appendChild(sexo);
-                
+
+        // Sexo
+        Element nodeSexo = doc.createElement("sexo");
+        nodeSexo.appendChild(doc.createTextNode(paciente.getSexo()));
+        nodoPaciente.appendChild(nodeSexo);
+
+        // Teléfono (CORREGIDO: usando su propia variable)
+        Element nodeTelefono = doc.createElement("telefono");
+        nodeTelefono.appendChild(doc.createTextNode(paciente.getTelefono()));
+        nodoPaciente.appendChild(nodeTelefono);
+
+        // Dirección (CORREGIDO: usando su propia variable)
+        Element nodeDireccion = doc.createElement("direccion");
+        nodeDireccion.appendChild(doc.createTextNode(paciente.getDireccion()));
+        nodoPaciente.appendChild(nodeDireccion);
+
         raiz.appendChild(nodoPaciente);
-        
-        
+
+        // Nodo Emergencia
         Element nodoEmergencia = doc.createElement("emergencia");
+
         Element esp = doc.createElement("especialidad");
         esp.appendChild(doc.createTextNode(Especialidad));
         nodoEmergencia.appendChild(esp);
         
         Element sint = doc.createElement("sintomas");
-        sint.appendChild(doc.createTextNode(paciente.getSintomas()));
+        sint.appendChild(doc.createTextNode(sintomas));
         nodoEmergencia.appendChild(sint);
         
         Element urgencia = doc.createElement("nivel_urgencia");
         urgencia.appendChild(doc.createTextNode(nivelUrgencia));
         nodoEmergencia.appendChild(urgencia);
-        
-        Element fechaAtención = doc.createElement("fecha_atencion");
-        fechaAtención.appendChild(doc.createTextNode(java.time.LocalDateTime.now().toString()));
-        nodoEmergencia.appendChild(fechaAtención);
-        
+
+        Element fechaAtencion = doc.createElement("fecha_atencion");
+        fechaAtencion.appendChild(doc.createTextNode(java.time.LocalDateTime.now().toString()));
+        nodoEmergencia.appendChild(fechaAtencion);
+
         raiz.appendChild(nodoEmergencia);
-        
+
+        // Transformación y Guardado Físico
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transfomer = transformerFactory.newTransformer();
-        transfomer.setOutputProperty(OutputKeys.INDENT ,"yes");
-        transfomer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-        
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+
         String ruta = "C:/UES-SALUD/expedientes";
         File carpetaExpediente = new File(ruta);
-        
-        if(!carpetaExpediente.exists()){
-            carpetaExpediente.mkdir();
+
+        if (!carpetaExpediente.exists()) {
+            carpetaExpediente.mkdirs(); // mkdirs() asegura crear carpetas intermedias si faltan
         }
+
         DOMSource source = new DOMSource(doc);
+        String nombreExpediente = paciente.getCarnet() + ".xml";
+        File expedienteFinal = new File(carpetaExpediente, nombreExpediente);
+        StreamResult result = new StreamResult(expedienteFinal);
+
+        transformer.transform(source, result);
+        System.out.println("Generado Correctamente = " + expedienteFinal.getAbsolutePath());
+
+    }
+    
+    public static Paciente cargarExpedienteXML(File archivoXML) throws Exception {
+        // 1. Parsear el archivo seleccionado
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(archivoXML);
+        doc.getDocumentElement().normalize();
+
+        // 2. Extraer datos del Paciente
+        Element pacienteNode = (Element) doc.getElementsByTagName("paciente").item(0);
+        String carnet = pacienteNode.getAttribute("carnet");
+        String nombres = pacienteNode.getElementsByTagName("nombres").item(0).getTextContent();
+        String apellidos = pacienteNode.getElementsByTagName("apellidos").item(0).getTextContent();
+        String fechaNacStr = pacienteNode.getElementsByTagName("fechaNacimiento").item(0).getTextContent();
+        LocalDateTime fechaNacimiento = java.time.LocalDate.parse(fechaNacStr).atStartOfDay();
+
+        String sexo = pacienteNode.getElementsByTagName("sexo").item(0).getTextContent();
+        String telefono = pacienteNode.getElementsByTagName("telefono").item(0).getTextContent();
+        String direccion = pacienteNode.getElementsByTagName("direccion").item(0).getTextContent();
+        // 3. Extraer datos de la Emergencia
+        Element emergenciaNode = (Element) doc.getElementsByTagName("emergencia").item(0);
+        String sintomas = emergenciaNode.getElementsByTagName("sintomas").item(0).getTextContent();
+        String nivelUrgencia = emergenciaNode.getElementsByTagName("nivel_urgencia").item(0).getTextContent();
+
         
-        String nombreExpediente = paciente.getCarnet()+".xml";
+
+        // 4. Instanciar y retornar el objeto reconstruido
+        return new Paciente(nombres, apellidos,carnet,sexo,telefono,fechaNacimiento,direccion);
         
-        File ExpedienteFinal = new File(carpetaExpediente,nombreExpediente);
-        StreamResult result = new StreamResult(ExpedienteFinal);
-        
-        transfomer.transform(source, result);
-        
-        System.out.println("Generado Correctamente = " + ExpedienteFinal.getAbsolutePath());
         
     }
+
 }

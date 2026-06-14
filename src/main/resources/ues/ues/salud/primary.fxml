@@ -24,7 +24,7 @@
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
               <MenuItem fx:id="mNuevo" text="Nuevo Paciente" />
-                  <MenuItem text="Abrir Expediente" />
+                  <MenuItem fx:id="mAbrir" onAction="#Abrir" text="Abrir Expediente" />
                   <MenuItem text="Guardar Paciente" />
             </items>
           </Menu>

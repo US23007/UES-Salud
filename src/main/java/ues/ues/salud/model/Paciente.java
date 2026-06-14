@@ -1,6 +1,7 @@
 package ues.ues.salud.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,25 +15,35 @@ public class Paciente {
     private String nombre_paciente;
     private String apellido_paciente;
     private String carnet;
-    private String sintomas;
     private String sexo;
     private String telefono;
-    private LocalDate fecha_nacimiento;
+    private LocalDateTime fecha_nacimiento;
     private String direccion;
     
     //Metodo Constructor para acceder a las variable privadas
 
-    public Paciente(int id_paciente, String nombre_paciente, String apellido_paciente, String carnet, String sintomas, String sexo, LocalDate fecha_nacimiento,String telefono,String direccion) {
+    public Paciente(int id_paciente, String nombre_paciente, String apellido_paciente, String carnet, String sexo, LocalDateTime fecha_nacimiento,String telefono,String direccion) {
         this.id_paciente = id_paciente;
         this.nombre_paciente = nombre_paciente;
         this.apellido_paciente = apellido_paciente;
         this.carnet = carnet;
-        this.sintomas = sintomas;
         this.sexo = sexo;
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
         this.direccion = direccion;
     }
+
+    public Paciente(String nombre_paciente, String apellido_paciente, String carnet, String sexo, String telefono, LocalDateTime fecha_nacimiento, String direccion) {
+        this.nombre_paciente = nombre_paciente;
+        this.apellido_paciente = apellido_paciente;
+        this.carnet = carnet;
+        this.sexo = sexo;
+        this.telefono = telefono;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.direccion = direccion;
+    }
+    
+    
 
     public Paciente() {
     }
@@ -56,11 +67,9 @@ public class Paciente {
         return carnet;
     }
 
-    public String getSintomas() {
-        return sintomas;
-    }
+    
 
-    public LocalDate getFecha_nacimiento() {
+    public LocalDateTime getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
@@ -96,11 +105,9 @@ public class Paciente {
         this.carnet = carnet;
     }
 
-    public void setSintomas(String sintomas) {
-        this.sintomas = sintomas;
-    }
+   
 
-    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDateTime fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
@@ -123,7 +130,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente{" + "id_paciente=" + id_paciente + ", nombre_paciente=" + nombre_paciente + ", apellido_paciente=" + apellido_paciente + ", carnet=" + carnet + ", sintomas=" + sintomas + ", fecha_nacimiento=" + fecha_nacimiento + '}';
+        return "Paciente{" + "id_paciente=" + id_paciente + ", nombre_paciente=" + nombre_paciente + ", apellido_paciente=" + apellido_paciente + ", carnet=" + carnet + ", fecha_nacimiento=" + fecha_nacimiento + '}';
     }
     
     
