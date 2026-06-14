@@ -1,138 +1,105 @@
-package ues.ues.salud.dao;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ues.ues.salud.Dao;
+
+import java.sql.PreparedStatement;
+import java.util.List;
+import javafx.geometry.Pos;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+import ues.ues.salud.Interface.DaoInterface;
+import ues.ues.salud.conexion.Conexion;
+import ues.ues.salud.model.Paciente;
 
 /**
  *
- * @author Daniel López LM25002
+ * @author su487
  */
+public class PacienteDao implements DaoInterface<Paciente>{
 
-//importando paquetes o librerias necesarias para trabajar
-import java.sql.*;
-import java.util.*;
-import java.time.*;
-import ues.ues.salud.conexion.Conexion;
-import ues.ues.salud.model.*;
+    @Override
+    public boolean insertarRegistro(Paciente entidad) {
+        try{
+            Conexion con = new Conexion();
+            String query = "INSERT INTO pacientes(carnet,nombres,apellidos,fecha_nacimiento,sexo,telefono,direccion) VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement ps = con.conectar().prepareStatement(query);
+            ps.setString(1,entidad.getCarnet());
+            ps.setString(2,entidad.getNombre_paciente());
+            ps.setString(3,entidad.getApellido_paciente());
+            ps.setTimestamp(4,java.sql.Timestamp.valueOf(entidad.getFecha_nacimiento()));
+            ps.setString(5, entidad.getSexo());
+            ps.setString(6, entidad.getTelefono());
+            ps.setString(7, entidad.getDireccion());
+            
+            int fila = ps.executeUpdate();
+            if(fila>0){
+                Notifications.create()
+                    .title("Proceso Completado")
+                    .text("Paciente Registrado Correctamente en la Base de Datos")
+                    .hideAfter(Duration.seconds(3)) // Se cierra sola tras 3 segundos
+                    .position(Pos.BOTTOM_RIGHT) // Aparece elegantemente abajo a la derecha
+                    .showInformation();
+                return true;
+            }
+            
+            
+        }catch(Exception e){
+            System.out.println("Error en Insertar Registro Paciente  = " + e);
+            e.getMessage();
+        }
+        
+        return false;
+    }
 
-public class PacienteDAO {
-    
-    //instanciamos la conexion y paciente
-    Conexion c = new Conexion();
-    Paciente paciente = new Paciente();
-    
-    //metodo para insertar un paciente
-    public boolean insertar(Paciente paciente) throws SQLException{
-        
-        //la variable sql almacena el comando para insertar
-        String sql = "INSERT INTO Paciente(id_paciente, nombre_paciente, apellido_paciente, carnet, sintomas, sexo, telefono, fecha_nacimiento, direccion) VALUES(?,?,?,?,?,?,?,?,?)";
-        
-        //Obtenemos la conexion
-        try(Connection conn = c.conectar()){
+    @Override
+    public boolean modificarRegistro(Paciente entidad) {
+        try{
+            Conexion con = new Conexion();
+            String query = "UPDATE pacientes SET nombres=?,apellidos=?,fecha_nacimiento=?,sexo=?,telefono=?,direccion=? WHERE carnet=?";
+            PreparedStatement ps = con.conectar().prepareStatement(query);
             
-            //verifica si no se pudo conectar
-            if (conn == null){
-                throw new SQLException("No se pudo conectar a la base de datos, favor revisar sus credenciales");
+            ps.setString(1,entidad.getNombre_paciente());
+            ps.setString(2,entidad.getApellido_paciente());
+            ps.setTimestamp(3,java.sql.Timestamp.valueOf(entidad.getFecha_nacimiento()));
+            ps.setString(4, entidad.getSexo());
+            ps.setString(5, entidad.getTelefono());
+            ps.setString(6, entidad.getDireccion());
+            ps.setString(7,entidad.getCarnet());
+            int fila = ps.executeUpdate();
+            if(fila>0){
+                Notifications.create()
+                    .title("Proceso Completado")
+                    .text("Paciente Actualizado Correctamente en la Base de Datos")
+                    .hideAfter(Duration.seconds(3)) // Se cierra sola tras 3 segundos
+                    .position(Pos.BOTTOM_RIGHT) // Aparece elegantemente abajo a la derecha
+                    .showInformation();
+                return true;
             }
             
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setInt(1, paciente.getId_paciente());
-                ps.setString(2, paciente.getNombre_paciente());
-                ps.setString(3, paciente.getApellido_paciente());
-                ps.setString(4, paciente.getCarnet());
-                ps.setString(5, paciente.getSintomas());
-                ps.setString(6, paciente.getSexo());
-                ps.setString(7, paciente.getTelefono());
-                ps.setDate(8, java.sql.Date.valueOf(paciente.getFecha_nacimiento()));
-                ps.setString(9, paciente.getDireccion());
-                
-                ps.executeUpdate();
-            }
-        }
-        return false;
-    }
-    
-    //metodo para actualizar un registro paciente
-    public boolean actualizar(Paciente paciente) throws SQLException{
-        
-        //contiene la instruccion para actualizar
-        String sql = "UPDATE Paciente SET nombre_paciente = ?, apellido_paciente = ?, carnet = ?, sintomas = ?, sexo = ?, telefono = ?, fecha_nacimiento = ?, direccion = ? WHERE id_paciente = ?";
-        
-        try(Connection conn = c.conectar()){
             
-            if (conn == null){
-                throw new SQLException("No se pudo conectar a la base de datos, favor revisar sus credenciales");
-            }
-            
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setString(2, paciente.getNombre_paciente());
-                ps.setString(3, paciente.getApellido_paciente());
-                ps.setString(4, paciente.getCarnet());
-                ps.setString(5, paciente.getSintomas());
-                ps.setString(6, paciente.getSexo());
-                ps.setString(7, paciente.getTelefono());
-                ps.setDate(8, java.sql.Date.valueOf(paciente.getFecha_nacimiento()));
-                ps.setString(9, paciente.getDireccion());
-                
-                ps.executeUpdate();
-            }
+        }catch(Exception e){
+            System.out.println("Error en Insertar Registro Paciente  = " + e);
+            e.getMessage();
         }
         
         return false;
     }
-    
-    //metodo para eliminar un paciente
-    public boolean eliminar(Paciente paciente) throws SQLException{
-        
-        //instruccion para borrar el paciente por medio del id
-        String sql = "DELETE FROM Paciente WHERE id_paciente = ?";
-        
-        try(Connection conn = c.conectar()){
-            
-            if(conn == null){
-                throw new SQLException("No se pudo conectar a la base de datos, favor revisar sus credenciales");
-            }
-            
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ps.setInt(1, paciente.getId_paciente());
-                
-                ps.executeUpdate();
-            }
-        }
-        
-        return false;
+
+    @Override
+    public boolean eliminarRegistro(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Paciente> buscarRegistro(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Paciente> listarTodos(String campo, String valor) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    //metodo para consultar paciente
-    public List<Paciente> consultar() throws SQLException{
-        
-        List<Paciente> lstPaciente = new ArrayList<>();
-        
-        String sql = "SELECT * FROM Paciente";
-        
-        try(Connection conn = c.conectar()){
-            
-            if(conn == null){
-                throw new SQLException("No se pudo conectar a la base de datos, favor revisar sus credenciales");
-            }
-            
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ResultSet rs = ps.executeQuery();
-                
-                
-                while(rs.next()){
-                    int id_paciente = rs.getInt("id");
-                    String nombre_paciente = rs.getString("Nombre");
-                    String apellido_paciente = rs.getString("Apellido");
-                    String carnet = rs.getString("Carnet");
-                    String sintomas = rs.getString("Sintomas");
-                    String sexo = rs.getString("Sexo");
-                    java.sql.Date fecha_nacimiento = rs.getDate("Fecha nacimiento");
-                    String telefono = rs.getString("Telefono");
-                    String direccion = rs.getString("Direccion");
-                    
-                    lstPaciente.add(paciente);
-                }
-            }
-        }
-        
-        return lstPaciente;
-    }
 }
