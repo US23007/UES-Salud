@@ -59,7 +59,7 @@ CREATE TABLE `pacientes` (
   `direccion` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_paciente`),
   UNIQUE KEY `carnet` (`carnet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `pacientes` (
 
 LOCK TABLES `pacientes` WRITE;
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
+INSERT INTO `pacientes` VALUES (1,'US23007','Samuel De Jesús ','Umaña Sorto','2004-03-21','Hombre','6565675','San Salvador');
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +93,7 @@ CREATE TABLE `triaje` (
   KEY `id_especialidad` (`id_especialidad`),
   CONSTRAINT `triaje_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`),
   CONSTRAINT `triaje_ibfk_2` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,8 +102,76 @@ CREATE TABLE `triaje` (
 
 LOCK TABLES `triaje` WRITE;
 /*!40000 ALTER TABLE `triaje` DISABLE KEYS */;
+INSERT INTO `triaje` VALUES (1,1,3,'Dolor de Muelas',35.00,'120/90','BAJA','2026-06-14 00:46:08'),(2,1,4,'Vomito',32.00,'60/120','BAJA','2026-06-14 01:29:59'),(3,1,1,'Dolor de Cabeza',36.00,'120/50','BAJA','2026-06-14 01:32:17'),(4,1,1,'Dolor de Cabeza',36.00,'120/60','BAJA','2026-06-14 01:43:57');
 /*!40000 ALTER TABLE `triaje` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'ues_salud'
+--
+
+--
+-- Dumping routines for database 'ues_salud'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_triaje` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_triaje`(
+    IN p_carnet VARCHAR(20),
+    IN p_especialidad VARCHAR(45), -- Ojo con la longitud, asegúrate que calce con tu tabla
+    IN p_sintomas TEXT,
+    IN p_temperatura DECIMAL(4,2),
+    IN p_presion VARCHAR(20),
+    IN p_nivel_urgencia VARCHAR(20)
+)
+BEGIN
+    DECLARE v_idPaciente INT DEFAULT NULL;
+    DECLARE v_idEspecialidad INT DEFAULT NULL;
+    
+    -- 1. Buscar los IDs correspondientes en una sola línea por cada uno
+    SELECT id_paciente INTO v_idPaciente FROM pacientes WHERE carnet = p_carnet;
+    SELECT id_especialidad INTO v_idEspecialidad FROM especialidades WHERE nombre_especialidad = p_especialidad;
+    
+    -- 2. VALIDACIÓN CORRECTA: Verificar que ambos registros existan en la BD
+    IF v_idPaciente IS NOT NULL AND v_idEspecialidad IS NOT NULL THEN
+        
+        INSERT INTO triaje(
+            id_paciente, 
+            id_especialidad, 
+            sintomas, 
+            temperatura, 
+            presion_arterial, 
+            nivel_urgencia,
+            fecha_registro)
+        VALUES (
+            v_idPaciente, 
+            v_idEspecialidad, 
+            p_sintomas, 
+            p_temperatura, 
+            p_presion, 
+            p_nivel_urgencia,
+            NOW()
+        );
+        
+    ELSE
+    
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Error: El carnet del estudiante o la especialidad médica no existen en el sistema.';
+    END IF;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -113,4 +182,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-12  0:21:54
+-- Dump completed on 2026-06-14 14:35:50

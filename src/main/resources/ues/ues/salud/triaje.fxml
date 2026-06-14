@@ -107,7 +107,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="tInfo" text="Información Clinica">
+                <Tab fx:id="tInfo" disable="true" text="Información Clinica">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../../../css/registro.css">
                            <children>
