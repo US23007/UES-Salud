@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="panel" stylesheets="@../../../css/registro.css" vgap="10.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.TriajeController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" styleClass="panel" stylesheets="@../../../css/registro.css" vgap="10.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.TriajeController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -107,7 +107,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="tInfo" disable="true" text="Información Clinica">
+                <Tab fx:id="tInfo" text="Información Clinica">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../../../css/registro.css">
                            <children>
@@ -119,6 +119,8 @@
                                 <rowConstraints>
                                   <RowConstraints maxHeight="104.35849397740108" minHeight="0.0" prefHeight="36.0943265638559" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="219.58490787667716" minHeight="9.962263217979284" prefHeight="34.56603801831868" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="219.58490787667716" minHeight="10.0" prefHeight="34.56603801831868" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="219.58490787667716" minHeight="10.0" prefHeight="34.56603801831868" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="279.90567033848504" minHeight="10.0" prefHeight="102.64149817863637" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="279.90567033848504" minHeight="10.0" prefHeight="60.13207901343213" vgrow="SOMETIMES" />
                                 </rowConstraints>
@@ -135,7 +137,7 @@
                                           <TextArea fx:id="txtSintomas" prefHeight="57.0" prefWidth="256.0" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                                        </children>
                                     </HBox>
-                                    <TitledPane fx:id="tabNivel" animated="false" styleClass="titlePane" stylesheets="@../../../css/registro.css" text="NIVEL DE URGENCIA" GridPane.rowIndex="2">
+                                    <TitledPane fx:id="tabNivel" animated="false" styleClass="titlePane" stylesheets="@../../../css/registro.css" text="NIVEL DE URGENCIA" GridPane.rowIndex="4">
                                       <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
@@ -149,7 +151,7 @@
                                           </AnchorPane>
                                       </content>
                                     </TitledPane>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
                                        <children>
                                           <Button fx:id="btnAtras" mnemonicParsing="false" onAction="#Retroceder" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Atrás" />
                                           <Button fx:id="btnGuardar" mnemonicParsing="false" onAction="#Guardar" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Guardar" />
@@ -158,6 +160,18 @@
                                        <padding>
                                           <Insets right="10.0" />
                                        </padding>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label text="Temperatura" />
+                                          <TextField fx:id="txtTemperatura" styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label text="Presión Arterial" />
+                                          <TextField fx:id="txtPresion" styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                                       </children>
                                     </HBox>
                                  </children>
                               </GridPane>

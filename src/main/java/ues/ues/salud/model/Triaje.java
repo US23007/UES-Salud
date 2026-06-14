@@ -11,7 +11,7 @@ public class Triaje {
     //Atributos
     private int id_triaje;
     private Paciente paciente;
-    private int id_especialidad;
+    
     private String sintomas;
     private double temperatura;
     private String presionArterial;
@@ -21,16 +21,22 @@ public class Triaje {
 
     
     //definicion del constructor
-    public Triaje(int id_triaje, Paciente paciente, int id_especialidad, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDate fecha_registro) {
-        this.id_triaje = id_triaje;
+
+    public Triaje(Paciente paciente, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDate fecha_registro, Especialidad especialidad) {
         this.paciente = paciente;
-        this.id_especialidad = id_especialidad;
         this.sintomas = sintomas;
         this.temperatura = temperatura;
         this.presionArterial = presionArterial;
         this.nivel_urgencia = nivel_urgencia;
         this.fecha_registro = fecha_registro;
+        this.especialidad = especialidad;
     }
+    
+    
+
+    public Triaje() {
+    }
+    
     
     //Metodos getters y setters
     public int getId_triaje() {
@@ -49,14 +55,7 @@ public class Triaje {
         this.paciente = paciente;
     }
 
-    public int getEspecialidad() {
-        return id_especialidad;
-    }
-
-    public void setEspecialidad(int id_especialidad) {
-        this.id_especialidad = id_especialidad;
-    }
-
+   
     public String getSintomas() {
         return sintomas;
     }
@@ -113,7 +112,7 @@ public class Triaje {
     }
     @Override
     public String toString() {
-        return "Triaje{" + "id_triaje=" + id_triaje + ", paciente=" + paciente + ", especialidad=" + id_especialidad + ", sintomas=" + sintomas + ", temperatura=" + temperatura + ", presionArterial=" + presionArterial + ", nivel_urgencia=" + nivel_urgencia + ", fecha_registro=" + fecha_registro + '}';
+        return "Triaje{" + "id_triaje=" + id_triaje + ", paciente=" + paciente  + ", sintomas=" + sintomas + ", temperatura=" + temperatura + ", presionArterial=" + presionArterial + ", nivel_urgencia=" + nivel_urgencia + ", fecha_registro=" + fecha_registro + '}';
     }
     
     

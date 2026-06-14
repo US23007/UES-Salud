@@ -20,7 +20,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import ues.ues.salud.model.Especialidad;
 import ues.ues.salud.model.Paciente;
+import ues.ues.salud.model.Triaje;
 
 /**
  *Clase ExpedienteXML : está clase será implementada para darle dinamismo a nuestro sistema ya que podremos cargar los expedientes de los estudiantes para
@@ -30,7 +32,7 @@ import ues.ues.salud.model.Paciente;
  */
 public class ExpedienteXML {
     
-    public static void generarExpedienteXML(Paciente paciente, String sintomas,String Especialidad, String nivelUrgencia) throws ParserConfigurationException, TransformerConfigurationException, TransformerException {
+    public static void generarExpedienteXML(Paciente paciente, String sintomas,Double temperatura,String presion,String Especialidad, String nivelUrgencia) throws ParserConfigurationException, TransformerConfigurationException, TransformerException {
         DocumentBuilderFactory factor = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factor.newDocumentBuilder();
         Document doc = builder.newDocument();
@@ -95,6 +97,14 @@ public class ExpedienteXML {
         sint.appendChild(doc.createTextNode(sintomas));
         nodoEmergencia.appendChild(sint);
         
+        Element temp = doc.createElement("temperatura");
+        temp.appendChild(doc.createTextNode(temperatura.toString()));
+        nodoEmergencia.appendChild(temp);
+        
+        Element pre = doc.createElement("presion");
+        pre.appendChild(doc.createTextNode(presion));
+        nodoEmergencia.appendChild(pre);
+        
         Element urgencia = doc.createElement("nivel_urgencia");
         urgencia.appendChild(doc.createTextNode(nivelUrgencia));
         nodoEmergencia.appendChild(urgencia);
@@ -150,11 +160,24 @@ public class ExpedienteXML {
         Element emergenciaNode = (Element) doc.getElementsByTagName("emergencia").item(0);
         String sintomas = emergenciaNode.getElementsByTagName("sintomas").item(0).getTextContent();
         String nivelUrgencia = emergenciaNode.getElementsByTagName("nivel_urgencia").item(0).getTextContent();
+        String temperatura = emergenciaNode.getElementsByTagName("temperatura").item(0).getTextContent();
+        String especialidad = emergenciaNode.getElementsByTagName("especialidad").item(0).getTextContent();
+        String presion = emergenciaNode.getElementsByTagName("presion").item(0).getTextContent();
 
+        Especialidad espe = new Especialidad();
+        espe.setNombreEspecialidad(especialidad);
+        Triaje triaje = new Triaje();
+        triaje.setSintomas(sintomas);
+        triaje.setNivel_urgencia(nivelUrgencia);
+        triaje.setPresionArterial(presion);
+        triaje.setTemperatura(Double.parseDouble(temperatura));
         
-
-        // 4. Instanciar y retornar el objeto reconstruido
-        return new Paciente(nombres, apellidos,carnet,sexo,telefono,fechaNacimiento,direccion);
+        Paciente paciente = new Paciente(nombres, apellidos,carnet,sexo,telefono,fechaNacimiento,direccion);
+        paciente.agregarTriaje(triaje);
+        triaje.agregarEspecialidad(espe);
+        espe.agregarTriaje(triaje);
+        
+        return paciente;
         
         
     }

@@ -41,16 +41,16 @@ public class PrimaryController implements Initializable{
 
     @FXML
     private void Registro(){
-        cargarPanel("triaje.fxml","","","","","","",null,true,false);
+        cargarPanel("triaje.fxml",null,true,false);
     }
     
     
-    public void cargarPanel(String panel,String carnet,String nombre,String apellidos,String telefono,String direccion,String sexo,LocalDateTime fecha,boolean Guardar,boolean Modificar){
+    public void cargarPanel(String panel,Paciente paciente,boolean Guardar,boolean Modificar){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
             Parent root = loader.load();
             TriajeController triaje = loader.getController();
-            triaje.setData(carnet, nombre, apellidos, telefono, direccion, sexo, fecha,Guardar,Modificar);
+            triaje.setData(paciente,Guardar,Modificar);
             bPrincipal.setCenter(root);
         } catch (IOException ex) {
             System.out.println("Error al cargar en"+panel + ex);
@@ -64,6 +64,16 @@ public class PrimaryController implements Initializable{
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos XML (*.xml)", "*.xml");
         chooser.getExtensionFilters().add(extFilter);
         chooser.setTitle("Seleccionar Expediente Clínico XML");
+       
+        File carpetaExpedientes = new File("C:/UES-SALUD/expedientes");
+
+        if (carpetaExpedientes.exists() && carpetaExpedientes.isDirectory()) {
+            chooser.setInitialDirectory(carpetaExpedientes);
+        } else {
+
+            carpetaExpedientes.mkdirs();
+            chooser.setInitialDirectory(carpetaExpedientes);
+        }
         
         File archivoSeleccionado = chooser.showOpenDialog(null);
         if (archivoSeleccionado != null) {
@@ -72,9 +82,7 @@ public class PrimaryController implements Initializable{
                 Paciente pacienteCargado = ExpedienteXML.cargarExpedienteXML(archivoSeleccionado);
 
                 // 2. Mapear u organizar los datos recuperados de vuelta en los campos de JavaFX
-                cargarPanel("triaje.fxml", pacienteCargado.getCarnet(), pacienteCargado.getNombre_paciente(),
-                        pacienteCargado.getApellido_paciente(), pacienteCargado.getTelefono(), pacienteCargado.getDireccion(), pacienteCargado.getSexo(),
-                        pacienteCargado.getFecha_nacimiento(), false, true);
+                cargarPanel("triaje.fxml",pacienteCargado,false,true);
                 
                 Notifications.create()
                         .title("Proceso Completado")

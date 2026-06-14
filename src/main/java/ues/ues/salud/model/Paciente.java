@@ -135,6 +135,13 @@ public class Paciente {
     public List<Triaje> obtenerTriajes(){
         return triajes;
     }
+    
+    public Triaje getUltimoTriaje() {
+        if (triajes != null && !triajes.isEmpty()) {
+            return triajes.get(triajes.size() - 1);
+        }
+        return null;
+    }
     //metodo abstracto que debera ser implementado (sobreescribir) en las clases hijas
    // public abstract String determinarPrioridad();
 

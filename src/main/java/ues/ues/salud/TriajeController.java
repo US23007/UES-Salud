@@ -8,6 +8,7 @@ import java.io.File;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,11 +31,15 @@ import javafx.util.Duration;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.controlsfx.control.Notifications;
+import ues.ues.salud.Dao.EspecialidadDao;
 import ues.ues.salud.Dao.PacienteDao;
+import ues.ues.salud.Dao.TriajeDao;
+import ues.ues.salud.model.Especialidad;
 import ues.ues.salud.model.Paciente;
 import ues.ues.salud.model.PacienteCritico;
 import ues.ues.salud.model.PacienteEstable;
 import ues.ues.salud.model.PacienteMedio;
+import ues.ues.salud.model.Triaje;
 import ues.ues.salud.utils.ExpedienteXML;
 
 /**
@@ -94,7 +99,11 @@ public class TriajeController implements Initializable {
     private TextArea txtSintomas;
     
     
+    @FXML
+    private TextField txtPresion;
     
+    @FXML
+    private TextField txtTemperatura;
     
     @FXML
     private Button btnAtras;
@@ -113,31 +122,68 @@ public class TriajeController implements Initializable {
         cbxUrgencia.getItems().add("BAJA");
         cbxUrgencia.getItems().add("MEDIA");
         cbxUrgencia.getItems().add("ALTA");
+        EspecialidadDao espeDao = new EspecialidadDao();
+        List<Especialidad> especialidades = espeDao.listarTodos(null,null);
         
-        cbxEspecialidad.getItems().add("Medica");
+        especialidades.forEach(e->{
+            cbxEspecialidad.getItems().add(e.getNombreEspecialidad());
+        
+        });
     }    
     
-    public void setData(String carnet,String nombre,String apellidos,String telefono,String direccion,String sexo,LocalDateTime fecha,boolean Guardar,boolean Modificar){
-        txtCarnet.setText(carnet);
-        txtNombres.setText(nombre);
-        txtApellidos.setText(apellidos);
-        txtTelefono.setText(telefono);
-        txtDireccion.setText(direccion);
-        
-        if(sexo.equalsIgnoreCase("HOMBRE")){
-            cbxHombre.setSelected(true);
-        }else if(sexo.equalsIgnoreCase("MUJER")){
-            cbxMujer.setSelected(true);
-        }
-        
-        if(fecha == null){
+    public void setData(Paciente paciente, boolean Guardar, boolean Modificar) {
+        if (paciente == null) {
+            txtTemperatura.setText("");
+            txtPresion.setText("");
+            txtSintomas.setText("");
+            cbxEspecialidad.getSelectionModel().clearSelection();
+            cbxUrgencia.getSelectionModel().clearSelection();
             dtFechaNacimiento.setValue(null);
-        }else{
-            dtFechaNacimiento.setValue(fecha.toLocalDate());
+            txtPresion.setText("");
+        } else {
+
+            Triaje ultimoTriaje = paciente.getUltimoTriaje();
+
+            if (ultimoTriaje != null) {
+
+                txtTemperatura.setText(String.valueOf(ultimoTriaje.getTemperatura()));
+                txtPresion.setText(ultimoTriaje.getPresionArterial());
+                txtSintomas.setText(ultimoTriaje.getSintomas());
+
+                cbxUrgencia.setValue(ultimoTriaje.getNivel_urgencia());
+
+                if (ultimoTriaje.obtenerEspecialida() != null) {
+                    cbxEspecialidad.setValue(ultimoTriaje.obtenerEspecialida().getNombreEspecialidad());
+                }
+            } else {
+
+                txtTemperatura.setText("");
+                txtPresion.setText("");
+                txtSintomas.setText("");
+                cbxEspecialidad.getSelectionModel().clearSelection();
+                cbxUrgencia.getSelectionModel().clearSelection();
+            }
+            txtCarnet.setText(paciente.getCarnet());
+            txtNombres.setText(paciente.getNombre_paciente());
+            txtApellidos.setText(paciente.getApellido_paciente());
+            txtDireccion.setText(paciente.getDireccion());
+            txtTelefono.setText(paciente.getTelefono());
+            if(paciente.getSexo().equalsIgnoreCase("HOMBRE")){
+                cbxHombre.setSelected(true);
+            }else if(paciente.getSexo().equalsIgnoreCase("MUJER")){
+                cbxMujer.setSelected(true);
+            }else{
+                cbxHombre.setSelected(false);
+                cbxMujer.setSelected(false);
+            }
+            
+            dtFechaNacimiento.setValue(paciente.getFecha_nacimiento().toLocalDate());
+            cambiarColor();
         }
-        
         btnGuardar.setVisible(Guardar);
         this.btnModificar.setVisible(Modificar);
+        
+        tInfo.setDisable(true);
     }
     
     @FXML
@@ -184,7 +230,7 @@ public class TriajeController implements Initializable {
                 "urgencia-alta"
         );
         
-        switch (cbxUrgencia.getValue().toString()) {
+        switch (cbxUrgencia.getSelectionModel().getSelectedItem().toString()) {
             case "BAJA":
                 tabNivel.getStyleClass().add("urgencia-baja");
                 break;
@@ -233,94 +279,150 @@ public class TriajeController implements Initializable {
         System.out.println("P = " + pacienteGlobal.toString());
         System.out.println("urgencia = " + urgencia);
         System.out.println("sintomas = " + txtSintomas.getText());
+        
+    String nombreEspecialidad = cbxEspecialidad.getSelectionModel().getSelectedItem().toString();
+    String sintomas = txtSintomas.getText();
         PacienteDao pacienDao = new PacienteDao();
-        
-        if(urgencia.equalsIgnoreCase("ALTA")){
-            PacienteCritico critico = new PacienteCritico(
-                    1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo() 
-                    ,pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
-                   if(pacienDao.insertarRegistro(critico)){
-                       ExpedienteXML.generarExpedienteXML(critico,txtSintomas.getText(),cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                       limpiarCampos();
-                   }
-            
-            System.out.println("CRITICO = " +critico.toString() );
-                     
-
-                    
-         }else if(urgencia.equalsIgnoreCase("MEDIA")){
-            PacienteMedio medio = new PacienteMedio(
+        Paciente pacienteInstanciado = null;
+        TriajeDao triajeDao = new TriajeDao();
+        if (urgencia.equalsIgnoreCase("ALTA")) {
+            pacienteInstanciado = new PacienteCritico(
                     1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
                      pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
 
-            if (pacienDao.insertarRegistro(medio)) {
-                 ExpedienteXML.generarExpedienteXML(medio,txtSintomas.getText(), cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                limpiarCampos();
-            }
-            
-            
-                    
-         }else if(urgencia.equalsIgnoreCase("BAJA")){
-             PacienteEstable estable = new PacienteEstable(
+        } else if (urgencia.equalsIgnoreCase("MEDIA")) {
+            pacienteInstanciado = new PacienteMedio(
                     1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
-                     pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
+                    pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
 
-            if (pacienDao.insertarRegistro(estable)) {
-                ExpedienteXML.generarExpedienteXML(estable,txtSintomas.getText(),cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                limpiarCampos();
-            }
-                     
-             
-         }
+        } else if (urgencia.equalsIgnoreCase("BAJA")) {
+            pacienteInstanciado = new PacienteEstable(
+                    1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
+                    pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
+
+        }
         
-       
+        if (pacienteInstanciado != null) {
+            // 3. Crear los objetos de soporte con el nuevo diseño limpio de clases
+            Especialidad especialidad = new Especialidad();
+            especialidad.setNombreEspecialidad(nombreEspecialidad);
+
+            Triaje triaje = new Triaje();
+            triaje.setSintomas(sintomas);
+            triaje.setNivel_urgencia(urgencia);
+
+            // Asignamos las lecturas físicas que te hacían falta en pantalla (Temperatura y Presión)
+            // Reemplaza 'txtTemperatura' y 'txtPresion' por los nombres reales de tus TextField
+            try {
+                triaje.setTemperatura(Double.parseDouble(txtTemperatura.getText()));
+            } catch (NumberFormatException e) {
+                triaje.setTemperatura(36.5); // Valor por defecto seguro si el campo está vacío o erróneo
+            }
+            triaje.setPresionArterial(txtPresion.getText());
+
+            // Establecer las relaciones bidireccionales en memoria
+            triaje.setPaciente(pacienteInstanciado);
+            triaje.agregarEspecialidad(especialidad);
+            pacienteInstanciado.agregarTriaje(triaje);
+
+            // 4. PERSISTENCIA EN LA BASE DE DATOS
+            // Primero aseguramos que el paciente exista o se registre
+            boolean pacienteGuardado = pacienDao.insertarRegistro(pacienteInstanciado);
+
+            // Segundo: Invocamos el procedimiento almacenado sp_insertar_triaje a través del DAO
+            // Pasamos el objeto triaje completo que contiene las relaciones internas
+            boolean triajeGuardado = triajeDao.insertarRegistro(triaje);
+
+            // 5. Si ambos se guardaron en la BD, generamos el XML final de UES-Salud
+            if (pacienteGuardado && triajeGuardado) {
+
+                // Usamos tu método limpio de generación de XML
+                ExpedienteXML.generarExpedienteXML(pacienteInstanciado,triaje.getSintomas(),triaje.getTemperatura(),triaje.getPresionArterial(), nombreEspecialidad, urgencia);
+
+                // Limpieza visual de la interfaz gráfica de JavaFX
+                limpiarCampos();
+                System.out.println("Expediente clínico y triaje consolidados con éxito.");
+            } else {
+                System.out.println("Error local: Falló la escritura en la base de datos.");
+            }
+        }
     }
     
     
     @FXML
     private void Modificar() throws ParserConfigurationException, TransformerException{
         String urgencia = cbxUrgencia.getValue().toString();
-        PacienteDao pacienteDao = new PacienteDao();
-        
-        if(urgencia.equalsIgnoreCase("ALTA")){
-            PacienteCritico critico = new PacienteCritico(
-                    1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo() 
-                    ,pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
-                   if(pacienteDao.modificarRegistro(critico)){
-                       ExpedienteXML.generarExpedienteXML(critico,txtSintomas.getText(),cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                       limpiarCampos();
-                   }
-            
-            System.out.println("CRITICO = " +critico.toString() );
-                     
+        System.out.println("P = " + pacienteGlobal.toString());
+        System.out.println("urgencia = " + urgencia);
+        System.out.println("sintomas = " + txtSintomas.getText());
 
-                    
-         }else if(urgencia.equalsIgnoreCase("MEDIA")){
-            PacienteMedio medio = new PacienteMedio(
+        String nombreEspecialidad = cbxEspecialidad.getSelectionModel().getSelectedItem().toString();
+        String sintomas = txtSintomas.getText();
+        PacienteDao pacienDao = new PacienteDao();
+        Paciente pacienteInstanciado = null;
+        TriajeDao triajeDao = new TriajeDao();
+        if (urgencia.equalsIgnoreCase("ALTA")) {
+            pacienteInstanciado = new PacienteCritico(
                     1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
-                     pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
+                    pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
 
-            if (pacienteDao.modificarRegistro(medio)) {
-                 ExpedienteXML.generarExpedienteXML(medio,txtSintomas.getText(), cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                limpiarCampos();
-            }
-            
-            
-                    
-         }else if(urgencia.equalsIgnoreCase("BAJA")){
-             PacienteEstable estable = new PacienteEstable(
+        } else if (urgencia.equalsIgnoreCase("MEDIA")) {
+            pacienteInstanciado = new PacienteMedio(
                     1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
-                     pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
+                    pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
 
-            if (pacienteDao.modificarRegistro(estable)) {
-                ExpedienteXML.generarExpedienteXML(estable,txtSintomas.getText(),cbxEspecialidad.getSelectionModel().getSelectedItem().toString(), cbxUrgencia.getSelectionModel().getSelectedItem().toString());
-                limpiarCampos();
+        } else if (urgencia.equalsIgnoreCase("BAJA")) {
+            pacienteInstanciado = new PacienteEstable(
+                    1, pacienteGlobal.getNombre_paciente(), pacienteGlobal.getApellido_paciente(), pacienteGlobal.getCarnet(), pacienteGlobal.getSexo(),
+                    pacienteGlobal.getFecha_nacimiento(), pacienteGlobal.getTelefono(), pacienteGlobal.getDireccion());
+
+        }
+
+        if (pacienteInstanciado != null) {
+            // 3. Crear los objetos de soporte con el nuevo diseño limpio de clases
+            Especialidad especialidad = new Especialidad();
+            especialidad.setNombreEspecialidad(nombreEspecialidad);
+
+            Triaje triaje = new Triaje();
+            triaje.setSintomas(sintomas);
+            triaje.setNivel_urgencia(urgencia);
+
+            // Asignamos las lecturas físicas que te hacían falta en pantalla (Temperatura y Presión)
+            // Reemplaza 'txtTemperatura' y 'txtPresion' por los nombres reales de tus TextField
+            try {
+                triaje.setTemperatura(Double.parseDouble(txtTemperatura.getText()));
+            } catch (NumberFormatException e) {
+                triaje.setTemperatura(36.5); // Valor por defecto seguro si el campo está vacío o erróneo
             }
-                     
-             
-         }
-        
-       
+            triaje.setPresionArterial(txtPresion.getText());
+
+            // Establecer las relaciones bidireccionales en memoria
+            triaje.setPaciente(pacienteInstanciado);
+            triaje.agregarEspecialidad(especialidad);
+            pacienteInstanciado.agregarTriaje(triaje);
+
+            // 4. PERSISTENCIA EN LA BASE DE DATOS
+            // Primero aseguramos que el paciente exista o se registre
+            boolean pacienteGuardado = pacienDao.modificarRegistro(pacienteInstanciado);
+
+            // Segundo: Invocamos el procedimiento almacenado sp_insertar_triaje a través del DAO
+            // Pasamos el objeto triaje completo que contiene las relaciones internas
+            boolean triajeGuardado = triajeDao.insertarRegistro(triaje);
+
+            // 5. Si ambos se guardaron en la BD, generamos el XML final de UES-Salud
+            if (pacienteGuardado && triajeGuardado) {
+
+                // Usamos tu método limpio de generación de XML
+                ExpedienteXML.generarExpedienteXML(pacienteInstanciado, triaje.getSintomas(), triaje.getTemperatura(), triaje.getPresionArterial(), nombreEspecialidad, urgencia);
+
+                // Limpieza visual de la interfaz gráfica de JavaFX
+                limpiarCampos();
+                System.out.println("Expediente clínico y triaje consolidados con éxito.");
+            } else {
+                System.out.println("Error local: Falló la sobreescritura en la base de datos.");
+            }
+        }
+
     }
 
     private void limpiarCampos() {
