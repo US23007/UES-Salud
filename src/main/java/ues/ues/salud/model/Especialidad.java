@@ -10,7 +10,7 @@ package ues.ues.salud.model;
  */
 public class Especialidad {
     private String nombreEspecialidad;
-
+    private Triaje triaje ;
     public Especialidad(String nombreEspecialidad) {
         this.nombreEspecialidad = nombreEspecialidad;
     }
@@ -26,6 +26,14 @@ public class Especialidad {
         this.nombreEspecialidad = nombreEspecialidad;
     }
     
+    public void agregarTriaje(Triaje t){
+        this.triaje = t;
+        t.agregarEspecialidad(this);
+    }
+    
+    public Triaje obtenerTriaje(){
+        return triaje;
+    }
     
     
 }

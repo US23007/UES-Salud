@@ -2,6 +2,8 @@ package ues.ues.salud.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,6 +21,7 @@ public class Paciente {
     private String telefono;
     private LocalDateTime fecha_nacimiento;
     private String direccion;
+    private List<Triaje> triajes = new ArrayList<>();
     
     //Metodo Constructor para acceder a las variable privadas
 
@@ -31,6 +34,7 @@ public class Paciente {
         this.fecha_nacimiento = fecha_nacimiento;
         this.telefono = telefono;
         this.direccion = direccion;
+        
     }
 
     public Paciente(String nombre_paciente, String apellido_paciente, String carnet, String sexo, String telefono, LocalDateTime fecha_nacimiento, String direccion) {
@@ -124,7 +128,13 @@ public class Paciente {
     }
     
     
-    
+    public void agregarTriaje(Triaje t){
+        triajes.add(t);
+        t.agregarPaciente(this);
+    }
+    public List<Triaje> obtenerTriajes(){
+        return triajes;
+    }
     //metodo abstracto que debera ser implementado (sobreescribir) en las clases hijas
    // public abstract String determinarPrioridad();
 

@@ -17,6 +17,8 @@ public class Triaje {
     private String presionArterial;
     private String nivel_urgencia;
     private LocalDate fecha_registro;
+    private Especialidad especialidad;
+
     
     //definicion del constructor
     public Triaje(int id_triaje, Paciente paciente, int id_especialidad, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDate fecha_registro) {
@@ -94,7 +96,21 @@ public class Triaje {
     public void setFecha_registro(LocalDate fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
-
+    public void agregarPaciente(Paciente p){
+        this.paciente = p;
+        
+    }
+    public Paciente obtenerPaciente(){
+        return paciente;
+    }
+    
+    public void agregarEspecialidad(Especialidad e){
+        this.especialidad = e;
+    }
+    
+    public Especialidad obtenerEspecialida(){
+        return especialidad;
+    }
     @Override
     public String toString() {
         return "Triaje{" + "id_triaje=" + id_triaje + ", paciente=" + paciente + ", especialidad=" + id_especialidad + ", sintomas=" + sintomas + ", temperatura=" + temperatura + ", presionArterial=" + presionArterial + ", nivel_urgencia=" + nivel_urgencia + ", fecha_registro=" + fecha_registro + '}';
