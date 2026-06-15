@@ -5,10 +5,15 @@
 package ues.ues.salud.Dao;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import ues.ues.salud.Interface.DaoInterface;
 import ues.ues.salud.conexion.Conexion;
+import ues.ues.salud.model.Especialidad;
+import ues.ues.salud.model.Paciente;
 import ues.ues.salud.model.Triaje;
 
 /**
@@ -60,7 +65,57 @@ public class TriajeDao implements DaoInterface<Triaje>{
 
     @Override
     public List<Triaje> listarTodos(String campo, String valor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Triaje> historial = new ArrayList<>();
+        Conexion con = new Conexion();
+        String query = "SELECT "
+                + "    p.carnet, "
+                + "    p.nombres as Nombres, "
+                + "    p.apellidos as Apellidos, "
+                + "    TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS Edad, "
+                + "    p.sexo AS Género, "
+                + "    e.nombre_especialidad AS Especialidad, "
+                + "    t.fecha_registro AS Fecha_Consulta, "
+                + "    t.sintomas AS Sintomas, "
+                +"     t.temperatura AS Temperatura, "
+                + "    t.presion_arterial AS Presión, "
+                + "    t.nivel_urgencia AS Urgencia "
+                + "FROM pacientes p "
+                + "INNER JOIN triaje t ON p.id_paciente = t.id_paciente "
+                + "INNER JOIN especialidades e ON t.id_especialidad = e.id_especialidad "
+                + "ORDER BY t.fecha_registro DESC";
+        try {
+            PreparedStatement ps = con.conectar().prepareStatement(query);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Paciente p = new Paciente();
+                p.setCarnet(rs.getString("carnet"));
+                p.setNombre_paciente(rs.getString("Nombres"));
+                p.setApellido_paciente(rs.getString("Apellidos"));
+                p.setSexo(rs.getString("Género"));
+                p.setEdad(rs.getInt("Edad"));
+
+                Especialidad e = new Especialidad();
+                e.setNombreEspecialidad(rs.getString("Especialidad"));
+
+                Triaje t = new Triaje();
+                t.setFecha_registro(rs.getTimestamp("Fecha_Consulta").toLocalDateTime());
+                t.setTemperatura(rs.getDouble("temperatura"));
+                t.setSintomas(rs.getString("Sintomas"));
+                t.setPresionArterial(rs.getString("Presión"));
+                t.setNivel_urgencia(rs.getString("Urgencia"));
+
+                
+                t.agregarPaciente(p);
+                t.agregarEspecialidad(e);
+
+                historial.add(t); 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return historial;
     }
     
 }

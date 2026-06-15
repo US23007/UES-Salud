@@ -116,6 +116,28 @@ public class Triaje {
         return "Triaje{" + "id_triaje=" + id_triaje + ", paciente=" + paciente  + ", sintomas=" + sintomas + ", temperatura=" + temperatura + ", presionArterial=" + presionArterial + ", nivel_urgencia=" + nivel_urgencia + ", fecha_registro=" + fecha_registro + '}';
     }
     
+    public String getCarnetPaciente() {
+        return this.paciente != null ? this.paciente.getCarnet() : "";
+    }
+
+    public String getNombrePaciente() {
+        return this.paciente != null ? this.paciente.getNombre_paciente() : "";
+    }
     
+    public String getApellidoPaciente(){
+          return this.paciente != null ? this.paciente.getApellido_paciente() : "";
+    }
+
+    public int getEdadPaciente() {
+        return this.paciente != null ? this.paciente.getEdad() : 0;
+    }
+
+    public String getGeneroPaciente() {
+        return this.paciente != null ? this.paciente.getSexo() : "";
+    }
+
+    public String getNombreEspecialidad() {
+        return this.especialidad != null ? this.especialidad.getNombreEspecialidad() : "";
+    }
     
 }
