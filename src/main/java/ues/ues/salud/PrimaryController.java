@@ -28,6 +28,9 @@ public class PrimaryController implements Initializable{
     private Button btnRegistro;
     
     @FXML
+    private Button btnBuscar;
+    
+    @FXML
     private BorderPane bPrincipal;
     
      @FXML
@@ -44,6 +47,11 @@ public class PrimaryController implements Initializable{
         cargarPanel("triaje.fxml",null,true,false);
     }
     
+    @FXML
+    private void Buscar(){
+        cargar("busqueda.fxml");
+    }
+    
     
     public void cargarPanel(String panel,Paciente paciente,boolean Guardar,boolean Modificar){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
@@ -51,6 +59,17 @@ public class PrimaryController implements Initializable{
             Parent root = loader.load();
             TriajeController triaje = loader.getController();
             triaje.setData(paciente,Guardar,Modificar);
+            bPrincipal.setCenter(root);
+        } catch (IOException ex) {
+            System.out.println("Error al cargar en"+panel + ex);
+            ex.getMessage();
+        }
+    }
+    
+    public void cargar(String panel){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
+        try {
+            Parent root = loader.load();
             bPrincipal.setCenter(root);
         } catch (IOException ex) {
             System.out.println("Error al cargar en"+panel + ex);

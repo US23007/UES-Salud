@@ -17,7 +17,9 @@ public class Paciente {
     private String nombre_paciente;
     private String apellido_paciente;
     private String carnet;
+    private int edad;
     private String sexo;
+    private int consultas;
     private String telefono;
     private LocalDateTime fecha_nacimiento;
     private String direccion;
@@ -36,6 +38,21 @@ public class Paciente {
         this.direccion = direccion;
         
     }
+
+    public Paciente(int id_paciente, String nombre_paciente, String apellido_paciente, String carnet, int edad, String sexo, int consultas, String telefono, LocalDateTime fecha_nacimiento, String direccion) {
+        this.id_paciente = id_paciente;
+        this.nombre_paciente = nombre_paciente;
+        this.apellido_paciente = apellido_paciente;
+        this.carnet = carnet;
+        this.edad = edad;
+        this.sexo = sexo;
+        this.consultas = consultas;
+        this.telefono = telefono;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.direccion = direccion;
+    }
+    
+    
 
     public Paciente(String nombre_paciente, String apellido_paciente, String carnet, String sexo, String telefono, LocalDateTime fecha_nacimiento, String direccion) {
         this.nombre_paciente = nombre_paciente;
@@ -86,6 +103,15 @@ public class Paciente {
     public String getSexo() {
         return sexo;
     }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+    
     
     
      //Implementacion de Metodos Setters
@@ -135,6 +161,23 @@ public class Paciente {
     public List<Triaje> obtenerTriajes(){
         return triajes;
     }
+
+    public int getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(int consultas) {
+        this.consultas = consultas;
+    }
+
+    public List<Triaje> getTriajes() {
+        return triajes;
+    }
+
+    public void setTriajes(List<Triaje> triajes) {
+        this.triajes = triajes;
+    }
+    
     
     public Triaje getUltimoTriaje() {
         if (triajes != null && !triajes.isEmpty()) {
@@ -147,8 +190,10 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "Paciente{" + "id_paciente=" + id_paciente + ", nombre_paciente=" + nombre_paciente + ", apellido_paciente=" + apellido_paciente + ", carnet=" + carnet + ", fecha_nacimiento=" + fecha_nacimiento + '}';
+        return "Paciente{" + "id_paciente=" + id_paciente + ", nombre_paciente=" + nombre_paciente + ", apellido_paciente=" + apellido_paciente + ", carnet=" + carnet + ", edad=" + edad + ", sexo=" + sexo + ", consultas=" + consultas + ", telefono=" + telefono + ", fecha_nacimiento=" + fecha_nacimiento + ", direccion=" + direccion + '}';
     }
+
+    
     
     
 }

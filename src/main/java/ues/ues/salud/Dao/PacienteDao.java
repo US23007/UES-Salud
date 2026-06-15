@@ -5,13 +5,20 @@
 package ues.ues.salud.Dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
+import javax.xml.transform.Result;
 import org.controlsfx.control.Notifications;
 import ues.ues.salud.Interface.DaoInterface;
 import ues.ues.salud.conexion.Conexion;
+import ues.ues.salud.model.Especialidad;
 import ues.ues.salud.model.Paciente;
+import ues.ues.salud.model.Triaje;
 
 /**
  *
@@ -94,12 +101,96 @@ public class PacienteDao implements DaoInterface<Paciente>{
 
     @Override
     public List<Paciente> buscarRegistro(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Paciente> pacientes = new ArrayList<>();
+        try {
+            Conexion con = new Conexion();
+            String query = "SELECT "
+                    +"p.id_paciente, "
+                    + "carnet, "
+                    + "nombres, "
+                    + "apellidos, "
+                    + "TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS Edad, "
+                    + "sexo AS Género, "
+                    + "p.telefono as Télefono, "
+                    + "p.direccion as Dirección, "
+                    + "COUNT(t.id_triaje) AS Consultas "
+                    + "FROM pacientes p "
+                    + "INNER JOIN triaje t "
+                    + "ON p.id_paciente = t.id_paciente "
+                    + "WHERE carnet = ? "
+                    + "GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, p.fecha_nacimiento, p.sexo , p.telefono, p.direccion";
+
+            PreparedStatement ps = con.conectar().prepareStatement(query);
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Paciente p = new Paciente();
+                p.setId_paciente(rs.getInt("id_paciente"));
+                p.setCarnet(rs.getString("carnet"));
+                p.setNombre_paciente(rs.getString("nombres"));
+                p.setApellido_paciente(rs.getString("apellidos"));
+                p.setEdad(rs.getInt("Edad"));
+                p.setSexo(rs.getString("Género"));
+                p.setTelefono(rs.getString("Télefono"));
+                p.setDireccion(rs.getString("Dirección"));
+                p.setConsultas(rs.getInt("Consultas"));
+
+                pacientes.add(p);
+
+            }
+
+            return pacientes;
+
+        } catch (Exception e) {
+            System.out.println("Error en Cargar pacientes en PacienteDao listarTodos  = " + e);
+            e.printStackTrace();
+        }
+
+        return pacientes;
     }
 
     @Override
     public List<Paciente> listarTodos(String campo, String valor) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Paciente> pacientes = new ArrayList<>();
+         try{
+            Conexion con = new Conexion();
+             String query = "SELECT "
+                     + "		p.carnet as Carnet, "
+                     + "		CONCAT(p.nombres, ' ', p.apellidos) AS Nombre_Completo, "
+                     + "    TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS Edad, "
+                     + "		p.sexo AS Género, "
+                     + "		COUNT(t.id_triaje) AS Consultas "
+                     + "	FROM pacientes p "
+                     + "		INNER JOIN triaje t ON p.id_paciente = t.id_paciente "
+                     + "	GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, p.fecha_nacimiento, p.sexo; ";
+            
+            
+            
+             PreparedStatement ps = con.conectar().prepareStatement(query);
+             ResultSet  rs = ps.executeQuery();
+            
+             while (rs.next()) {
+                 Paciente p = new Paciente();
+                 p.setCarnet(rs.getString("Carnet"));
+                 p.setNombre_paciente(rs.getString("Nombre_Completo"));
+                 p.setSexo(rs.getString("Género"));
+                 p.setEdad(rs.getInt("Edad"));
+                 p.setConsultas(rs.getInt("Consultas"));
+                 
+                 pacientes.add(p);
+
+             }
+             
+             return pacientes;
+
+            
+        }catch(Exception e){
+            System.out.println("Error en Cargar pacientes en PacienteDao listarTodos  = " + e);
+            e.printStackTrace();
+        }
+        
+        return pacientes;
     }
     
 }

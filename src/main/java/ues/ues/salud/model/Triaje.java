@@ -1,6 +1,7 @@
 package ues.ues.salud.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -16,13 +17,13 @@ public class Triaje {
     private double temperatura;
     private String presionArterial;
     private String nivel_urgencia;
-    private LocalDate fecha_registro;
+    private LocalDateTime fecha_registro;
     private Especialidad especialidad;
 
     
     //definicion del constructor
 
-    public Triaje(Paciente paciente, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDate fecha_registro, Especialidad especialidad) {
+    public Triaje(Paciente paciente, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDateTime fecha_registro, Especialidad especialidad) {
         this.paciente = paciente;
         this.sintomas = sintomas;
         this.temperatura = temperatura;
@@ -88,11 +89,11 @@ public class Triaje {
         this.nivel_urgencia = nivel_urgencia;
     }
 
-    public LocalDate getFecha_registro() {
+    public LocalDateTime getFecha_registro() {
         return fecha_registro;
     }
 
-    public void setFecha_registro(LocalDate fecha_registro) {
+    public void setFecha_registro(LocalDateTime fecha_registro) {
         this.fecha_registro = fecha_registro;
     }
     public void agregarPaciente(Paciente p){

@@ -61,7 +61,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Búsqueda de Pacientes">
+            <Button fx:id="btnBuscar" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Buscar" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Búsqueda de Pacientes">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
