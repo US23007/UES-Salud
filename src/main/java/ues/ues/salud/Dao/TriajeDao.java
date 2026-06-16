@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ues.ues.salud.Interface.DaoInterface;
 import ues.ues.salud.conexion.Conexion;
+import ues.ues.salud.model.DetalleReceta;
 import ues.ues.salud.model.Especialidad;
 import ues.ues.salud.model.Paciente;
 import ues.ues.salud.model.Triaje;
@@ -116,6 +117,37 @@ public class TriajeDao implements DaoInterface<Triaje>{
             e.printStackTrace();
         }
         return historial;
+    }
+    
+    
+    
+    public int insertarRegistroConId(Triaje triaje) {
+        String sql = "{call sp_insertar_triaje(?, ?, ?, ?, ?, ?)}";
+
+        try {
+            Conexion con = new Conexion();
+
+            CallableStatement cs = con.conectar().prepareCall(sql);
+
+            cs.setString(1, triaje.getPaciente().getCarnet());
+            cs.setString(2, triaje.obtenerEspecialida().getNombreEspecialidad());
+            cs.setString(3, triaje.getSintomas());
+            cs.setDouble(4, triaje.getTemperatura());
+            cs.setString(5, triaje.getPresionArterial());
+            cs.setString(6, triaje.getNivel_urgencia());
+
+            int filasAfectadas = cs.executeUpdate();
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar SP: " + e.getMessage());
+
+        }
+        
+        return 0;
     }
     
 }

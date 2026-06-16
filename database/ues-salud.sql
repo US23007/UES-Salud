@@ -18,6 +18,65 @@ USE `ues_salud`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `detalles_recetas`
+--
+
+DROP TABLE IF EXISTS `detalles_recetas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `detalles_recetas` (
+  `id_detalle` int NOT NULL AUTO_INCREMENT,
+  `id_receta` int DEFAULT NULL,
+  `nombre_medicamento` varchar(150) DEFAULT NULL,
+  `dosis` varchar(100) DEFAULT NULL,
+  `indicaciones` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_detalle`),
+  KEY `id_receta` (`id_receta`),
+  CONSTRAINT `detalles_recetas_ibfk_1` FOREIGN KEY (`id_receta`) REFERENCES `recetas` (`id_receta`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `detalles_recetas`
+--
+
+LOCK TABLES `detalles_recetas` WRITE;
+/*!40000 ALTER TABLE `detalles_recetas` DISABLE KEYS */;
+INSERT INTO `detalles_recetas` VALUES (1,2,'Tabcin','1','Despues de comer');
+/*!40000 ALTER TABLE `detalles_recetas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctores`
+--
+
+DROP TABLE IF EXISTS `doctores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `doctores` (
+  `id_doctor` int NOT NULL AUTO_INCREMENT,
+  `id_especialidad` int DEFAULT NULL,
+  `nombre_doctor` varchar(100) NOT NULL,
+  `apellido_doctor` varchar(100) NOT NULL,
+  `junta_vigilancia` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id_doctor`),
+  UNIQUE KEY `junta_vigilancia` (`junta_vigilancia`),
+  KEY `id_especialidad` (`id_especialidad`),
+  CONSTRAINT `doctores_ibfk_1` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctores`
+--
+
+LOCK TABLES `doctores` WRITE;
+/*!40000 ALTER TABLE `doctores` DISABLE KEYS */;
+INSERT INTO `doctores` VALUES (1,1,'Juan Carlos','Pérez Mendoza','JVPM-10452'),(2,2,'María Luisa','Benítez Sorto','JVPM-8943'),(3,3,'Carlos Ernesto','Alvarenga Huezo','JVPM-12301'),(4,1,'Ana Beatriz','Rivas Castaneda','JVPM-11567');
+/*!40000 ALTER TABLE `doctores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `especialidades`
 --
 
@@ -68,8 +127,39 @@ CREATE TABLE `pacientes` (
 
 LOCK TABLES `pacientes` WRITE;
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
-INSERT INTO `pacientes` VALUES (1,'US23007','Samuel De Jesús ','Umaña Sorto','2004-03-21','Hombre','6565675','San Salvador');
+INSERT INTO `pacientes` VALUES (1,'US23007','Samuel De Jesus','Umaña Sorto','2004-03-21','Hombre','76438438','San Salvador');
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recetas`
+--
+
+DROP TABLE IF EXISTS `recetas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `recetas` (
+  `id_receta` int NOT NULL AUTO_INCREMENT,
+  `id_triaje` int DEFAULT NULL,
+  `id_doctor` int DEFAULT NULL,
+  `diagnostico` text,
+  `fecha_emision` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_receta`),
+  UNIQUE KEY `id_triaje` (`id_triaje`),
+  KEY `id_doctor` (`id_doctor`),
+  CONSTRAINT `recetas_ibfk_1` FOREIGN KEY (`id_triaje`) REFERENCES `triaje` (`id_triaje`),
+  CONSTRAINT `recetas_ibfk_2` FOREIGN KEY (`id_doctor`) REFERENCES `doctores` (`id_doctor`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recetas`
+--
+
+LOCK TABLES `recetas` WRITE;
+/*!40000 ALTER TABLE `recetas` DISABLE KEYS */;
+INSERT INTO `recetas` VALUES (1,2,1,'Diarrea','2026-06-16 07:30:34'),(2,4,1,'Diarrea','2026-06-16 07:35:15');
+/*!40000 ALTER TABLE `recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -102,7 +192,7 @@ CREATE TABLE `triaje` (
 
 LOCK TABLES `triaje` WRITE;
 /*!40000 ALTER TABLE `triaje` DISABLE KEYS */;
-INSERT INTO `triaje` VALUES (1,1,3,'Dolor de Muelas',35.00,'120/90','BAJA','2026-06-14 00:46:08'),(2,1,4,'Vomito',32.00,'60/120','BAJA','2026-06-14 01:29:59'),(3,1,1,'Dolor de Cabeza',36.00,'120/50','BAJA','2026-06-14 01:32:17'),(4,1,1,'Dolor de Cabeza',36.00,'120/60','BAJA','2026-06-14 01:43:57');
+INSERT INTO `triaje` VALUES (1,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(2,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(3,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(4,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15');
 /*!40000 ALTER TABLE `triaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,6 +203,33 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'ues_salud'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_receta` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertar_receta`(
+IN p_idTriaje INT,
+IN p_nombreDoctor VARCHAR(100),
+IN p_diagnostico TEXT
+)
+BEGIN
+	DECLARE v_idDoctor INT;
+	SELECT id_doctor INTO v_idDoctor FROM doctores WHERE concat(nombre_doctor,' ',apellido_doctor) = p_nombreDoctor;
+    IF v_idDoctor IS NOT NULL THEN 
+		INSERT INTO recetas(id_triaje,id_doctor,diagnostico) VALUES (p_idTriaje,v_idDoctor,p_diagnostico);
+	END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_insertar_triaje` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -160,12 +277,41 @@ BEGIN
             NOW()
         );
         
+        SELECT LAST_INSERT_ID() AS id_triaje;
+        
     ELSE
     
         SIGNAL SQLSTATE '45000' 
         SET MESSAGE_TEXT = 'Error: El carnet del estudiante o la especialidad médica no existen en el sistema.';
     END IF;
     
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_listar_pacientes` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_listar_pacientes`()
+BEGIN
+	SELECT 
+		p.carnet,
+		CONCAT(p.nombres, ' ', p.apellidos) AS Nombre_Completo,
+    TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS Edad,
+		p.sexo AS Género,
+		COUNT(t.id_triaje) AS Consultas
+	FROM pacientes p
+		INNER JOIN triaje t ON p.id_paciente = t.id_paciente
+	GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, p.fecha_nacimiento, p.sexo;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -182,4 +328,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-14 14:35:50
+-- Dump completed on 2026-06-16  1:37:17

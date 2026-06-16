@@ -38,6 +38,11 @@ public class PrimaryController implements Initializable{
    
     @FXML
     private Button btnHistorial;
+    
+    @FXML
+    private Button btnEstadisticas;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
@@ -56,6 +61,11 @@ public class PrimaryController implements Initializable{
     @FXML
     private void Historial(){
         cargar("Historial.fxml");
+    }
+    
+    @FXML
+    private void Estadisticas(){
+        cargar("Reporte.fxml");
     }
     public void cargarPanel(String panel,Paciente paciente,boolean Guardar,boolean Modificar){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
