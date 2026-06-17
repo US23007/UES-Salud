@@ -35,6 +35,12 @@ public class PrimaryController implements Initializable{
     
      @FXML
     private MenuItem mAbrir;
+     
+     @FXML
+    private MenuItem mConsultas;
+     
+     @FXML
+    private MenuItem mNuevo;
    
     @FXML
     private Button btnHistorial;
@@ -42,7 +48,7 @@ public class PrimaryController implements Initializable{
     @FXML
     private Button btnEstadisticas;
     
-    
+    @FXML Button btnReportes;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
@@ -140,5 +146,21 @@ public class PrimaryController implements Initializable{
     }
     
     
-   
+    @FXML
+    private void Reportes(){
+        cargar("Estadisticas.fxml");
+    }
+    
+    @FXML
+    public void Consultas() throws IOException {
+        File carpetaExpedientes = new File("C:/UES-SALUD/consultas");
+        if (java.awt.Desktop.isDesktopSupported()) {
+            java.awt.Desktop.getDesktop().open(carpetaExpedientes);
+        }
+    }
+    
+    @FXML
+    public void Salir() throws IOException{
+        App.setRoot("login");
+    }
 }

@@ -6,7 +6,7 @@
 }
 
 .panel-title{
-    -fx-background-color: #0D47A1;
+    -fx-background-color: #002855;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-padding: 8;
@@ -127,3 +127,38 @@
     -fx-border-color: #0D47A1;
 }
 
+
+.card{
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #dce6f2;
+    -fx-border-width: 1;
+    
+    
+    
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0,0,0,0.15),
+        10,
+        0,
+        0,
+        3
+    );
+}
+
+.img{
+    -fx-cursor: hand;
+}
+
+.h1{
+    -fx-text-fill: black;
+     -fx-font-weight: bold;
+     -fx-font-size:20;
+}
+
+.h2{
+     -fx-text-fill: black;
+     -fx-font-weight: bold;
+     -fx-font-size:12;
+}

@@ -136,10 +136,10 @@ public class TriajeDao implements DaoInterface<Triaje>{
             cs.setString(5, triaje.getPresionArterial());
             cs.setString(6, triaje.getNivel_urgencia());
 
-            int filasAfectadas = cs.executeUpdate();
-            ResultSet rs = cs.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
+            try(ResultSet rs = cs.executeQuery()){
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
             }
 
         } catch (SQLException e) {

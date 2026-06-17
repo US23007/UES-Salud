@@ -27,43 +27,50 @@ import ues.ues.salud.model.Paciente;
  */
 public class GenerarReportePDF {
     public static void generarRecetaPDF(Paciente pac,String doctor,String especialidad,String diagnostico,List<DetalleReceta> medicamentos){
+        String rutaCarpeta = "C:/UES-SALUD/consultas/";
         String nombreArchivo = "Receta_" + pac.getCarnet() + ".pdf";
+        
+        File directorio = new File(rutaCarpeta);
+        if (!directorio.exists()) {
+            directorio.mkdirs(); 
+        }
+
+        // 3. El archivo final apuntará a la ruta absoluta combinada
+        File archivoPdf = new File(directorio, nombreArchivo);
         Document doc = new Document();
         
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream(nombreArchivo));
+            PdfWriter.getInstance(doc, new FileOutputStream(archivoPdf));
             doc.open();
             
-            // Fuentes estilizadas
+            
             Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
             Font fuenteSub = FontFactory.getFont(FontFactory.HELVETICA, 11);
             Font fuenteBold = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
             Font fuenteNormal = FontFactory.getFont(FontFactory.HELVETICA, 10);
             
-            // =================================================================
-            // 🌟 ENCABEZADO CON LOGO DE LA MINERVA (Tabla de 2 columnas)
-            // =================================================================
+            
             PdfPTable tablaEncabezado = new PdfPTable(2);
             tablaEncabezado.setWidthPercentage(100);
-            tablaEncabezado.setWidths(new float[]{15f, 85f}); // 15% para el logo, 85% para el texto
+            tablaEncabezado.setWidths(new float[]{15f, 85f}); 
             
-            // Celda 1: El Logo de la Minerva
+            
             PdfPCell celdaLogo = new PdfPCell();
             celdaLogo.setBorder(PdfPCell.NO_BORDER); // Hacemos la celda invisible
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
-                // Ruta de tu imagen en el proyecto
-                String rutaLogo = "src/main/resources/img/minerva.png"; 
+               
+                String rutaLogo = "/img/minerva.png"; 
                 Image imgLogo = Image.getInstance(rutaLogo);
                 
-                // Escalamos la imagen para que quepa perfectamente en el encabezado
+                
                 imgLogo.scaleToFit(60, 60); 
                 imgLogo.setAlignment(Element.ALIGN_CENTER);
                 celdaLogo.addElement(imgLogo);
             } catch (Exception e) {
                 System.out.println("No se pudo cargar el logo de la Minerva, se omitirá: " + e.getMessage());
-                // Si la imagen no se encuentra, dejamos la celda en blanco para que no se caiga el programa
+                
             }
             tablaEncabezado.addCell(celdaLogo);
             
@@ -125,8 +132,7 @@ public class GenerarReportePDF {
             pie.setAlignment(Element.ALIGN_CENTER);
             doc.add(pie);
             
-            // Abrir automáticamente el archivo
-            File archivoPdf = new File(nombreArchivo);
+            doc.close();
             if (java.awt.Desktop.isDesktopSupported()) {
                 java.awt.Desktop.getDesktop().open(archivoPdf);
             }

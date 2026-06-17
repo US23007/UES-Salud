@@ -23,19 +23,22 @@
         <menus>
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
-              <MenuItem fx:id="mNuevo" text="Nuevo Paciente" />
                   <MenuItem fx:id="mAbrir" onAction="#Abrir" text="Abrir Expediente" />
-                  <MenuItem text="Guardar Paciente" />
+                  <MenuItem fx:id="mSalir" onAction="#Salir" text="Salir" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Pacientes">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem fx:id="mNuevo" onAction="#Registro" text="Nuevo Paciente" />
+                  <MenuItem fx:id="mBuscar" onAction="#Buscar" text="Buscar Paciente" />
+                  <MenuItem fx:id="mNuevo11" onAction="#Historial" text="Historial de Atención" />
+                  <MenuItem fx:id="mConsultas" onAction="#Consultas" text="Consultas" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Reportes">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#Reportes" text="Generar Reporte" />
+                  <MenuItem mnemonicParsing="false" onAction="#Estadisticas" text="Estadisticas" />
             </items>
           </Menu>
         </menus>
@@ -71,7 +74,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Reportes">
+            <Button fx:id="btnReportes" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#Reportes" styleClass="menu-button" stylesheets="@../../../css/styles.css" text="Reportes">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -117,4 +120,27 @@
          </BorderPane.margin>
       </GridPane>
    </bottom>
+   <center>
+      <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: white;">
+               <children>
+                  <Label style="-fx-font-size: 20;" styleClass="h1" stylesheets="@../../../css/registro.css" text="Bienvenido al Sistema UES-Salud" />
+                  <ImageView fitHeight="249.0" fitWidth="202.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/minerva.png" />
+                     </image>
+                  </ImageView>
+                  <Label styleClass="h2" stylesheets="@../../../css/registro.css" text="Gestión digital de expedientes clínicos y atención médica universitaria." />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </center>
 </BorderPane>

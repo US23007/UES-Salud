@@ -242,12 +242,12 @@
                                           <HBox spacing="10.0">
                                              <children>
                                                 <Label styleClass="titlePane" stylesheets="@../../../css/busqueda.css" text="Medicamentos" />
-                                                <ImageView fx:id="imgMas" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#Nuevo" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="imgMas" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#Nuevo" pickOnBounds="true" preserveRatio="true" styleClass="img">
                                                    <image>
                                                       <Image url="@../../../img/add_circle_16dp_000000_FILL0_wght400_GRAD0_opsz20.png" />
                                                    </image>
                                                 </ImageView>
-                                                <ImageView fx:id="imgMenos" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#Menos" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="imgMenos" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#Menos" pickOnBounds="true" preserveRatio="true" styleClass="img">
                                                    <image>
                                                       <Image url="@../../../img/remove_16dp_000000_FILL0_wght400_GRAD0_opsz20.png" />
                                                    </image>

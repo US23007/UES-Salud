@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.image.Image;
 import ues.ues.salud.utils.IniciarSistema;
 
 /**
@@ -19,7 +20,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         IniciarSistema.inicializarSistema();
-        scene = new Scene(loadFXML("primary"), 640, 480);
+         
+        scene = new Scene(loadFXML("login"), 640, 480);
+        stage.setTitle("Gestión de Expedientes UES- Salud");
+        stage.getIcons().add(
+                new Image(App.class.getResourceAsStream("/img/heart.png"))
+        );
         stage.setScene(scene);
         stage.show();
     }

@@ -28,7 +28,7 @@ public class IniciarSistema {
             );
 
             Files.createDirectories(
-                    Paths.get("C:/UES-SALUD/backups")
+                    Paths.get("C:/UES-SALUD/consultas")
             );
 
             Files.createDirectories(
