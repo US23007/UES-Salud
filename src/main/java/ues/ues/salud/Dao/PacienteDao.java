@@ -100,8 +100,8 @@ public class PacienteDao implements DaoInterface<Paciente>{
     }
 
     @Override
-    public List<Paciente> buscarRegistro(String codigo) {
-        List<Paciente> pacientes = new ArrayList<>();
+    public Paciente buscarRegistro(String codigo) {
+        Paciente p = new Paciente();
         try {
             Conexion con = new Conexion();
             String query = "SELECT "
@@ -125,7 +125,7 @@ public class PacienteDao implements DaoInterface<Paciente>{
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Paciente p = new Paciente();
+                
                 p.setId_paciente(rs.getInt("id_paciente"));
                 p.setCarnet(rs.getString("carnet"));
                 p.setNombre_paciente(rs.getString("nombres"));
@@ -136,18 +136,17 @@ public class PacienteDao implements DaoInterface<Paciente>{
                 p.setDireccion(rs.getString("Dirección"));
                 p.setConsultas(rs.getInt("Consultas"));
 
-                pacientes.add(p);
-
+                
             }
 
-            return pacientes;
+            return p;
 
         } catch (Exception e) {
             System.out.println("Error en Cargar pacientes en PacienteDao listarTodos  = " + e);
             e.printStackTrace();
         }
 
-        return pacientes;
+        return p;
     }
 
     @Override

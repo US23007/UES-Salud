@@ -6,6 +6,7 @@ module ues.ues.salud {
     requires org.controlsfx.controls;
     requires itextpdf;
     requires java.desktop;
+    requires org.jfree.jfreechart;
     opens ues.ues.salud to javafx.fxml;
     opens ues.ues.salud.model  to javafx.fxml,javafx.base;
     exports ues.ues.salud;

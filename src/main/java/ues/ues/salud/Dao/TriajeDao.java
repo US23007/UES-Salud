@@ -59,10 +59,7 @@ public class TriajeDao implements DaoInterface<Triaje>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public List<Triaje> buscarRegistro(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public List<Triaje> listarTodos(String campo, String valor) {
@@ -148,6 +145,11 @@ public class TriajeDao implements DaoInterface<Triaje>{
         }
         
         return 0;
+    }
+
+    @Override
+    public Triaje buscarRegistro(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

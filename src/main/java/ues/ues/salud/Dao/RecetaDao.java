@@ -59,10 +59,7 @@ public class RecetaDao implements DaoInterface<Receta>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public List<Receta> buscarRegistro(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public List<Receta> listarTodos(String campo, String valor) {
@@ -122,5 +119,10 @@ public class RecetaDao implements DaoInterface<Receta>{
         } finally {
             try { if (con.conectar() != null) con.conectar().close(); } catch (Exception e) { e.printStackTrace(); }
         }
+    }
+
+    @Override
+    public Receta buscarRegistro(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

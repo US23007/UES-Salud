@@ -33,10 +33,7 @@ public class EspecialidadDao implements DaoInterface<Especialidad>{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public List<Especialidad> buscarRegistro(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public List<Especialidad> listarTodos(String campo, String valor) {
@@ -60,6 +57,11 @@ public class EspecialidadDao implements DaoInterface<Especialidad>{
         }
         
         return especialidades;
+    }
+
+    @Override
+    public Especialidad buscarRegistro(String codigo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="436.0" prefWidth="593.0" styleClass="panel" stylesheets="@../../../css/registro.css" vgap="5.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.EstadisticasController">
+<GridPane hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="436.0" prefWidth="593.0" styleClass="panel" stylesheets="@../../../css/registro.css" vgap="5.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ues.ues.salud.EstadisticasController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,18 +33,18 @@
             <HBox alignment="CENTER" prefHeight="47.0" prefWidth="293.0" spacing="10.0">
                <children>
                   <Label text="Fecha Inicio" />
-                  <DatePicker styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                  <DatePicker fx:id="dtInicio" promptText="Ingrese la fecha Inicio" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="43.0" prefWidth="293.0" spacing="10.0">
                <children>
                   <Label text="Fecha Final" />
-                  <DatePicker styleClass="text-field" stylesheets="@../../../css/registro.css" />
+                  <DatePicker fx:id="dtFinal" promptText="Ingrese la fecha Final" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                </children>
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
+                  <Button fx:id="btnReporteAtenciones" alignment="CENTER" mnemonicParsing="false" onAction="#ReporteAtenciones" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -64,12 +64,11 @@
             <HBox alignment="CENTER" prefHeight="47.0" prefWidth="293.0" spacing="10.0">
                <children>
                   <Label text="Carnet" />
-                  <TextField styleClass="text-field" stylesheets="@../../../css/registro.css">
+                  <TextField fx:id="txtCarnet" promptText="Ingrese el Carnet" styleClass="text-field" stylesheets="@../../../css/registro.css">
                      <HBox.margin>
                         <Insets top="2.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" text="Buscar" />
                </children>
                <VBox.margin>
                   <Insets bottom="30.0" top="20.0" />
@@ -77,7 +76,7 @@
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
+                  <Button fx:id="btnExpediente" alignment="CENTER" mnemonicParsing="false" onAction="#ReporteExpediente" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -88,29 +87,27 @@
       </VBox>
       <VBox spacing="10.0" styleClass="card" stylesheets="@../../../css/registro.css" GridPane.rowIndex="1">
          <children>
-            <Label maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="609.0" styleClass="panel-title" stylesheets="@../../../css/registro.css" text="Expediente Clinico por Alumno" />
-            <Label text="Consulta el Historial Clinico del Estudiante">
+            <Label alignment="TOP_CENTER" contentDisplay="TOP" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="609.0" styleClass="panel-title" stylesheets="@../../../css/registro.css" text="Reporte de Epidemias o  Sintomas Comunes" VBox.vgrow="ALWAYS" />
+            <Label text="Historial de Enfermedades Tratadas">
                <padding>
                   <Insets left="5.0" />
                </padding>
             </Label>
             <HBox alignment="CENTER" prefHeight="47.0" prefWidth="293.0" spacing="10.0">
                <children>
-                  <Label text="Carnet" />
-                  <TextField styleClass="text-field" stylesheets="@../../../css/registro.css">
-                     <HBox.margin>
-                        <Insets top="2.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" text="Buscar" />
+                  <Label text="Fecha Inicio" />
+                  <DatePicker fx:id="dtInicioSintomas" promptText="Ingrese la fecha Inicio" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="293.0" spacing="10.0">
+               <children>
+                  <Label text="Fecha Final" />
+                  <DatePicker fx:id="dtFinalSintomas" promptText="Ingrese la fecha Final" styleClass="text-field" stylesheets="@../../../css/registro.css" />
+               </children>
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
+                  <Button fx:id="btnReporteSintomas" alignment="CENTER" mnemonicParsing="false" onAction="#ReporteSintomas" styleClass="btn-continuar" stylesheets="@../../../css/login.css" text="Generar PDF">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>

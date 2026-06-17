@@ -35,8 +35,8 @@ public class DoctorDao implements DaoInterface<Doctor>{
     }
 
     @Override
-    public List<Doctor> buscarRegistro(String codigo) {
-        List<Doctor> doctores = new ArrayList<>();
+    public Doctor buscarRegistro(String codigo) {
+        Doctor d = new Doctor();
         Conexion con = new Conexion();
         String query = "SELECT "
                 + "id_doctor as ID "
@@ -47,17 +47,17 @@ public class DoctorDao implements DaoInterface<Doctor>{
             ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
-                Doctor d = new Doctor();
+                
                 d.setIdDoctor(rs.getInt("ID"));
-                doctores.add(d);
+                
             }
-            return doctores;
+            return d;
         }catch(Exception e){
             System.out.println("Algo Salio Mal en Buscar DoctorDao = " + e.getMessage());
             e.printStackTrace();
         }
         
-        return doctores;
+        return d;
     }
 
     @Override

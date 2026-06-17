@@ -6,6 +6,7 @@ package ues.ues.salud;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -50,8 +51,10 @@ public class BusquedaController implements Initializable {
     private void Buscar(){
         System.out.println("presionado = ");
         PacienteDao paciDao = new PacienteDao();
-        List<Paciente> pacientes = paciDao.buscarRegistro(txtCarnet.getText());
-        pacientes.forEach(System.out::println);
+        
+        Paciente paciente = paciDao.buscarRegistro(txtCarnet.getText());
+        List<Paciente> pacientes = new ArrayList<>();
+        pacientes.add(paciente);
         String[] cabeceras = {"ID","Carnet", "Nombres","Apellidos","Género", "Edad","Télefono","Dirección","Cantidad de Consultas"};
         String[] atributos = {"id_paciente","carnet", "nombre_paciente","apellido_paciente","sexo", "edad","telefono","direccion","consultas"};
         Parent tabla = cargarTabla("TablaInformacion.fxml", cabeceras, atributos, pacientes);
