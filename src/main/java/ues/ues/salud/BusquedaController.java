@@ -44,22 +44,57 @@ public class BusquedaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarTodos();
+
+        btnBuscar.setVisible(false);
+        btnBuscar.setManaged(false);
+        txtCarnet.textProperty().addListener((obs, oldValue, newValue) -> {
+            
+            if(newValue.trim().isEmpty()){
+
+                if(vBusqueda.getChildren().size() > 1){
+                    vBusqueda.getChildren().remove(2);
+                }
+
+                cargarTodos();
+            }else{
+                Buscar();
+            }
+        });
     }    
     
     
     @FXML
     private void Buscar(){
-        System.out.println("presionado = ");
         PacienteDao paciDao = new PacienteDao();
-        
-        Paciente paciente = paciDao.buscarRegistro(txtCarnet.getText());
-        List<Paciente> pacientes = new ArrayList<>();
-        pacientes.add(paciente);
-        String[] cabeceras = {"ID","Carnet", "Nombres","Apellidos","Género", "Edad","Télefono","Dirección","Cantidad de Consultas"};
-        String[] atributos = {"id_paciente","carnet", "nombre_paciente","apellido_paciente","sexo", "edad","telefono","direccion","consultas"};
-        Parent tabla = cargarTabla("TablaInformacion.fxml", cabeceras, atributos, pacientes);
+
+        List<Paciente> pacientes =
+                paciDao.buscarPorCarnetParcial(txtCarnet.getText().trim());
+
+        String[] cabeceras = {
+            "Carnet",
+            "Nombre Completo",
+            "Edad",
+            "Género",
+            "Cantidad de Consultas"
+        };
+
+        String[] atributos = {
+            "carnet",
+            "nombre_paciente",
+            "edad",
+            "sexo",
+            "consultas"
+        };
+
+        Parent tabla = cargarTabla(
+                "TablaInformacion.fxml",
+                cabeceras,
+                atributos,
+               pacientes
+        );
+
         if (vBusqueda.getChildren().size() > 1) {
-            vBusqueda.getChildren().remove(2); // Quitamos la tabla general vieja
+            vBusqueda.getChildren().remove(2);
         }
 
         vBusqueda.getChildren().add(tabla);
