@@ -148,6 +148,46 @@ public class PacienteDao implements DaoInterface<Paciente>{
 
         return p;
     }
+    
+    public List<Paciente> buscarPorCarnetParcial(String carnet){
+        List<Paciente> pacientes = new ArrayList<>();
+        
+        try{
+            Conexion con = new Conexion();
+            String query = "SELECT "
+                    + "p.carnet as Carnet, "
+                    + "CONCAT(p.nombres, ' ', p.apellidos) AS Nombre_Completo, "
+                    + "TIMESTAMPDIFF(YEAR, p.fecha_nacimiento, CURDATE()) AS Edad, "
+                    + "p.sexo AS Género, "
+                    + "COUNT(t.id_triaje) AS Consultas "
+                    + "FROM pacientes p "
+                    + "INNER JOIN triaje t ON p.id_paciente = t.id_paciente "
+                    + "WHERE p.carnet LIKE ? "
+                    + "GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, "
+                    + "p.fecha_nacimiento, p.sexo";
+            PreparedStatement ps = con.conectar().prepareStatement(query);
+            ps.setString(1, carnet + "%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+
+Paciente p = new Paciente();
+
+            p.setCarnet(rs.getString("Carnet"));
+            p.setNombre_paciente(rs.getString("Nombre_Completo"));
+            p.setEdad(rs.getInt("Edad"));
+            p.setSexo(rs.getString("Género"));
+            p.setConsultas(rs.getInt("Consultas"));
+
+            pacientes.add(p);
+        }
+
+    }catch(Exception e){
+        System.out.println("Error buscarPorCarnetParcial = " + e);
+        e.printStackTrace();
+    }
+
+    return pacientes;
+}
 
     @Override
     public List<Paciente> listarTodos(String campo, String valor) {
