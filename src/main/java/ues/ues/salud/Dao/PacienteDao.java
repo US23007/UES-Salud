@@ -4,6 +4,7 @@
  */
 package ues.ues.salud.Dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -96,7 +97,19 @@ public class PacienteDao implements DaoInterface<Paciente>{
 
     @Override
     public boolean eliminarRegistro(String codigo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+            Conexion con = new Conexion();
+            Connection conexion = con.conectar();
+            String query = "UPDATE pacientes SET estado = 0 WHERE carnet=? ";
+            PreparedStatement ps = conexion.prepareStatement(query);
+            ps.setString(1, codigo);
+            
+            return ps.executeUpdate() > 0;
+        }catch(Exception e){
+            System.out.println("No se pudo conectar a la db = " + e.getMessage());
+        }
+        
+        return false;
     }
 
     @Override
@@ -162,7 +175,7 @@ public class PacienteDao implements DaoInterface<Paciente>{
                     + "COUNT(t.id_triaje) AS Consultas "
                     + "FROM pacientes p "
                     + "INNER JOIN triaje t ON p.id_paciente = t.id_paciente "
-                    + "WHERE p.carnet LIKE ? "
+                    + "WHERE p.carnet LIKE ? AND estado = 1 "
                     + "GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, "
                     + "p.fecha_nacimiento, p.sexo";
             PreparedStatement ps = con.conectar().prepareStatement(query);
@@ -202,8 +215,9 @@ Paciente p = new Paciente();
                      + "		COUNT(t.id_triaje) AS Consultas "
                      + "	FROM pacientes p "
                      + "		INNER JOIN triaje t ON p.id_paciente = t.id_paciente "
+                     + "    WHERE estado = 1 "
                      + "	GROUP BY p.id_paciente, p.carnet, p.nombres, p.apellidos, p.fecha_nacimiento, p.sexo; ";
-            
+
             
             
              PreparedStatement ps = con.conectar().prepareStatement(query);

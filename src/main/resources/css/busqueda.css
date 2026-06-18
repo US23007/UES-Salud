@@ -32,3 +32,32 @@
     -fx-background-color: #bfd7ea; /* Azul claro de selección */
     -fx-table-cell-text-fill: #154c79;
 }
+
+.context-menu {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8px;
+    -fx-border-color: #e2e8f0; /* Gris sutil para el borde */
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    /* Sombra difuminada y suave (Efecto Elevación Material Design) */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.12), 12, 0, 0, 4);
+    -fx-padding: 5px 0px;
+}
+
+.context-menu .menu-item {
+    -fx-padding: 8px 20px 8px 15px; /* Más espacio para que respire el texto */
+    -fx-cursor: hand;
+}
+
+
+.context-menu .menu-item .label {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 13px;
+    /* Dejamos que el color rojo que le pusiste en Java se mantenga */
+}
+
+
+.context-menu .menu-item:focused, 
+.context-menu .menu-item:hover {
+    -fx-background-color: #fff5f5;
+}

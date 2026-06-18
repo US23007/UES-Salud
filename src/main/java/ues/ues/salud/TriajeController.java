@@ -686,7 +686,7 @@ public class TriajeController implements Initializable {
             pacienteInstanciado.agregarTriaje(triaje);
 
             
-            //boolean pacienteGuardado = pacienDao.modificarRegistro(pacienteInstanciado);
+            boolean pacienteGuardado = pacienDao.modificarRegistro(pacienteInstanciado);
 
             DoctorDao docDao = new DoctorDao();
             int idTriaje  = triajeDao.insertarRegistroConId(triaje);
@@ -754,6 +754,7 @@ public class TriajeController implements Initializable {
         txtDireccion.setText("");
         txtSintomas.setText("");
         tInfo.setDisable(true);
+        tReceta.setDisable(true);
         tabPane.getSelectionModel().select(tDatos);
         tDatos.setDisable(false);
     }

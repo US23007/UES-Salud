@@ -15,7 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -60,6 +63,8 @@ public class BusquedaController implements Initializable {
                 Buscar();
             }
         });
+        
+        
     }    
     
     
@@ -90,8 +95,14 @@ public class BusquedaController implements Initializable {
                 "TablaInformacion.fxml",
                 cabeceras,
                 atributos,
-               pacientes
+               pacientes,
+               paciente -> {
+                    
+                    confirmarYEliminar(paciente);
+                }
         );
+        
+        
 
         if (vBusqueda.getChildren().size() > 1) {
             vBusqueda.getChildren().remove(2);
@@ -102,14 +113,18 @@ public class BusquedaController implements Initializable {
     }
     
     
-    public<T> Parent cargarTabla(String panel,String[] columnas,String[] atributos,List<T> generica ){
+    public<T> Parent cargarTabla(String panel,String[] columnas,String[] atributos,List<T> generica,java.util.function.Consumer<T> accionEliminar ){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
             Parent root = loader.load();
-            TablaInformacionController tabla = loader.getController();
+            
+            TablaInformacionController<T> tabla = loader.getController();
             tabla.setColumns(columnas,atributos);
             
             tabla.setData(FXCollections.observableArrayList(generica));
+            if(accionEliminar != null){
+                tabla.configurarMenuEliminar(accionEliminar);
+            }
             return root;
         } catch (IOException ex) {
             System.out.println("Error al cargar en"+panel + ex);
@@ -125,8 +140,50 @@ public class BusquedaController implements Initializable {
         List<Paciente> pacientes = paciDao.listarTodos(null,null);
         String[] cabeceras = {"Carnet", "Nombre Completo", "Edad", "Género", "Cantidad de Consultas"};
         String[] atributos = {"carnet", "nombre_paciente", "edad", "sexo", "consultas"};
-        Parent tabla = cargarTabla("TablaInformacion.fxml", cabeceras, atributos, pacientes);
+        Parent tabla = cargarTabla("TablaInformacion.fxml", cabeceras, atributos, pacientes,null);
         vBusqueda.getChildren().add(tabla);
+    }
+
+    private void confirmarYEliminar(Paciente paciente) {
+        PacienteDao pacienteDao = new PacienteDao();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar Acción");
+        alert.setHeaderText("¿Desea eliminar al paciente?");
+        alert.setContentText("El estudiante con carnet " + paciente.getCarnet()
+                + " (" + paciente.getNombre_paciente() + ") cambiará a estado inactivo.");
+
+        
+        ButtonType btnSi = new ButtonType("Sí, dar de baja");
+        ButtonType btnNo = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(btnSi, btnNo);
+
+        
+        alert.showAndWait().ifPresent(respuesta -> {
+            if (respuesta == btnSi) {
+
+               
+                boolean exito = pacienteDao.eliminarRegistro(paciente.getCarnet());
+
+                if (exito) {
+                 
+                    Alert exitoAlert = new Alert(Alert.AlertType.INFORMATION);
+                    exitoAlert.setTitle("Registro Actualizado");
+                    exitoAlert.setHeaderText(null);
+                    exitoAlert.setContentText("El expediente ha sido desactivado correctamente.");
+                    exitoAlert.show();
+                    
+                   
+                } else {
+                   
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Error de Conexión");
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText("No se pudo actualizar el estado del paciente en la base de datos.");
+                    errorAlert.show();
+                }
+            }
+        });
+
     }
     
 }
