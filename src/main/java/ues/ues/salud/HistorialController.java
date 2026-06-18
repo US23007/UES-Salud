@@ -46,25 +46,67 @@ public class HistorialController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarTodos();
+        btnBuscar.setVisible(false);
+        btnBuscar.setManaged(false);
+        txtCarnet.textProperty().addListener((obs, oldValue, newValue) -> {
+
+            if(newValue.trim().isEmpty()){
+                if(vBusqueda.getChildren().size() > 1){
+                    vBusqueda.getChildren().remove(2);
+                }
+
+                cargarTodos();
+            }else{
+                Buscar();
+            }
+        });
     }    
     
     
     @FXML
     private void Buscar(){
-        System.out.println("presionado = ");
-        PacienteDao paciDao = new PacienteDao();
-        Paciente paciente = paciDao.buscarRegistro(txtCarnet.getText());
-        List<Paciente> pacientes = new ArrayList<>();
-        pacientes.add(paciente);
-        String[] cabeceras = {"ID","Carnet", "Nombres","Apellidos","Género", "Edad","Télefono","Dirección","Cantidad de Consultas"};
-        String[] atributos = {"id_paciente","carnet", "nombre_paciente","apellido_paciente","sexo", "edad","telefono","direccion","consultas"};
-        Parent tabla = cargarTabla("TablaInformacion.fxml", cabeceras, atributos, pacientes);
+        TriajeDao triaDao = new TriajeDao();
+        
+        List<Triaje> historial = triaDao.buscarPorCarnetParcial(txtCarnet.getText().trim());
+
+        String[] cabeceras = {
+        "Carnet",
+        "Nombres",
+        "Apellidos",
+        "Edad",
+        "Género",
+        "Especialidad",
+        "Sintomas",
+        "Temperatura",
+        "Presión Arterial",
+        "Urgencia"
+        };
+
+        String[] atributos = {
+        "CarnetPaciente",
+        "NombrePaciente",
+        "ApellidoPaciente",
+        "EdadPaciente",
+        "GeneroPaciente",
+        "NombreEspecialidad",
+        "Sintomas",
+        "Temperatura",
+        "PresionArterial",
+        "Nivel_urgencia"
+        };
+
+        Parent tabla = cargarTabla(
+                "TablaInformacion.fxml",
+                cabeceras,
+               atributos,
+               historial
+        );
+
         if (vBusqueda.getChildren().size() > 1) {
-            vBusqueda.getChildren().remove(2); // Quitamos la tabla general vieja
+            vBusqueda.getChildren().remove(2);
         }
 
         vBusqueda.getChildren().add(tabla);
-
     }
     
     
