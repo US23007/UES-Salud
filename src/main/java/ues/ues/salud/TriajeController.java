@@ -4,6 +4,9 @@
  */
 package ues.ues.salud;
 
+import java.time.LocalDate;
+import java.time.Period;
+import javafx.scene.control.Alert;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
@@ -30,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Text;
@@ -174,6 +178,51 @@ public class TriajeController implements Initializable {
             cbxEspecialidad.getItems().add(e.getNombreEspecialidad());
         
         });
+        txtTelefono.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtTelefono.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+
+            if (txtTelefono.getText().length() > 8) {
+                txtTelefono.setText(txtTelefono.getText().substring(0, 8));
+            }  
+        });
+        txtNombres.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ ]*")) {
+                txtNombres.setText(newValue.replaceAll("[^A-Za-zÁÉÍÓÚáéíóúÑñ ]", "")
+                );
+            }
+        });
+        txtApellidos.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.matches("[A-Za-zÁÉÍÓÚáéíóúÑñ ]*")) {
+                txtApellidos.setText(newValue.replaceAll("[^A-Za-zÁÉÍÓÚáéíóúÑñ ]", ""));
+            }
+        });
+        txtCarnet.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue.length() > 7) {
+                txtCarnet.setText(oldValue);
+            }
+        });
+        txtCarnet.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (!newValue.equals(newValue.toUpperCase())) {
+                txtCarnet.setText(newValue.toUpperCase());
+            }
+        });
+        ToggleGroup sexoGroup = new ToggleGroup();
+        cbxHombre.setToggleGroup(sexoGroup);
+        cbxMujer.setToggleGroup(sexoGroup);
+        
+        txtTemperatura.textProperty().addListener((o,v,n) -> {
+            if(!n.matches("\\d*(\\.\\d*)?")){
+                txtTemperatura.setText(v);
+            }
+        });
+        
+        txtPresion.textProperty().addListener((o,v,n) -> {
+            if(!n.matches("[0-9/]*")){
+                txtPresion.setText(v);
+            }
+        });
     }    
     
     public void setData(Paciente paciente, boolean Guardar, boolean Modificar) {
@@ -234,39 +283,120 @@ public class TriajeController implements Initializable {
     @FXML
     //Botón Continuar de tabDatosPersonales 
     private void Siguiente(){
-        pacienteGlobal = new Paciente();
-        pacienteGlobal.setNombre_paciente(txtNombres.getText());
-        pacienteGlobal.setApellido_paciente(txtApellidos.getText());
-        pacienteGlobal.setCarnet(txtCarnet.getText());
-        
-        if(cbxHombre.isSelected()){
-            cbxMujer.setSelected(false);
-            pacienteGlobal.setSexo(cbxHombre.getText());
-        }else if(cbxMujer.isSelected()){
-            cbxHombre.setSelected(false);
-            pacienteGlobal.setSexo(cbxMujer.getText());
-        }else{
-            System.out.println("NO HA SELECCIONADO NADA");
-        }
-        
-        System.out.println("PACIENTE FECHA UI= " +dtFechaNacimiento.getValue());
-        
-        dtFechaNacimiento.getChronology().date(dtFechaNacimiento.getConverter().fromString(dtFechaNacimiento.getEditor().getText()));
-        LocalDateTime fecha = dtFechaNacimiento.getValue().atStartOfDay();
-        System.out.println("PACIENTE FECHA = " +fecha);
-        pacienteGlobal.setFecha_nacimiento(fecha);
-        
-        pacienteGlobal.setTelefono(txtTelefono.getText());
-        
-        pacienteGlobal.setDireccion(txtDireccion.getText());
-        
-        tInfo.setDisable(false);
-        tabPane.getSelectionModel().select(tInfo);
-        tDatos.setDisable(true);
+        String carnet = txtCarnet.getText().trim();
+    String nombres = txtNombres.getText().trim();
+    String apellidos = txtApellidos.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String direccion = txtDireccion.getText().trim();
+
+    // VALIDAR CARNET
+    if(!carnet.matches("^[A-Z]{2}[0-9]{5}$")){
+        mostrarError("El carnet debe tener un formato como: MH25061");
+        return;
+    }
+
+    // VALIDAR NOMBRES
+    if(nombres.isEmpty()){
+        mostrarError("Debe ingresar los nombres del paciente");
+        return;
+    }
+
+    if(!nombres.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$")){
+        mostrarError("Los nombres solo pueden contener letras");
+        return;
+    }
+
+    // VALIDAR APELLIDOS
+    if(apellidos.isEmpty()){
+        mostrarError("Debe ingresar los apellidos del paciente");
+        return;
+    }
+
+    if(!apellidos.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$")){
+        mostrarError("Los apellidos solo pueden contener letras");
+        return;
+    }
+
+    // VALIDAR FECHA DE NACIMIENTO
+    if(dtFechaNacimiento.getValue() == null){
+        mostrarError("Debe seleccionar una fecha de nacimiento");
+        return;
+    }
+
+    int edad = Period.between(
+            dtFechaNacimiento.getValue(),
+            LocalDate.now()
+    ).getYears();
+
+    if(edad < 17){
+        mostrarError("El paciente debe tener al menos 17 años");
+        return;
+    }
+
+    if(edad > 90){
+        mostrarError("La edad máxima permitida es 90 años");
+        return;
+    }
+
+    // VALIDAR SEXO
+    if(!cbxHombre.isSelected() && !cbxMujer.isSelected()){
+        mostrarError("Debe seleccionar el sexo del paciente");
+        return;
+    }
+
+    // VALIDAR TELEFONO
+    if(!telefono.matches("^[0-9]{8}$")){
+        mostrarError("El teléfono debe contener exactamente 8 números");
+        return;
+    }
+
+    // VALIDAR DIRECCION
+    if(direccion.isEmpty()){
+        mostrarError("Debe ingresar una dirección");
+        return;
+    }
+
+    // LIMPIAR ESPACIOS REPETIDOS
+    nombres = nombres.replaceAll("\\s+", " ");
+    apellidos = apellidos.replaceAll("\\s+", " ");
+
+    // CREAR PACIENTE
+    pacienteGlobal = new Paciente();
+
+    pacienteGlobal.setNombre_paciente(nombres);
+    pacienteGlobal.setApellido_paciente(apellidos);
+    pacienteGlobal.setCarnet(carnet);
+
+    if(cbxHombre.isSelected()){
+        pacienteGlobal.setSexo(cbxHombre.getText());
+    }else{
+        pacienteGlobal.setSexo(cbxMujer.getText());
+    }
+
+    System.out.println("PACIENTE FECHA UI = " + dtFechaNacimiento.getValue());
+
+    LocalDateTime fecha = dtFechaNacimiento.getValue().atStartOfDay();
+
+    System.out.println("PACIENTE FECHA = " + fecha);
+
+    pacienteGlobal.setFecha_nacimiento(fecha);
+    pacienteGlobal.setTelefono(telefono);
+    pacienteGlobal.setDireccion(direccion);
+
+    tInfo.setDisable(false);
+    tabPane.getSelectionModel().select(tInfo);
+    tDatos.setDisable(true);
         
         
     }
     
+    private void mostrarError(String mensaje){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error de Validación");
+    alert.setHeaderText(null);
+    alert.setContentText(mensaje);
+    alert.showAndWait();
+}
     
     @FXML
     private void cambiarColor(){
@@ -329,14 +459,58 @@ public class TriajeController implements Initializable {
     
     @FXML
     //Botón Continuae de tabNuevoTriaje 
-    private void Guardar() throws ParserConfigurationException, TransformerException{
-        String urgencia = cbxUrgencia.getValue().toString();
+    private void Guardar() throws ParserConfigurationException, TransformerException{ 
+        // VALIDAR ESPECIALIDAD
+        if(cbxEspecialidad.getSelectionModel().getSelectedItem() == null){
+            mostrarError("Debe seleccionar una especialidad");
+            return;
+        }
+        //VALIDAR SINTOMAS
+        String sintomas = txtSintomas.getText().trim();
+
+        if(sintomas.isEmpty()){
+            mostrarError("Debe describir los síntomas del paciente");
+            return;
+        }
+        // VALIDAR TEMPERATURA
+        if(txtTemperatura.getText().trim().isEmpty()){
+            mostrarError("Debe ingresar la temperatura");
+            return;
+        }
+        double temperatura;
+
+        try{
+            temperatura = Double.parseDouble(txtTemperatura.getText().trim());
+            if(temperatura < 28 || temperatura > 45){
+                mostrarError("La temperatura debe estar entre 28°C y 45°C");
+                return;
+            }
+
+        }catch(NumberFormatException e){
+            mostrarError("La temperatura debe ser numérica");
+            return;
+        }
+        // VALIDAR PRESION
+        String presion = txtPresion.getText().trim();
+        if(!presion.matches("^\\d{2,3}/\\d{2,3}$")){
+            mostrarError("La presión arterial debe tener formato 120/80");
+            return;
+        }
+        // VALIDAR URGENCIA
+        if(cbxUrgencia.getValue() == null){
+            mostrarError("Debe seleccionar un nivel de urgencia");
+            return;
+        }
+        String urgencia = cbxUrgencia.getEditor().getText().trim();
+        if(!urgencia.equalsIgnoreCase("ALTA") && !urgencia.equalsIgnoreCase("MEDIA") && !urgencia.equalsIgnoreCase("BAJA")){
+            mostrarError("Debe seleccionar una urgencia válida");
+            return;
+        }
         System.out.println("P = " + pacienteGlobal.toString());
         System.out.println("urgencia = " + urgencia);
         System.out.println("sintomas = " + txtSintomas.getText());
 
         String nombreEspecialidad = cbxEspecialidad.getSelectionModel().getSelectedItem().toString();
-        String sintomas = txtSintomas.getText();
         PacienteDao pacienDao = new PacienteDao();
         Paciente pacienteInstanciado = null;
         TriajeDao triajeDao = new TriajeDao();
@@ -409,6 +583,58 @@ public class TriajeController implements Initializable {
 
     @FXML
     private void Grabar() throws ParserConfigurationException, TransformerException, SQLException{
+        // VALIDAR MÉDICO
+        if(cbxAtencion.getSelectionModel().getSelectedItem() == null){
+            mostrarError("Debe seleccionar el médico que atenderá al paciente");
+            return;
+        }
+        // VALIDAR DIAGNÓSTICO
+        String diagnostico = txtDiagnosticos.getText().trim();
+        if(diagnostico.isEmpty()){
+            mostrarError("Debe ingresar un diagnóstico");
+            return;
+        }
+
+        if(diagnostico.length() < 5){
+            mostrarError("El diagnóstico es demasiado corto");
+            return;
+        }
+        // VALIDAR MEDICAMENTOS
+        List<DetalleRecetaTable> listaTabla = tblMedicamentos.getItems();
+
+        for(DetalleRecetaTable dt : listaTabla){
+            String nombre = dt.getNombre() == null ? "" : dt.getNombre().trim();
+            String dosis = dt.getDosis() == null ? "" : dt.getDosis().trim();
+            String indicaciones = dt.getIndicaciones() == null ? "" : dt.getIndicaciones().trim();
+            // Nombre
+            if(nombre.isEmpty()){
+                mostrarError("Existe un medicamento sin nombre");
+                return;
+            }
+            if(nombre.equalsIgnoreCase("Nuevo Medicamento")){
+                mostrarError("Debe cambiar el nombre de todos los medicamentos");
+                return;
+            }
+            // Dosis
+            if(dosis.isEmpty()){
+                mostrarError("Existe un medicamento sin dosis");
+                return;
+            }
+
+            if(dosis.equalsIgnoreCase("Dosis")){
+                mostrarError("Debe modificar la dosis de todos los medicamentos");
+                return;
+            }
+            // Indicaciones
+            if(indicaciones.isEmpty()){
+                mostrarError("Existen medicamentos sin indicaciones");
+                return;
+            }
+            if(indicaciones.equalsIgnoreCase("Indicaciones")){
+                mostrarError("Debe modificar las indicaciones de todos los medicamentos");
+                return;
+            }
+}
         String urgencia = cbxUrgencia.getValue().toString();
         System.out.println("P = " + pacienteGlobal.toString());
         System.out.println("urgencia = " + urgencia);
@@ -467,9 +693,7 @@ public class TriajeController implements Initializable {
 
             System.out.println("DOC = " + cbxAtencion.getSelectionModel().getSelectedItem().toString());
             int idDoctor = docDao.ObtenerDoctor(cbxAtencion.getSelectionModel().getSelectedItem().toString());
-            String diagnostico = txtDiagnosticos.getText();
             
-            List<DetalleRecetaTable> listaTabla = tblMedicamentos.getItems();
             List<DetalleReceta> medicamentos = new ArrayList<>();
             
             for(DetalleRecetaTable dt : listaTabla){
