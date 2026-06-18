@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -59,7 +60,7 @@ public class LoginController implements Initializable{
     @FXML
     private Button btnCancelar;
     
-  
+    @FXML CheckBox chkContrasenia;
     
     @FXML
     private void conectar() throws SQLException, IOException{
@@ -74,7 +75,7 @@ public class LoginController implements Initializable{
             return;
         
         }
-        if(txtContrasenia.getText().trim().isEmpty()){
+        if(!chkContrasenia.isSelected() && txtContrasenia.getText().trim().isEmpty()){
             Notifications.create()
                     .title("Campo Vacio")
                     .text("El campo Contraseña esta vacio")
@@ -83,6 +84,7 @@ public class LoginController implements Initializable{
                     .showWarning();
             return;
         }
+        
         if(txtHost.getText().trim().isEmpty()){
             Notifications.create()
                     .title("Campo Vacio")
@@ -156,6 +158,14 @@ public class LoginController implements Initializable{
     public void initialize(URL url, ResourceBundle rb) {
         
         cargarConfig();
+        txtContrasenia.disableProperty().bind(chkContrasenia.selectedProperty());
+        
+        chkContrasenia.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                txtContrasenia.setText("");
+            }
+            
+        });
     }
     
     
@@ -180,7 +190,7 @@ public class LoginController implements Initializable{
             return;
         
         }
-        if(txtContrasenia.getText().trim().isEmpty()){
+        if (!chkContrasenia.isSelected() && txtContrasenia.getText().trim().isEmpty()) {
             Notifications.create()
                     .title("Campo Vacio")
                     .text("El campo Contraseña esta vacio")
@@ -189,6 +199,8 @@ public class LoginController implements Initializable{
                     .showWarning();
             return;
         }
+
+        
         if(txtHost.getText().trim().isEmpty()){
             Notifications.create()
                     .title("Campo Vacio")

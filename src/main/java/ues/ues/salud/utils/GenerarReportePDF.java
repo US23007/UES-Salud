@@ -73,14 +73,15 @@ public class GenerarReportePDF {
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
-               
-                String rutaLogo = "/img/minerva.png"; 
-                Image imgLogo = Image.getInstance(rutaLogo);
-                
-                
-                imgLogo.scaleToFit(60, 60); 
-                imgLogo.setAlignment(Element.ALIGN_CENTER);
-                celdaLogo.addElement(imgLogo);
+                java.net.URL urlLogo = GenerarReportePDF.class.getResource("/img/minerva.png");
+                if (urlLogo != null) {
+                    Image imgLogo = Image.getInstance(urlLogo);
+                    imgLogo.scaleToFit(60, 60);
+                    imgLogo.setAlignment(Element.ALIGN_CENTER);
+                    celdaLogo.addElement(imgLogo);
+                } else {
+                    System.out.println("No se encontró la imagen en los recursos internos.");
+                }
             } catch (Exception e) {
                 System.out.println("No se pudo cargar el logo de la Minerva, se omitirá: " + e.getMessage());
                 
@@ -197,11 +198,15 @@ public class GenerarReportePDF {
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
-                String rutaLogo = "src/main/resources/img/minerva.png"; 
-                Image imgLogo = Image.getInstance(rutaLogo);
-                imgLogo.scaleToFit(55, 55); 
-                imgLogo.setAlignment(Element.ALIGN_CENTER);
-                celdaLogo.addElement(imgLogo);
+                 java.net.URL urlLogo = GenerarReportePDF.class.getResource("/img/minerva.png");
+                if (urlLogo != null) {
+                    Image imgLogo = Image.getInstance(urlLogo);
+                    imgLogo.scaleToFit(60, 60);
+                    imgLogo.setAlignment(Element.ALIGN_CENTER);
+                    celdaLogo.addElement(imgLogo);
+                } else {
+                    System.out.println("No se encontró la imagen en los recursos internos.");
+                }
             } catch (Exception e) {
                 System.out.println("No se pudo cargar el logo en reporte general: " + e.getMessage());
             }
@@ -325,11 +330,15 @@ public class GenerarReportePDF {
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
-                String rutaLogo = "src/main/resources/img/minerva.png"; 
-                Image imgLogo = Image.getInstance(rutaLogo);
-                imgLogo.scaleToFit(60, 60); 
-                imgLogo.setAlignment(Element.ALIGN_CENTER);
-                celdaLogo.addElement(imgLogo);
+                 java.net.URL urlLogo = GenerarReportePDF.class.getResource("/img/minerva.png");
+                if (urlLogo != null) {
+                    Image imgLogo = Image.getInstance(urlLogo);
+                    imgLogo.scaleToFit(60, 60);
+                    imgLogo.setAlignment(Element.ALIGN_CENTER);
+                    celdaLogo.addElement(imgLogo);
+                } else {
+                    System.out.println("No se encontró la imagen en los recursos internos.");
+                }
             } catch (Exception e) {
                 System.out.println("No se pudo cargar el logo de la Minerva: " + e.getMessage());
             }
@@ -446,11 +455,15 @@ public class GenerarReportePDF {
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
-                String rutaLogo = "src/main/resources/img/minerva.png"; 
-                Image imgLogo = Image.getInstance(rutaLogo);
-                imgLogo.scaleToFit(60, 60); 
-                imgLogo.setAlignment(Element.ALIGN_CENTER);
-                celdaLogo.addElement(imgLogo);
+                 java.net.URL urlLogo = GenerarReportePDF.class.getResource("/img/minerva.png");
+                if (urlLogo != null) {
+                    Image imgLogo = Image.getInstance(urlLogo);
+                    imgLogo.scaleToFit(60, 60);
+                    imgLogo.setAlignment(Element.ALIGN_CENTER);
+                    celdaLogo.addElement(imgLogo);
+                } else {
+                    System.out.println("No se encontró la imagen en los recursos internos.");
+                }
             } catch (Exception e) {
                 System.out.println("No se pudo cargar el logo: " + e.getMessage());
             }

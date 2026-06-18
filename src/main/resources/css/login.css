@@ -545,3 +545,52 @@
     -fx-background-color: #2c3e50;
     -fx-background-radius: 5px;
 }
+
+.check-box-custom {
+    -fx-text-fill: #4a5568;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+/* El cuadrito del CheckBox (Base) */
+.check-box-custom .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cbd5e0;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+    -fx-padding: 3px; /* Controla el tamaño del cuadrito */
+}
+
+.check-box-custom:hover .box {
+    -fx-border-color: #1d52b9;
+}
+
+
+.check-box-custom:selected .box {
+    -fx-background-color: #1d52b9; /* Fondo azul */
+    -fx-border-color: #1d52b9;
+}
+
+.check-box-custom .mark {
+    -fx-background-color: transparent; 
+    -fx-shape: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"; /* Icono vectorial limpio */
+}
+
+
+.check-box-custom:selected .mark {
+    -fx-background-color: #ffffff; 
+}
+
+
+.check-box-custom:focused .box {
+    -fx-background-insets: 0;
+}
+
+.text-field:disabled {
+    -fx-background-color: #f4f4f4;
+    -fx-text-fill: #aaaaaa;
+    -fx-border-color: #e0e0e0;
+    -fx-opacity: 0.7;
+}

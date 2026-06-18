@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -45,7 +47,13 @@
                   <TextField fx:id="txtRoot" prefHeight="25.0" prefWidth="305.0" promptText="root" styleClass="input" stylesheets="@../../../css/login.css" />
                   <Label styleClass="text-normal" stylesheets="@css/styles.css" text="Contraseña" />
                   <PasswordField fx:id="txtContrasenia" styleClass="input" stylesheets="@../../../css/login.css" />
-                  <GridPane hgap="10.0" vgap="5.0">
+                  <CheckBox fx:id="chkContrasenia" mnemonicParsing="false" prefHeight="33.0" prefWidth="275.0" stylesheets="@../../../css/login.css" text="No tengo contraseña definida">
+                     <styleClass>
+                        <String fx:value="check-box" />
+                        <String fx:value="check-box-custom" />
+                     </styleClass>
+                  </CheckBox>
+                  <GridPane hgap="10.0" vgap="10.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -98,7 +106,7 @@
             </VBox>
          </center>
          <left>
-            <VBox prefHeight="439.0" prefWidth="249.0" spacing="5.0" styleClass="left-panel" stylesheets="@css/styles.css" BorderPane.alignment="CENTER">
+            <VBox prefHeight="439.0" prefWidth="249.0" spacing="5.0" styleClass="left-panel" stylesheets="@../../../css/styles.css" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" y="20.0">
                      <image>
