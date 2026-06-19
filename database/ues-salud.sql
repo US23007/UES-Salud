@@ -33,7 +33,7 @@ CREATE TABLE `detalles_recetas` (
   PRIMARY KEY (`id_detalle`),
   KEY `id_receta` (`id_receta`),
   CONSTRAINT `detalles_recetas_ibfk_1` FOREIGN KEY (`id_receta`) REFERENCES `recetas` (`id_receta`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `detalles_recetas` (
 
 LOCK TABLES `detalles_recetas` WRITE;
 /*!40000 ALTER TABLE `detalles_recetas` DISABLE KEYS */;
-INSERT INTO `detalles_recetas` VALUES (1,2,'Tabcin','1','Despues de comer');
+INSERT INTO `detalles_recetas` VALUES (1,2,'Tabcin','1','Despues de comer'),(2,3,'Ajiodin','1 pastilla','Despues de cada comida'),(3,4,'Acetaminofen','1 pastilla','Déspues de cada comida'),(4,5,'Dolofin','1 pastilla','cada 12 horas'),(5,6,'Acetamnofen','1 pastilla','cada  dia');
 /*!40000 ALTER TABLE `detalles_recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,9 +116,10 @@ CREATE TABLE `pacientes` (
   `sexo` varchar(10) DEFAULT NULL,
   `telefono` varchar(15) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id_paciente`),
   UNIQUE KEY `carnet` (`carnet`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +128,7 @@ CREATE TABLE `pacientes` (
 
 LOCK TABLES `pacientes` WRITE;
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
-INSERT INTO `pacientes` VALUES (1,'US23007','Samuel De Jesus','Umaña Sorto','2004-03-21','Hombre','76438438','San Salvador');
+INSERT INTO `pacientes` VALUES (1,'US23007','Jesus','Umaña Sorto','2004-03-21','Hombre','76547378','San Salvador',1),(2,'BG43893','Bryan Daniel','Amaya Alas','2004-03-15','Hombre','54645645','San Salvador,Mejicanos',1);
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +150,7 @@ CREATE TABLE `recetas` (
   KEY `id_doctor` (`id_doctor`),
   CONSTRAINT `recetas_ibfk_1` FOREIGN KEY (`id_triaje`) REFERENCES `triaje` (`id_triaje`),
   CONSTRAINT `recetas_ibfk_2` FOREIGN KEY (`id_doctor`) REFERENCES `doctores` (`id_doctor`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +159,7 @@ CREATE TABLE `recetas` (
 
 LOCK TABLES `recetas` WRITE;
 /*!40000 ALTER TABLE `recetas` DISABLE KEYS */;
-INSERT INTO `recetas` VALUES (1,2,1,'Diarrea','2026-06-16 07:30:34'),(2,4,1,'Diarrea','2026-06-16 07:35:15');
+INSERT INTO `recetas` VALUES (1,2,1,'Diarrea','2026-06-16 07:30:34'),(2,4,1,'Diarrea','2026-06-16 07:35:15'),(3,5,3,'Picadura en el diente Molar','2026-06-17 04:04:32'),(4,6,1,'Cefalitis','2026-06-18 05:09:54'),(5,7,3,'Dolor','2026-06-18 05:24:34'),(6,8,3,'csdcs','2026-06-18 06:00:13');
 /*!40000 ALTER TABLE `recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +184,7 @@ CREATE TABLE `triaje` (
   KEY `id_especialidad` (`id_especialidad`),
   CONSTRAINT `triaje_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `pacientes` (`id_paciente`),
   CONSTRAINT `triaje_ibfk_2` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id_especialidad`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +193,7 @@ CREATE TABLE `triaje` (
 
 LOCK TABLES `triaje` WRITE;
 /*!40000 ALTER TABLE `triaje` DISABLE KEYS */;
-INSERT INTO `triaje` VALUES (1,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(2,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(3,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(4,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15');
+INSERT INTO `triaje` VALUES (1,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(2,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(3,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(4,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(5,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-16 22:04:32'),(6,2,1,'Dolor de Cabeza',30.00,'120/60','BAJA','2026-06-17 23:09:54'),(7,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-17 23:24:34'),(8,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-18 00:00:13');
 /*!40000 ALTER TABLE `triaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,4 +329,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-16  1:37:17
+-- Dump completed on 2026-06-18  1:00:55
