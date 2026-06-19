@@ -105,7 +105,12 @@
                                           <TextArea fx:id="txtDireccion" prefHeight="52.0" prefWidth="349.0" promptText="Dirección del Paciente" styleClass="text-field" stylesheets="@../../../css/registro.css" />
                                        </children>
                                     </HBox>
-                                    <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#Siguiente" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Continuar" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                                    <HBox alignment="CENTER_LEFT" spacing="20.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                                       <children>
+                                          <Button fx:id="btnContinuar" mnemonicParsing="false" onAction="#Siguiente" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Continuar" />
+                                          <Button fx:id="btnModificarDatos" mnemonicParsing="false" onAction="#ModificarPaciente" styleClass="btn-continuar" stylesheets="@../../../css/registro.css" text="Modificar" visible="false" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                            </children>

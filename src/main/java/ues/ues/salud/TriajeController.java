@@ -166,6 +166,9 @@ public class TriajeController implements Initializable {
     @FXML
     private TextArea txtDiagnosticos;
     
+    @FXML 
+    private Button btnModificarDatos;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cbxUrgencia.getItems().add("BAJA");
@@ -257,7 +260,9 @@ public class TriajeController implements Initializable {
                 cbxEspecialidad.getSelectionModel().clearSelection();
                 cbxUrgencia.getSelectionModel().clearSelection();
             }
+            btnModificarDatos.setVisible(Modificar);
             txtCarnet.setText(paciente.getCarnet());
+            txtCarnet.setDisable(Modificar);
             txtNombres.setText(paciente.getNombre_paciente());
             txtApellidos.setText(paciente.getApellido_paciente());
             txtDireccion.setText(paciente.getDireccion());
@@ -277,13 +282,14 @@ public class TriajeController implements Initializable {
         btnGuardar.setVisible(Guardar);
         this.btnModificar.setVisible(Modificar);
         
+        
         tInfo.setDisable(true);
     }
     
     @FXML
     //Botón Continuar de tabDatosPersonales 
     private void Siguiente(){
-        String carnet = txtCarnet.getText().trim();
+       String carnet = txtCarnet.getText().trim();
     String nombres = txtNombres.getText().trim();
     String apellidos = txtApellidos.getText().trim();
     String telefono = txtTelefono.getText().trim();
@@ -390,14 +396,14 @@ public class TriajeController implements Initializable {
         
     }
     
-    private void mostrarError(String mensaje){
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setTitle("Error de Validación");
-    alert.setHeaderText(null);
-    alert.setContentText(mensaje);
-    alert.showAndWait();
-}
-    
+    private void mostrarError(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error de Validación");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
     @FXML
     private void cambiarColor(){
         Object seleccionado = cbxUrgencia.getSelectionModel().getSelectedItem();
@@ -870,5 +876,119 @@ public class TriajeController implements Initializable {
         txtPacienteReceta.setText(pacienteInstanciado.getNombre_paciente()+ " " + pacienteGlobal.getApellido_paciente());
         txtRecetaSintomas.setText(pacienteInstanciado.getUltimoTriaje().getSintomas());
         vincularTabla();
+    }
+    
+    @FXML
+    private void ModificarPaciente(){
+         String carnet = txtCarnet.getText().trim();
+        String nombres = txtNombres.getText().trim();
+        String apellidos = txtApellidos.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String direccion = txtDireccion.getText().trim();
+
+        
+        // VALIDAR NOMBRES
+        if (nombres.isEmpty()) {
+            mostrarError("Debe ingresar los nombres del paciente");
+            return;
+        }
+
+        if (!nombres.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$")) {
+            mostrarError("Los nombres solo pueden contener letras");
+            return;
+        }
+
+        // VALIDAR APELLIDOS
+        if (apellidos.isEmpty()) {
+            mostrarError("Debe ingresar los apellidos del paciente");
+            return;
+        }
+
+        if (!apellidos.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$")) {
+            mostrarError("Los apellidos solo pueden contener letras");
+            return;
+        }
+
+        // VALIDAR FECHA DE NACIMIENTO
+        if (dtFechaNacimiento.getValue() == null) {
+            mostrarError("Debe seleccionar una fecha de nacimiento");
+            return;
+        }
+
+        int edad = Period.between(
+                dtFechaNacimiento.getValue(),
+                LocalDate.now()
+        ).getYears();
+
+        if (edad < 17) {
+            mostrarError("El paciente debe tener al menos 17 años");
+            return;
+        }
+
+        if (edad > 90) {
+            mostrarError("La edad máxima permitida es 90 años");
+            return;
+        }
+
+        // VALIDAR SEXO
+        if (!cbxHombre.isSelected() && !cbxMujer.isSelected()) {
+            mostrarError("Debe seleccionar el sexo del paciente");
+            return;
+        }
+
+        // VALIDAR TELEFONO
+        if (!telefono.matches("^[0-9]{8}$")) {
+            mostrarError("El teléfono debe contener exactamente 8 números");
+            return;
+        }
+
+        // VALIDAR DIRECCION
+        if (direccion.isEmpty()) {
+            mostrarError("Debe ingresar una dirección");
+            return;
+        }
+
+        // LIMPIAR ESPACIOS REPETIDOS
+        nombres = nombres.replaceAll("\\s+", " ");
+        apellidos = apellidos.replaceAll("\\s+", " ");
+
+        // CREAR PACIENTE
+        pacienteGlobal = new Paciente();
+
+        pacienteGlobal.setNombre_paciente(nombres);
+        pacienteGlobal.setApellido_paciente(apellidos);
+        pacienteGlobal.setCarnet(carnet);
+
+        if (cbxHombre.isSelected()) {
+            pacienteGlobal.setSexo(cbxHombre.getText());
+        } else {
+            pacienteGlobal.setSexo(cbxMujer.getText());
+        }
+
+        System.out.println("PACIENTE FECHA UI = " + dtFechaNacimiento.getValue());
+
+        LocalDateTime fecha = dtFechaNacimiento.getValue().atStartOfDay();
+
+        
+
+        pacienteGlobal.setFecha_nacimiento(fecha);
+        pacienteGlobal.setTelefono(telefono);
+        pacienteGlobal.setDireccion(direccion);
+        PacienteDao paciDao = new PacienteDao();
+        if(paciDao.modificarRegistro(pacienteGlobal)){
+            Notifications.create()
+                    .title("Proceso Completado")
+                    .text("Paciente Modificado Correctamente en la base de datos")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BOTTOM_RIGHT) 
+                    .showInformation();
+        }else{
+            Notifications.create()
+                    .title("Error en la base de datos")
+                    .text("No se puedo modificar al Paciente con Carnet: "+pacienteGlobal.getCarnet())
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BOTTOM_RIGHT) 
+                    .showError();
+        }
     }
 }
