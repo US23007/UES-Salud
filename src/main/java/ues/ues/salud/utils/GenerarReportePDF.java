@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ues.ues.salud.utils;
 
 import com.itextpdf.text.BaseColor;
@@ -36,11 +33,15 @@ import ues.ues.salud.model.Paciente;
 
 /**
  *
- * @author su487
+ * Clase GenerarReportePDF : Como su nombre lo indica esta clase es el encargado de tomar la informacion de los Dao y escribirlos en pdf para la generacion de reportes , Se ha utilizado la libreria de  itextpdf y jfree.chart para 
+ * la generación de graficos y estructurar el pdf
+ *  Fecha : 06/06/2026
+ * @author US23007 Samuel De Jesus Umaña Sorto
  */
 public class GenerarReportePDF {
+    //Funcion para generar la receta, consulta , ticket de la consulta realizada donde recibe un objeto del tipo Persona y otros atributos importantes
     public static void generarRecetaPDF(Paciente pac,String doctor,String especialidad,String diagnostico,List<DetalleReceta> medicamentos){
-        String rutaCarpeta = "C:/UES-SALUD/consultas/";
+        String rutaCarpeta = "C:/UES-SALUD/consultas/"; //Asignamos el archivo de salida en la ruta creada anteriormente en la clase InicializarSistema
         String nombreArchivo = "Receta_" + pac.getCarnet() + ".pdf";
         
         File directorio = new File(rutaCarpeta);
@@ -48,31 +49,32 @@ public class GenerarReportePDF {
             directorio.mkdirs(); 
         }
 
-        // 3. El archivo final apuntará a la ruta absoluta combinada
+       
         File archivoPdf = new File(directorio, nombreArchivo);
         Document doc = new Document();
         
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(archivoPdf));
-            doc.open();
+            doc.open(); //Abrimos el documento pfd recien creado
             
-            
+            //Estilos y Tipos de Fuentes
             Font fuenteTitulo = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
             Font fuenteSub = FontFactory.getFont(FontFactory.HELVETICA, 11);
             Font fuenteBold = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 10);
             Font fuenteNormal = FontFactory.getFont(FontFactory.HELVETICA, 10);
             
-            
+            //Tabla 
             PdfPTable tablaEncabezado = new PdfPTable(2);
             tablaEncabezado.setWidthPercentage(100);
             tablaEncabezado.setWidths(new float[]{15f, 85f}); 
             
-            
+            //Celdas
             PdfPCell celdaLogo = new PdfPCell();
             celdaLogo.setBorder(PdfPCell.NO_BORDER); // Hacemos la celda invisible
             celdaLogo.setVerticalAlignment(Element.ALIGN_MIDDLE);
             
             try {
+                //Obtenemos la ruta del logo de la ues para más profesionalismo
                 java.net.URL urlLogo = GenerarReportePDF.class.getResource("/img/minerva.png");
                 if (urlLogo != null) {
                     Image imgLogo = Image.getInstance(urlLogo);
@@ -86,9 +88,9 @@ public class GenerarReportePDF {
                 System.out.println("No se pudo cargar el logo de la Minerva, se omitirá: " + e.getMessage());
                 
             }
-            tablaEncabezado.addCell(celdaLogo);
+            tablaEncabezado.addCell(celdaLogo); //Asignamos la imagen a la celda
             
-            // Celda 2: Texto Institucional
+            //Texto Institucional
             PdfPCell celdaTexto = new PdfPCell();
             celdaTexto.setBorder(PdfPCell.NO_BORDER); // Invisible
             celdaTexto.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -110,7 +112,7 @@ public class GenerarReportePDF {
             doc.add(new Paragraph("\n")); 
             // =================================================================
             
-            // Datos del Paciente y la Consulta (Lo que ya tenías armado)
+            // Datos del Paciente y la Consulta 
             doc.add(new Paragraph("Carnet Paciente: " + pac.getCarnet(), fuenteNormal));
             doc.add(new Paragraph("Nombre Completo: " + pac.getNombre_paciente() + " " + pac.getApellido_paciente(), fuenteNormal));
             doc.add(new Paragraph("Atendido Por:    " + doctor + " (" + especialidad + ")", fuenteNormal));
@@ -141,7 +143,7 @@ public class GenerarReportePDF {
             
             doc.add(tabla);
             
-            // Mensaje de cierre
+            
             Paragraph pie = new Paragraph("\n\n==================================================\n¡Recupérese pronto! Presentar este documento en Farmacia.", fuenteNormal);
             pie.setAlignment(Element.ALIGN_CENTER);
             doc.add(pie);
@@ -164,6 +166,7 @@ public class GenerarReportePDF {
         
     }
     
+    //Metodo para 
     public static void generarReporteAtenciones(LocalDate inicio, LocalDate fin, List<String[]> atenciones) {
         String rutaCarpeta = "C:/UES-SALUD/reportes/";
         DateTimeFormatter formatoFichero = DateTimeFormatter.ofPattern("yyyyMMdd");

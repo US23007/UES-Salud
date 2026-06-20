@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package ues.ues.salud.Interface;
 
 import java.util.List;
 
 /**
- *
- * @author su487
+ * DaoInterfaz : ya que estamos haciendo procesos similares entre las entidades se decidio generalizar e implementar en cada una de las entidades metodos generales para ser sobreescritos a nuestra conveniencia
+ *Fecha : 04/06/2026
+ * Autor: US23007 Samuel De Jesus Umaña Sorto
  */
 public interface DaoInterface<T>{
     boolean insertarRegistro(T entidad); //Insertar un nuevo registro a la base de datos

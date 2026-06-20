@@ -11,53 +11,63 @@ import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import ues.ues.salud.utils.ConfigDB;
 
+/*
+Fecha : 1/06/2026
+Clase Conexion : Es uno de los ejes fundamentales  de nuestro sistemas ya que es el mensajero e interprete entre el programa y la db
+Autores : US23007 y LM25002
+*/
 
 
 public class Conexion {
-    private static Connection con;
+    private static Connection con; //Variable del tipp sql Connection
     
     
    
-    public boolean getConexion(String host,String port,String db,String user,String pass) throws SQLException{
-        String URL = "jdbc:mysql://"
-            +host
+    //Método para obtener la conexion para ser  usado en el login
+    public boolean getConexion(String host,String port,String db,String user,String pass) throws SQLException{ 
+        //Cadena de Conexion para el Driver Manager 
+        String URL = "jdbc:mysql://" //JDBC de MySql
+            +host //Servidor
             +":"
-            +port
+            +port //Puerto
             +"/"
-            +db;
+            +db; //Base de Datos que se desea conectar
         
         System.out.println("URL = " + URL);
         try{
-            
+            // Uso de Driver Connection 
             con = DriverManager.getConnection(
-                    URL,
-                    user,
-                    pass
+                    URL, // Cadena de conexion
+                    user, //Nombre de Usuario para acceder a la base de datos
+                    pass //Contraseña
             
             );
             
             
-            return true;
+            return true; //Retorna Verdadero si encuentra los datos en mysql
                     
         }catch(SQLException ex){
-            System.out.println("ex = " + ex);
+            System.out.println("ex = " + ex); //Caso de error 
+            //Mensaje de Error 
             Notifications.create()
                     .title("Acceso Invalido")
                     .text("Las credenciales ingresadas son incorrectas")
                     .hideAfter(Duration.seconds(3)) // Se cierra sola tras 3 segundos
-                    .position(Pos.BOTTOM_RIGHT) // Aparece elegantemente abajo a la derecha
+                    .position(Pos.BOTTOM_RIGHT) // Aparece  abajo a la derecha
                     .showError();
         }finally{
-            con.close();
+            con.close(); //Cierra la conexion
         }
-        
-        return false;
+         
+        return false; //No puede acceder a la aplicacion 
     }
     
     
+    //Funcion conectar Retorna una variable del tipo Connection es nuestro mensajero que llevara y traera la informacion entre la db y el programa
     public Connection conectar() throws SQLException{
         String URL = "jdbc:mysql://"
-            +ConfigDB.getHost()
+                //Una vez obtenido los datos se pasan a guardar en un archivo config.properties para no estar escribiendo las credenciales cada vez que se inicia sesion
+            +ConfigDB.getHost() 
             +":"
             +ConfigDB.getPort()
             +"/"
@@ -73,15 +83,13 @@ public class Conexion {
             
             );
             
-            System.out.println("Usuario = " +ConfigDB.getUser());
-            System.out.println("Pass = " +ConfigDB.getPassword());
-            return con;
+            return con; //Ingresa al Sistema
                     
         }catch(SQLException ex){
             System.out.println("ex = " + ex);
         }
         
-        return null;
+        return null; //Retorna Vacio al no encontrar las credenciales o db no existe 
     }
     
     
