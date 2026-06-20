@@ -42,7 +42,7 @@ CREATE TABLE `detalles_recetas` (
 
 LOCK TABLES `detalles_recetas` WRITE;
 /*!40000 ALTER TABLE `detalles_recetas` DISABLE KEYS */;
-INSERT INTO `detalles_recetas` VALUES (1,2,'Tabcin','1','Despues de comer'),(2,3,'Ajiodin','1 pastilla','Despues de cada comida'),(3,4,'Acetaminofen','1 pastilla','Déspues de cada comida'),(4,5,'Dolofin','1 pastilla','cada 12 horas'),(5,6,'Acetamnofen','1 pastilla','cada  dia');
+INSERT INTO `detalles_recetas` VALUES (1,2,'Tabcin','1','Despues de comer'),(2,3,'Ajiodin','1 pastilla','Despues de cada comida'),(3,4,'Acetaminofen','1 pastilla','Déspues de cada comida'),(4,5,'Dolofin','1 pastilla','cada 12 horas'),(5,6,'Acetamnofen','1 pastilla','cada  dia'), (6,7, 'Fluoxetina', '2', 'Dos capsula cada 12 horas'), (7,8, 'Amoxicilina', '1', 'Despues de comer'), (8,9, 'Vitassil Omega3', '1', 'cada dia'), (9,10, 'Ibuprofeno', '1', 'cada 8 horas'), (10,11, 'Panadol', '1', 'despues de comer'), (11,12, 'Fentermina', '1', 'cada 8 horas'), (12,13, 'ViroGrip', '2', 'Dia y noche'), (13,14, 'Ceftriaxona', '2', 'cada 8 horas'), (14,15, 'Paracetamol', '1', 'cada 8 horas');
 /*!40000 ALTER TABLE `detalles_recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -72,7 +72,7 @@ CREATE TABLE `doctores` (
 
 LOCK TABLES `doctores` WRITE;
 /*!40000 ALTER TABLE `doctores` DISABLE KEYS */;
-INSERT INTO `doctores` VALUES (1,1,'Juan Carlos','Pérez Mendoza','JVPM-10452'),(2,2,'María Luisa','Benítez Sorto','JVPM-8943'),(3,3,'Carlos Ernesto','Alvarenga Huezo','JVPM-12301'),(4,1,'Ana Beatriz','Rivas Castaneda','JVPM-11567');
+INSERT INTO `doctores` VALUES (1,1,'Juan Carlos','Pérez Mendoza','JVPM-10452'),(2,2,'María Luisa','Benítez Sorto','JVPM-8943'),(3,3,'Carlos Ernesto','Alvarenga Huezo','JVPM-12301'),(4,1,'Ana Beatriz','Rivas Castaneda','JVPM-11567'), (5,4, 'Gustavo Ernesto', 'Alvarenga Cornejo', 'JVPM-116901'), (6,5, 'Marcela Guadalupe', 'Carranza Montes', 'JVPM-157235'), (7,3, 'Tomas Alfredo', 'Portillo Calderon', 'JVPM-126432'), (8,5, 'Brenda Vanessa', 'Herrera Mendez', 'JVPM-142167');
 /*!40000 ALTER TABLE `doctores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ CREATE TABLE `pacientes` (
 
 LOCK TABLES `pacientes` WRITE;
 /*!40000 ALTER TABLE `pacientes` DISABLE KEYS */;
-INSERT INTO `pacientes` VALUES (1,'US23007','Jesus','Umaña Sorto','2004-03-21','Hombre','76547378','San Salvador',1),(2,'BG43893','Bryan Daniel','Amaya Alas','2004-03-15','Hombre','54645645','San Salvador,Mejicanos',1);
+INSERT INTO `pacientes` VALUES (1,'US23007','Jesus','Umaña Sorto','2004-03-21','Hombre','76547378','San Salvador',1),(2,'BG43893','Bryan Daniel','Amaya Alas','2004-03-15','Hombre','54645645','San Salvador,Mejicanos',1), (3, 'MP25001', 'Maria Elizabeth', 'Martinez Perez', '2005-09-21', 'Mujer', '77819044', 'La libertad, Santa Tecla', 1), (4, 'ZO23025', 'Brandon Ulises', 'Zamora Orellana', '2002-01-12', 'Hombre', '65789056', 'San Salvador, Soyapango', 1), (5, 'GC24002', 'Gabriela Rebeca', 'Gomez Coto', '2006-10-10', 'Mujer', '79815469', 'San Salvador, Mejicanos', 1), (6, 'LO25005', 'Andres Manuel', 'Lopez Ortiz', '2005-02-17', 'Hombre', '70345889', 'San Salvador, Soyapango', 1), (7, 'GJ25022', 'Ana Paula', 'Gimenez Juarez', '2004-12-24', 'Mujer', '76549876', 'La Paz, Zacatecoluca', 1), (8, 'DO26001', 'Lucas Emanuel', 'Dominguez Ortega', '2002-11-15', 'Hombre', '60601012', 'La libertad, Lourdes',1), (9, 'OB23098', 'Obed Ezequiel', 'Orantes Bernal', '2000-04-12', 'Hombre', '78450112', 'San Salvador Centro', 1), (10, 'PL22003', 'Fernanda Nahomy', 'Perez Lopez', '2004-12-27', 'Mujer', '75749303', 'San Salvador, San Jacinto',1), (11, 'VC24022', 'Sara Mishelle', 'Velasquez Cortes', '2007-01-23', 'Mujer', '65435677', 'San Salvador, Apopa',1);
 /*!40000 ALTER TABLE `pacientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +159,7 @@ CREATE TABLE `recetas` (
 
 LOCK TABLES `recetas` WRITE;
 /*!40000 ALTER TABLE `recetas` DISABLE KEYS */;
-INSERT INTO `recetas` VALUES (1,2,1,'Diarrea','2026-06-16 07:30:34'),(2,4,1,'Diarrea','2026-06-16 07:35:15'),(3,5,3,'Picadura en el diente Molar','2026-06-17 04:04:32'),(4,6,1,'Cefalitis','2026-06-18 05:09:54'),(5,7,3,'Dolor','2026-06-18 05:24:34'),(6,8,3,'csdcs','2026-06-18 06:00:13');
+INSERT INTO `recetas` VALUES (1,2,1,'Diarrea','2026-06-16 07:30:34'),(2,4,1,'Diarrea','2026-06-16 07:35:15'),(3,5,3,'Picadura en el diente Molar','2026-06-17 04:04:32'),(4,6,1,'Cefalitis','2026-06-18 05:09:54'),(5,7,3,'Dolor','2026-06-18 05:24:34'),(6,8,3,'csdcs','2026-06-18 06:00:13'), (7,9,2, 'Depresion', '2026-06-19 01:45:25'), (8,10,3, 'Inflamacion de encias y sangrado', '2026-06-19 01:50:25'), (9, 11, 5, 'Colesterol alto', '2026-06-19 01:55:25'), (10,12,6, 'Fractura de femur', '2026-06-19 01:57:25'), (11,13,4, 'Dolor de cabeza', '2026-06-19 01:30:25'), (12,14,5, 'Sobrepeso', '2026-06-19 09:30:25'), (13,15,1, 'Gripe', '2026-06-19 01:40:25'), (14,16,8, 'Apendicitis', '2026-06-19 01:40:25'), (15,17,4, 'Migraña', '2026-06-19 01:15:25');
 /*!40000 ALTER TABLE `recetas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,7 +193,7 @@ CREATE TABLE `triaje` (
 
 LOCK TABLES `triaje` WRITE;
 /*!40000 ALTER TABLE `triaje` DISABLE KEYS */;
-INSERT INTO `triaje` VALUES (1,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(2,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(3,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(4,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(5,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-16 22:04:32'),(6,2,1,'Dolor de Cabeza',30.00,'120/60','BAJA','2026-06-17 23:09:54'),(7,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-17 23:24:34'),(8,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-18 00:00:13');
+INSERT INTO `triaje` VALUES (1,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(2,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:30:34'),(3,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(4,1,1,'Diarrea',35.00,'120/70','BAJA','2026-06-16 01:35:15'),(5,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-16 22:04:32'),(6,2,1,'Dolor de Cabeza',30.00,'120/60','BAJA','2026-06-17 23:09:54'),(7,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-17 23:24:34'),(8,1,3,'Dolor de Muelas',36.00,'120/60','ALTA','2026-06-18 00:00:13'), (9,3,2, 'Depresion', 35.00, '120/70', 'MEDIA', '2026-06-19 01:45:25'), (10,4,3, 'Inflamacion de encias y sangrado', 35.00, '120/70', 'MEDIA', '2026-06-19 01:50:25'), (11,5,4, 'Colesterol alto', 35.00, '150/70', 'ALTA', '2026-06-19 01:55:25'), (12,6,5, 'Fractura de femur', 35.00, '120/70', 'ALTA', '2026-06-19 01:57:25'), (13, 7, 1, 'Dolor de cabeza', 37.00, '120/70', 'BAJA', '2026-06-19 01:30:25'), (14,8,4, 'Sobrepeso', 35.00, '140/70', 'MEDIA', '2026-06-19 09:30:25'), (15,9,1, 'Gripe', 37.00, '120/70', 'BAJA', '2026-06-19 01:40:25'), (16, 10, 5, 'Apendicitis', 37.00, '120/70', 'ALTA', '2026-06-19 01:40:25'), (17, 11, 1, 'Migraña', 36.00, '120/70', 'MEDIA', '2026-06-19 01:15:25');
 /*!40000 ALTER TABLE `triaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
