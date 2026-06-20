@@ -33,6 +33,14 @@
     -fx-background-color: #1565C0;
 }
 
+.menu-button-active{
+    -fx-background-color: #1565C0;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12;
+}
+
 .panel{
     -fx-background-color: white;
     -fx-border-color: #D6D6D6;

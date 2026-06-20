@@ -75,7 +75,7 @@ public class ReporteDao {
     public Map<String, Integer> obtenerPacientesPorGenero() {
         Map<String, Integer> datos = new HashMap<>();
         
-        String sql = "SELECT p.sexo, COUNT(t.id_triaje) as total "
+        String sql = "SELECT p.sexo, COUNT(DISTINCT t.id_paciente) as total "
                    + "FROM triaje t "
                    + "INNER JOIN pacientes p ON t.id_paciente = p.id_paciente "
                    + "GROUP BY p.sexo";

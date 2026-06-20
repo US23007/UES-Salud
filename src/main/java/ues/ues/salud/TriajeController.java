@@ -975,20 +975,14 @@ public class TriajeController implements Initializable {
         pacienteGlobal.setTelefono(telefono);
         pacienteGlobal.setDireccion(direccion);
         PacienteDao paciDao = new PacienteDao();
-        if(paciDao.modificarRegistro(pacienteGlobal)){
-            Notifications.create()
-                    .title("Proceso Completado")
-                    .text("Paciente Modificado Correctamente en la base de datos")
-                    .hideAfter(Duration.seconds(3))
-                    .position(Pos.BOTTOM_RIGHT) 
-                    .showInformation();
-        }else{
-            Notifications.create()
+        if(!paciDao.modificarRegistro(pacienteGlobal)){
+             Notifications.create()
                     .title("Error en la base de datos")
                     .text("No se puedo modificar al Paciente con Carnet: "+pacienteGlobal.getCarnet())
                     .hideAfter(Duration.seconds(3))
                     .position(Pos.BOTTOM_RIGHT) 
                     .showError();
         }
+        limpiarCampos();
     }
 }

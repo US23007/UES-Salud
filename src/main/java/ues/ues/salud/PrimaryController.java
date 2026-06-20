@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +26,8 @@ import ues.ues.salud.utils.ExpedienteXML;
 
 public class PrimaryController implements Initializable{
 
+    
+    List<Button> botones = new ArrayList<>();
     @FXML
     private Button btnRegistro;
     
@@ -51,26 +55,56 @@ public class PrimaryController implements Initializable{
     @FXML Button btnReportes;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       botones.add(btnRegistro);
+       botones.add(btnBuscar);
+       botones.add(btnHistorial);
+       botones.add(btnEstadisticas);
+       botones.add(btnReportes);
        
+    }
+    
+    public void clearStyle(Button b, String cssClass){
+        b.getStyleClass().remove(cssClass);
+    }
+    
+    public void addStyle(Button b, String cssClass){
+        b.getStyleClass().add(cssClass);
+    }
+    
+    private void cambiarBotonActivo(Button botonSeleccionado) {
+        botones.forEach(bt -> {
+            bt.getStyleClass().removeAll("menu-button", "menu-button-active");
+            if (bt == botonSeleccionado) {
+                clearStyle(bt, "menu-button");
+                addStyle(bt, "menu-button-active");
+            } else {
+                clearStyle(bt, "menu-button-active");
+                addStyle(bt, "menu-button");
+            }
+        });
     }
 
     @FXML
     private void Registro(){
+        cambiarBotonActivo(btnRegistro);
         cargarPanel("triaje.fxml",null,true,false);
     }
     
     @FXML
     private void Buscar(){
+        cambiarBotonActivo(btnBuscar);
         cargar("busqueda.fxml");
     }
     
     @FXML
     private void Historial(){
+        cambiarBotonActivo(btnHistorial);
         cargar("Historial.fxml");
     }
     
     @FXML
     private void Estadisticas(){
+        cambiarBotonActivo(btnEstadisticas);
         cargar("Reporte.fxml");
     }
     public void cargarPanel(String panel,Paciente paciente,boolean Guardar,boolean Modificar){
@@ -131,7 +165,7 @@ public class PrimaryController implements Initializable{
                         .showInformation();
                
 
-                
+                cambiarBotonActivo(btnRegistro);
 
             } catch (Exception e) {
                 // Por si el archivo XML está corrupto, mal editado o no cumple con las etiquetas esperadas
@@ -148,6 +182,7 @@ public class PrimaryController implements Initializable{
     
     @FXML
     private void Reportes(){
+        cambiarBotonActivo(btnReportes);
         cargar("Estadisticas.fxml");
     }
     
@@ -163,4 +198,13 @@ public class PrimaryController implements Initializable{
     public void Salir() throws IOException{
         App.setRoot("login");
     }
+    
+    @FXML 
+    private void ver_Reportes() throws IOException{
+        File carpetaExpedientes = new File("C:/UES-SALUD/reportes");
+        if (java.awt.Desktop.isDesktopSupported()) {
+            java.awt.Desktop.getDesktop().open(carpetaExpedientes);
+        }
+    }
+    
 }
