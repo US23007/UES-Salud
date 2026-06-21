@@ -1,11 +1,14 @@
 package ues.ues.salud.model;
 
+//importando paquetes necesarios
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author Daniel Lopez LM25002
+ * Esta clase implementa el proceso de sobreescritura y sirve para representar un tipo 
+ * especifico del paciente que por su condicion requiere de una atencion de MEDIA prioridad
  */
 
 //Utilizamos la palabra reservada extends para implementar la herencia
@@ -17,12 +20,5 @@ public class PacienteMedio extends Paciente{
         super(id_paciente, nombre_paciente, apellido_paciente, carnet,sexo, fecha_nacimiento,telefono,direccion);
     }
     
-    //@Override nos permite implementar el concepto de sobreescritura
     
-    /*
-    @Override
-    public String determinarPrioridad(){
-        return "Medio - El paciente requiere atencion rapida";
-    }
-    */
 }

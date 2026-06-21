@@ -1,21 +1,26 @@
 
 package ues.ues.salud.model;
 
+//importando paquetes necesarios
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  *
- * @author su487
+ * @author Guillermo Daniel Lopez Montenegro LM25002
+ * Esta clase almacena informacion sobre quien emitio la receta, el triaje o la enfermedad que se detecto
+ * Esta clase es importante para facilitar los CRUD en los DAO
  */
 public class Receta {
+    //declarando atributos
     private int idReceta;
     private Triaje triaje;
     private Doctor doctor;
     private String diagnostico;
-    private List<DetalleReceta> detalles;
+    private List<DetalleReceta> detalles; //Una receta contiene muchos detalles. Asociacion 1 a muchos
     private LocalDateTime fechaEmision;
 
+    //Metodo constructor con parametros para acceder a las variables privadas
     public Receta(Triaje triaje, Doctor doctor, String diagnostico, LocalDateTime fechaEmision) {
         this.triaje = triaje;
         this.doctor = doctor;
@@ -23,13 +28,10 @@ public class Receta {
         this.fechaEmision = fechaEmision;
     }
 
-    
-
-    
-
     public Receta() {
     }
 
+    //Metodos getters y setters
     public Triaje getTriaje() {
         return triaje;
     }

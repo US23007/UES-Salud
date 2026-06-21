@@ -1,18 +1,21 @@
 package ues.ues.salud.model;
 
+//Importando paquetes necesarios
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  *
- * @author Daniel López LM25002
+ * @author Guillermo Daniel López Montenegro LM25002
+ * Esta clase es de las mas importantes dentro del sistema, aqui se registran los niveles de urgencias con las que el paciente se presenta a la consulta
+ * tambien es fundamental para hacer las operaciones CRUD en los DAO
  */
+//Definicion de clase
 public class Triaje {
     
-    //Atributos
+   //Declaracion de atributos
     private int id_triaje;
     private Paciente paciente;
-    
     private String sintomas;
     private double temperatura;
     private String presionArterial;
@@ -21,8 +24,7 @@ public class Triaje {
     private Especialidad especialidad;
 
     
-    //definicion del constructor
-
+    //definicion del constructor con parametros para acceder a los atributos privados
     public Triaje(Paciente paciente, String sintomas, double temperatura, String presionArterial, String nivel_urgencia, LocalDateTime fecha_registro, Especialidad especialidad) {
         this.paciente = paciente;
         this.sintomas = sintomas;

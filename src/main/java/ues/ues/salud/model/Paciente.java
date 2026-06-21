@@ -1,5 +1,6 @@
 package ues.ues.salud.model;
 
+//importando paquetes necesarios
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -7,9 +8,11 @@ import java.util.List;
 
 /**
  *
- * @author Daniel López LM25002
+ * @author Guillermo Daniel López Montenegro LM25002
+ * Esta clase almacena toda la informacion basica de un paciente, representa a la tabla Pacientes de la base de dato definicion de la clase 
+ * Esta clase para facilitar las operaciones CRUD en los DAO
  */
-//definicion de una clase abstracta que no se puede instanciar
+
 public class Paciente {
     
     //Atributos del Paciente
@@ -23,7 +26,7 @@ public class Paciente {
     private String telefono;
     private LocalDateTime fecha_nacimiento;
     private String direccion;
-    private List<Triaje> triajes = new ArrayList<>();
+    private List<Triaje> triajes = new ArrayList<>(); //El paciente puede tener varios triajes a lo largo del tiempo tambien se le conoce como asociacion 1 a muchos
     
     //Metodo Constructor para acceder a las variable privadas
 

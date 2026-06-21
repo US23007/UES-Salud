@@ -6,25 +6,29 @@ package ues.ues.salud.model;
 
 /**
  *
- * @author su487
+ * @author Guillermo Daniel Lopez Montenegro LM25002
+ * Esta clase registra los medicamentos, dosis o indicaciones especificos que le recetan al paciente
  */
 public class DetalleReceta {
+    //Declaracion de atributos
     private int idDetalleReceta;
     private Receta receta;
     private String nombre_medicamento;
     private String dosis;
     private String indicaciones;
 
+    //Metodos constructor
     public DetalleReceta() {
     }
 
+    //Metodo constructor con parametros para acceder a las variables privadas
     public DetalleReceta(String nombre_medicamento, String dosis, String indicaciones) {
         this.nombre_medicamento = nombre_medicamento;
         this.dosis = dosis;
         this.indicaciones = indicaciones;
     }
 
-    
+    //metodos getters y setters
     public int getIdDetalleReceta() {
         return idDetalleReceta;
     }

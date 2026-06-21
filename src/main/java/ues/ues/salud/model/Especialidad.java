@@ -6,11 +6,19 @@ package ues.ues.salud.model;
 
 /**
  *
- * @author su487
+ * @author Guillermo Daniel Lopez Montenegro LM25002
+ * Esta clase registra las especialidades disponibles del sistema hospitalario
+ * Esta clase es util para facilitar las operaciones CRUD en los DAO
  */
+
+//Definicion de la clase
 public class Especialidad {
+    
+    //Declaracion de atributos
     private String nombreEspecialidad;
     private Triaje triaje ;
+    
+    //Metodos constructor para acceder a la variable privada
     public Especialidad(String nombreEspecialidad) {
         this.nombreEspecialidad = nombreEspecialidad;
     }
@@ -18,6 +26,7 @@ public class Especialidad {
     public Especialidad() {
     }
 
+    //Metodos Getters y setters
     public String getNombreEspecialidad() {
         return nombreEspecialidad;
     }
@@ -25,6 +34,7 @@ public class Especialidad {
     public void setNombreEspecialidad(String nombreEspecialidad) {
         this.nombreEspecialidad = nombreEspecialidad;
     }
+    
     
     public void agregarTriaje(Triaje t){
         this.triaje = t;

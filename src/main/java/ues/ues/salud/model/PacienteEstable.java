@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author Daniel Lopez LM25002
+ * @author Guillermo Daniel Lopez Montenegro LM25002
+ * Esta clase implementa el proceso de sobreescritura y sirve para representar un tipo 
+ * especifico del paciente que por su condicion requiere de una atencion BAJA de prioridad
  */
 
 //Utilizamos la palabra reservada extends para implementar la herencia
@@ -17,12 +19,4 @@ public class PacienteEstable extends Paciente{
         super(id_paciente, nombre_paciente, apellido_paciente, carnet,sexo,fecha_nacimiento,telefono,direccion);
     }
     
-    //@Override nos permite implementar el concepto de sobreescritura
-    
-    /*
-    @Override
-    public String determinarPrioridad(){
-        return "Bajo - urgencia menor";
-    }
-    */
 }
