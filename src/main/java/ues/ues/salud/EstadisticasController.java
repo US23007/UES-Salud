@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+
 package ues.ues.salud;
 
 import java.net.URL;
@@ -22,10 +19,14 @@ import ues.ues.salud.model.Paciente;
 import ues.ues.salud.utils.GenerarReportePDF;
 
 /**
- * FXML Controller class
- *
- * @author su487
+ * Controlador del módulo de estadísticas y reportes.
+ * Permite generar reportes PDF de atenciones médicas,
+ * expedientes clínicos y síntomas más frecuentes.
+ * Documentado por: Astrid Escobar PE25005 APE115
  */
+
+
+// Método ejecutado al iniciar la vista de estadísticas.
 public class EstadisticasController implements Initializable {
 
     @FXML Button btnReporteAtenciones;
@@ -36,13 +37,15 @@ public class EstadisticasController implements Initializable {
     @FXML TextField txtCarnet;
     @FXML Button btnExpediente,btnReporteSintomas;
     ReporteDao repoDao =new ReporteDao();
+    
     @FXML 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
-    
+    // Genera un reporte PDF de las atenciones realizadas
+    // dentro de un rango de fechas seleccionado por el usuario.
     @FXML
     private void ReporteAtenciones(){
         
@@ -74,7 +77,7 @@ public class EstadisticasController implements Initializable {
     }
     
     
-    
+    // Limpia los campos utilizados para generar reportes.
     private void Limpiar(){
         dtInicio.setValue(null);
         dtFinal.setValue(null);
@@ -83,6 +86,9 @@ public class EstadisticasController implements Initializable {
         dtInicioSintomas.setValue(null);
     }
     
+    
+    // Genera el expediente clínico de un paciente a partir
+    // del carnet ingresado por el usuario.
     @FXML
     private void ReporteExpediente(){
         PacienteDao paciDao = new PacienteDao();
@@ -118,6 +124,9 @@ public class EstadisticasController implements Initializable {
        
     }
     
+    
+    // Genera un reporte PDF con los síntomas más frecuentes
+    // registrados en un período determinado.
      @FXML
      private void ReporteSintomas(){
          LocalDate inicio = dtInicioSintomas.getValue();

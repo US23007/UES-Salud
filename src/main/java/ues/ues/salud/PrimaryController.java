@@ -1,3 +1,16 @@
+/**
+ * Controlador principal de la interfaz del sistema UES-Salud.
+ *
+ * Funciones principales:
+ * - Administrar la navegación entre módulos.
+ * - Cargar las vistas del sistema.
+ * - Gestionar el menú lateral.
+ * - Abrir expedientes y reportes generados.
+ *
+ * Elaborado y documentado por:
+ * Astrid Escobar PE25005 APE115
+ */
+
 package ues.ues.salud;
 
 import java.io.File;
@@ -53,6 +66,9 @@ public class PrimaryController implements Initializable{
     private Button btnEstadisticas;
     
     @FXML Button btnReportes;
+    
+    // Inicializa la lista de botones del menú principal
+    // para controlar el estilo visual del módulo activo.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        botones.add(btnRegistro);
@@ -70,7 +86,8 @@ public class PrimaryController implements Initializable{
     public void addStyle(Button b, String cssClass){
         b.getStyleClass().add(cssClass);
     }
-    
+    // Cambia el estilo visual del botón seleccionado
+    // para indicar al usuario el módulo actual.
     private void cambiarBotonActivo(Button botonSeleccionado) {
         botones.forEach(bt -> {
             bt.getStyleClass().removeAll("menu-button", "menu-button-active");
@@ -83,11 +100,12 @@ public class PrimaryController implements Initializable{
             }
         });
     }
-
+    // Abre el módulo de registro y triaje de pacientes.
     @FXML
     private void Registro(){
         cambiarBotonActivo(btnRegistro);
         cargarPanel("triaje.fxml",null,true,false);
+        // Carga dinámicamente una vista FXML dentro del panel principal de la aplicación.
     }
     
     @FXML
@@ -101,12 +119,14 @@ public class PrimaryController implements Initializable{
         cambiarBotonActivo(btnHistorial);
         cargar("Historial.fxml");
     }
-    
+    // Abre la pantalla de reportes y estadísticas.
     @FXML
     private void Estadisticas(){
         cambiarBotonActivo(btnEstadisticas);
         cargar("Reporte.fxml");
     }
+    
+    // Carga una vista FXML con el expediente del paciente dentro del área principal.
     public void cargarPanel(String panel,Paciente paciente,boolean Guardar,boolean Modificar){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
@@ -119,7 +139,7 @@ public class PrimaryController implements Initializable{
             ex.getMessage();
         }
     }
-    
+    // Carga una vista FXML simple dentro del área principal.
     public void cargar(String panel){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
@@ -130,7 +150,7 @@ public class PrimaryController implements Initializable{
             ex.getMessage();
         }
     }
-    
+   // Permite seleccionar y cargar un expediente clínico almacenado en formato XML.
     @FXML
     private void Abrir(){
         FileChooser chooser = new FileChooser();
@@ -151,10 +171,10 @@ public class PrimaryController implements Initializable{
         File archivoSeleccionado = chooser.showOpenDialog(null);
         if (archivoSeleccionado != null) {
             try {
-                // 1. Invocar el método lector que creamos pasándole el archivo real
+                // Invocar el método lector que creamos pasándole el archivo real
                 Paciente pacienteCargado = ExpedienteXML.cargarExpedienteXML(archivoSeleccionado);
 
-                // 2. Mapear u organizar los datos recuperados de vuelta en los campos de JavaFX
+                // Mapear u organizar los datos recuperados de vuelta en los campos de JavaFX
                 cargarPanel("triaje.fxml",pacienteCargado,false,true);
                 
                 Notifications.create()
@@ -179,13 +199,15 @@ public class PrimaryController implements Initializable{
         }
     }
     
-    
+    //Abre la vista de Estadisticas
     @FXML
     private void Reportes(){
         cambiarBotonActivo(btnReportes);
         cargar("Estadisticas.fxml");
     }
     
+    
+    //Abre la ruta donde se guardan las consultas de los pacientes
     @FXML
     public void Consultas() throws IOException {
         File carpetaExpedientes = new File("C:/UES-SALUD/consultas");
@@ -193,12 +215,12 @@ public class PrimaryController implements Initializable{
             java.awt.Desktop.getDesktop().open(carpetaExpedientes);
         }
     }
-    
+    // Cierra la sesión actual y regresa al login.
     @FXML
     public void Salir() throws IOException{
         App.setRoot("login");
     }
-    
+    // Abre la carpeta donde se guardan los reportes. 
     @FXML 
     private void ver_Reportes() throws IOException{
         File carpetaExpedientes = new File("C:/UES-SALUD/reportes");

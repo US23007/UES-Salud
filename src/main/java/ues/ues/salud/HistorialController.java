@@ -26,10 +26,15 @@ import ues.ues.salud.model.Paciente;
 import ues.ues.salud.model.Triaje;
 
 /**
- * FXML Controller class
- *
- * @author su487
+ *  FXML Controller class
+ * Controlador del módulo de historial clínico.
+ * Permite consultar las atenciones médicas registradas
+ * para cada paciente mediante búsquedas por carnet.
+ * Documentado por: Astrid Escobar PE25005 APE115
  */
+
+// Inicializa la vista y configura la búsqueda dinámica
+// del historial clínico.
 public class HistorialController implements Initializable {
 
     @FXML
@@ -42,7 +47,8 @@ public class HistorialController implements Initializable {
     private TextField txtCarnet;
     
     
-    
+    // Busca el historial clínico asociado al carnet ingresado
+    // y muestra los resultados en una tabla.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cargarTodos();
@@ -62,7 +68,8 @@ public class HistorialController implements Initializable {
         });
     }    
     
-    
+    // Carga una tabla reutilizable para visualizar la información
+    // obtenida desde la base de datos.
     @FXML
     private void Buscar(){
         TriajeDao triaDao = new TriajeDao();
@@ -109,7 +116,8 @@ public class HistorialController implements Initializable {
         vBusqueda.getChildren().add(tabla);
     }
     
-    
+   // Carga una tabla reutilizable para visualizar la información
+    // obtenida desde la base de datos.
     public<T> Parent cargarTabla(String panel,String[] columnas,String[] atributos,List<T> generica ){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
@@ -127,7 +135,8 @@ public class HistorialController implements Initializable {
         
         return null;
     }
-    
+    // Carga todos los registros de historial clínico disponibles
+    // al iniciar el módulo
     private void cargarTodos(){
         TriajeDao triaDao = new TriajeDao();
         List<Triaje> historial = triaDao.listarTodos(null,null);
