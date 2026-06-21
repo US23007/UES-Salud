@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ues.ues.salud.Dao;
 
 import java.sql.Connection;
@@ -23,10 +20,12 @@ import ues.ues.salud.model.Triaje;
 
 /**
  *
- * @author su487
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase PacienteDao: Encargada de ser el puente entre nuestra clase base Paciente y la tabla Paciente de la base de datos
  */
 public class PacienteDao implements DaoInterface<Paciente>{
 
+    //Método para Insertar un nuevo paciente en la base de datos
     @Override
     public boolean insertarRegistro(Paciente entidad) {
         try{
@@ -61,6 +60,7 @@ public class PacienteDao implements DaoInterface<Paciente>{
         return false;
     }
 
+    //Método para modificar  paciente en la base de datos por medio de su carnet universitario
     @Override
     public boolean modificarRegistro(Paciente entidad) {
         try{
@@ -95,6 +95,7 @@ public class PacienteDao implements DaoInterface<Paciente>{
         return false;
     }
 
+    //Método para "Eliminar" paciente en la base de datos, aunque en realidad lo unico que hacemos es desactivarlo cambiando su estado a 0
     @Override
     public boolean eliminarRegistro(String codigo) {
         try{
@@ -112,6 +113,8 @@ public class PacienteDao implements DaoInterface<Paciente>{
         return false;
     }
 
+    
+    //Método para buscar  paciente en la base de datos por medio de su carnet para generar su reporte
     @Override
     public Paciente buscarRegistro(String codigo) {
         Paciente p = new Paciente();
@@ -161,7 +164,7 @@ public class PacienteDao implements DaoInterface<Paciente>{
 
         return p;
     }
-    
+    //Método para hacer una busqueda dinamica de un paciente en la base de datos
     public List<Paciente> buscarPorCarnetParcial(String carnet){
         List<Paciente> pacientes = new ArrayList<>();
         
@@ -181,17 +184,17 @@ public class PacienteDao implements DaoInterface<Paciente>{
             PreparedStatement ps = con.conectar().prepareStatement(query);
             ps.setString(1, carnet + "%");
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
 
-Paciente p = new Paciente();
+                Paciente p = new Paciente();
 
-            p.setCarnet(rs.getString("Carnet"));
-            p.setNombre_paciente(rs.getString("Nombre_Completo"));
-            p.setEdad(rs.getInt("Edad"));
-            p.setSexo(rs.getString("Género"));
-            p.setConsultas(rs.getInt("Consultas"));
+                p.setCarnet(rs.getString("Carnet"));
+                p.setNombre_paciente(rs.getString("Nombre_Completo"));
+                p.setEdad(rs.getInt("Edad"));
+                p.setSexo(rs.getString("Género"));
+                p.setConsultas(rs.getInt("Consultas"));
 
-            pacientes.add(p);
+                pacientes.add(p);
         }
 
     }catch(Exception e){
@@ -202,6 +205,8 @@ Paciente p = new Paciente();
     return pacientes;
 }
 
+    
+    //Método para Listar Todos los pacientes activos de nuestra base de datos
     @Override
     public List<Paciente> listarTodos(String campo, String valor) {
         List<Paciente> pacientes = new ArrayList<>();

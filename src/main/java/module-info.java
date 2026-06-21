@@ -1,4 +1,5 @@
 module ues.ues.salud {
+    //Módulo, paquetes y librerias para que javaFx pueda utilizarlas libremente
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;

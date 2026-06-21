@@ -16,10 +16,13 @@ import ues.ues.salud.model.Triaje;
 
 /**
  *
- * @author su487
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase Triaje: Encargada de ser el puente entre nuestra clase base Triaje y la tabla Triajes de la base de datos
  */
 public class TriajeDao implements DaoInterface<Triaje>{
 
+    
+    //Método para Insertar un nuevo Triaje en la base de datos por medio de el procedimiento almacenado sp_insertar_triaje
     @Override
     public boolean insertarRegistro(Triaje entidad) {
         String sql = "{call sp_insertar_triaje(?, ?, ?, ?, ?, ?)}";
@@ -46,18 +49,21 @@ public class TriajeDao implements DaoInterface<Triaje>{
         }
     }
 
+    //Método para modifcar un Triaje (No utilizado)
     @Override
     public boolean modificarRegistro(Triaje entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
+    //Método para eliminar un Triaje (No utilizado)
     @Override
     public boolean eliminarRegistro(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     
-
+    //Método para Listar los triajes un Triaje para el historial de atenciones 
     @Override
     public List<Triaje> listarTodos(String campo, String valor) {
         List<Triaje> historial = new ArrayList<>();
@@ -113,6 +119,7 @@ public class TriajeDao implements DaoInterface<Triaje>{
         return historial;
     }
     
+    //Método para Listar los triajes un Triaje por carnet del paciente para el historial de atenciones del estudiante
     public List<Triaje> buscarPorCarnetParcial(String carnet) {
 
     List<Triaje> historial = new ArrayList<>();
@@ -177,7 +184,8 @@ public class TriajeDao implements DaoInterface<Triaje>{
     return historial;
 }
     
-    
+    //Método para Insertar un nuevo Triaje en la base de datos por medio de el procedimiento almacenado sp_insertar_triaje y obtener su ID generado para 
+    //utilizarlo en la creación de una nueva receta
     public int insertarRegistroConId(Triaje triaje) {
         String sql = "{call sp_insertar_triaje(?, ?, ?, ?, ?, ?)}";
 
@@ -206,6 +214,9 @@ public class TriajeDao implements DaoInterface<Triaje>{
         
         return 0;
     }
+    
+    
+    //Método para buscar un Triaje (No utilizado)
 
     @Override
     public Triaje buscarRegistro(String codigo) {

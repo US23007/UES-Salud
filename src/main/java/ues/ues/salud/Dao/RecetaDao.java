@@ -22,10 +22,13 @@ import ues.ues.salud.utils.DetalleRecetaTable;
 
 /**
  *
- * @author su487
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase RecetaDao: Encargada de ser el puente entre nuestra clase base Receta y la tabla Receta de la base de datos
  */
 public class RecetaDao implements DaoInterface<Receta>{
 
+    
+    //Método para Insertar una receta por medio de el procedimiento almacenado sp_insertar_receta creado en la base de datos
     @Override
     public boolean insertarRegistro(Receta entidad) {
        String sql = "{call sp_insertar_receta(?, ?, ?)}";
@@ -49,23 +52,28 @@ public class RecetaDao implements DaoInterface<Receta>{
         }
     }
 
+    
+    //Método para modifcar una Receta (No utilizado)
     @Override
     public boolean modificarRegistro(Receta entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
+    
+    //Método para eliminar una Receta (No utilizado)
     @Override
     public boolean eliminarRegistro(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     
-
+    //Método para listar una Receta (No utilizado)
     @Override
     public List<Receta> listarTodos(String campo, String valor) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    //Método para insertar una receta con todo los medicamentos preescritos por el medico asignado
     public int insertarRecetaYDetalles(int idTriaje, int idDoctor, String diagnostico, List<DetalleReceta> medicamentos) throws SQLException{
         Conexion con = new Conexion();
         Connection conectar = con.conectar();
@@ -76,7 +84,7 @@ public class RecetaDao implements DaoInterface<Receta>{
             // Desactivamos el autocommit para manejarlo como una sola transacción atómica
             conectar.setAutoCommit(false);
 
-            // 1. Insertar la Cabecera de la Receta
+            // Insertar la Cabecera de la Receta
             PreparedStatement psReceta = conectar.prepareStatement(queryReceta, Statement.RETURN_GENERATED_KEYS);
             psReceta.setInt(1, idTriaje);
             psReceta.setInt(2, idDoctor);
@@ -90,7 +98,7 @@ public class RecetaDao implements DaoInterface<Receta>{
                 idRecetaGenerado = rsKeys.getInt(1);
             }
 
-            // 2. Insertar los Medicamentos usando Batch (en lote) para mayor velocidad
+            // Insertar los Medicamentos usando Batch (en lote) para mayor velocidad
             if (idRecetaGenerado > 0 && medicamentos != null && !medicamentos.isEmpty()) {
                 PreparedStatement psDetalle = conectar.prepareStatement(queryDetalle);
                 for (DetalleReceta med : medicamentos) {
@@ -100,12 +108,12 @@ public class RecetaDao implements DaoInterface<Receta>{
                     psDetalle.setString(4, med.getIndicaciones());
                     psDetalle.addBatch(); // Se acumula en memoria
                 }
-                psDetalle.executeBatch(); // Se envían todos de un solo golpe a MySQL
+                psDetalle.executeBatch(); // Se envían todos todos a MySQL
             }
 
-            // Si todo llegó hasta aquí sin caer al catch, consolidamos los cambios
+            // Si todo llegó hasta aquí sin caer al catch,todo se completo correctamente 
             conectar.commit();
-            return idRecetaGenerado; // Retornamos el ID por si te sirve para el XML
+            return idRecetaGenerado; // Retornamos el ID 
 
         } catch (Exception e) {
             System.out.println("Error al guardar la receta y sus detalles: " + e.getMessage());
@@ -121,6 +129,7 @@ public class RecetaDao implements DaoInterface<Receta>{
         }
     }
 
+    //Método para buscar una receta en la base de datos
     @Override
     public Receta buscarRegistro(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

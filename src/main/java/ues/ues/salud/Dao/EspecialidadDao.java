@@ -14,26 +14,31 @@ import ues.ues.salud.model.Especialidad;
 
 /**
  *
- * @author Samuel
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase EspecialidadDao: Encargada de ser el puente entre nuestra clase base Especialidad y la tabla Especialidad de la base de datos
  */
 public class EspecialidadDao implements DaoInterface<Especialidad>{
 
+    //Método para Insertar una Especialidad (No utilizado)
     @Override
     public boolean insertarRegistro(Especialidad entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    //Método para modificar una Especialidad (No utilizado)
     @Override
     public boolean modificarRegistro(Especialidad entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    //Método para eliminar una Especialidad (No utilizado)
 
     @Override
     public boolean eliminarRegistro(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    
+    //Método para Listar todas las especialidades y asignarlas al comboBox de la vista de Nuevo Triaje
 
     @Override
     public List<Especialidad> listarTodos(String campo, String valor) {
@@ -58,6 +63,8 @@ public class EspecialidadDao implements DaoInterface<Especialidad>{
         
         return especialidades;
     }
+    
+    //Método para buscar una Especialidad (No utilizado)
 
     @Override
     public Especialidad buscarRegistro(String codigo) {

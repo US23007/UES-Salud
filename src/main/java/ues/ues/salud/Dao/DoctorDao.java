@@ -15,25 +15,34 @@ import ues.ues.salud.model.Especialidad;
 
 /**
  *
- * @author su487
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase DoctorDao: Encargada de ser el puente entre nuestra clase base Doctor y la tabla Doctores de la base de datos
  */
+
+//Método que implementa la DaoInterface y Recibe la clase base Doctor
 public class DoctorDao implements DaoInterface<Doctor>{
 
+    //Método para Insertar un Doctor (No utilizado)
     @Override
     public boolean insertarRegistro(Doctor entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    //Método para Modificar un Doctor (No utilizado)
     @Override
     public boolean modificarRegistro(Doctor entidad) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    //Método para eliminar un Doctor (No utilizado)
     @Override
     public boolean eliminarRegistro(String codigo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    
+    //Método para Buscar un Doctor 
+    //La busqueda es atravez del nombre del doctor para obtener su codigo ID Doctor y utilizarlo en la receta
     @Override
     public Doctor buscarRegistro(String codigo) {
         Doctor d = new Doctor();
@@ -60,6 +69,7 @@ public class DoctorDao implements DaoInterface<Doctor>{
         return d;
     }
 
+    //Método para Listar los doctores de la base de datos por su especialidad y asignarlos al comboBox de Receta
     @Override
     public List<Doctor> listarTodos(String campo, String valor) {
         List<Doctor> doctores = new ArrayList<>();
@@ -105,7 +115,7 @@ public class DoctorDao implements DaoInterface<Doctor>{
     }
     
     
-
+    //Método para Obtener el ID de  un Doctor por su nombre Completo
     public int ObtenerDoctor(String codigo) {
         int ID = 0;
         Conexion con = new Conexion();

@@ -20,9 +20,12 @@ import ues.ues.salud.conexion.Conexion;
 
 /**
  *
- * @author su487
+ * @author US23007 Samuel De Jesús Umaña Sorto
+ * Clase RepoerteDao: Encargada de ser el puente,generar las consultas y obtener los datos para llenar la informacion de nuestros graficos de PieChart 
+ * (no necesita clase base)
  */
 public class ReporteDao {
+    //Método para obtener todos los pacientes atendidos por una especialida y retornarlos en un HashMap
     public Map<String,Number> obtenerPacientesPorEspecialidad() throws SQLException{
         Map<String,Number> datos = new HashMap<>();
         
@@ -55,6 +58,7 @@ public class ReporteDao {
         return datos;
     }
     
+    //Método para obtener todos los pacientes segun su nivel de urgencia y retornarlos en un HashMap
     public Map<String, Integer> obtenerPacientesPorUrgencia() {
         Map<String, Integer> datos = new HashMap<>();
         String sql = "SELECT nivel_urgencia, COUNT(*) as total FROM triaje GROUP BY nivel_urgencia";
@@ -71,7 +75,7 @@ public class ReporteDao {
         return datos;
     }
     
-    
+    //Método para obtener todos los pacientes por Genero y retornarlos en un HashMap
     public Map<String, Integer> obtenerPacientesPorGenero() {
         Map<String, Integer> datos = new HashMap<>();
         
@@ -93,6 +97,8 @@ public class ReporteDao {
         return datos;
     }
     
+    
+    //Método para obtener todos los medicamentos más recetados (top 3) y retornarlos en un HashMap
     public Map<String, Integer> obtenerMedicamentosMasRecetados() {
         Map<String, Integer> datos = new HashMap<>();
         String sql = "SELECT nombre_medicamento, COUNT(*) as total "
@@ -112,6 +118,8 @@ public class ReporteDao {
         return datos;
     }
     
+    
+    //Método para obtener todos las atenciones entre un rango de fechas especificadas y retornarlos en una Lista para el Reporte
     public List<String[]> obtenerAtencionesPorFecha(LocalDate inicio, LocalDate fin) {
         List<String[]> lista = new ArrayList<>();
         String sql = "SELECT t.fecha_registro, p.carnet, CONCAT(p.nombres, ' ', p.apellidos) AS paciente, "
@@ -151,13 +159,13 @@ public class ReporteDao {
         return lista;
     }
     
-    
+    //Método para obtener el historial de un paciente en concreto y retornarlos en una Lista para el Reporte
     public List<String[]> obtenerHistorialPorCarnet(String carnet) {
         List<String[]> historial = new ArrayList<>();
         String sql = "SELECT t.fecha_registro, e.nombre_especialidad, t.sintomas, t.nivel_urgencia "
                 + "FROM triaje t "
                 + "INNER JOIN pacientes p ON t.id_paciente = p.id_paciente "
-                + "INNER JOIN especialidades e ON t.id_especialidad = e.id_especialidad " // Ajusta si tu tabla es 'especialidades'
+                + "INNER JOIN especialidades e ON t.id_especialidad = e.id_especialidad " 
                 + "WHERE p.carnet = ? "
                 + "ORDER BY t.fecha_registro DESC";
 
@@ -189,7 +197,7 @@ public class ReporteDao {
         return historial;
     }
     
-    
+    //Método para obtener los sintomas más comunes o epidemias  y retornarlos en una Lista para el Reporte
     public List<String[]> obtenerSintomasMasComunes(LocalDate inicio, LocalDate fin) {
         List<String[]> lista = new ArrayList<>();
         String sql = "SELECT sintomas, COUNT(*) AS total_repeticiones "
