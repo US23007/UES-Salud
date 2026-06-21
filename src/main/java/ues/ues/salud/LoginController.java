@@ -1,5 +1,16 @@
 package ues.ues.salud;
 
+/**
+ * Controlador del módulo de inicio de sesión y configuración de conexión.
+ * Gestiona la autenticación de usuarios mediante credenciales de base de datos,
+ * valida los datos de conexión, permite establecer la comunicación con el servidor
+ * y administrar la configuración almacenada (host, puerto, base de datos, usuario
+ * y contraseña). Además, proporciona notificaciones visuales para informar el
+ * resultado de las operaciones realizadas.
+ *
+ * Autor: David Murgas HM25061
+ */
+
 import ues.ues.salud.conexion.Conexion;
 import ues.ues.salud.utils.ConfigDB;
 import java.io.IOException;
