@@ -1,6 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+/**
+ * Controlador del módulo de triaje
+ * encargado del apartado del formulario de triaje
+ * validación de todos los campos 
+ * Autor: David Murgas MH25061
  */
 package ues.ues.salud;
 
