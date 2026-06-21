@@ -166,7 +166,7 @@ public class GenerarReportePDF {
         
     }
     
-    //Metodo para 
+    //Metodo para Generar el reporte de Atenciones entre un rango de fechas especificadas
     public static void generarReporteAtenciones(LocalDate inicio, LocalDate fin, List<String[]> atenciones) {
         String rutaCarpeta = "C:/UES-SALUD/reportes/";
         DateTimeFormatter formatoFichero = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -278,7 +278,7 @@ public class GenerarReportePDF {
             
             
             doc.close();
-            
+            //Abrir automaticamente 
             if (java.awt.Desktop.isDesktopSupported()) {
                 java.awt.Desktop.getDesktop().open(archivoPdf);
             }
@@ -299,6 +299,8 @@ public class GenerarReportePDF {
         }
     }
     
+    
+    //Método para generar el Expediente Clinico de un paciente en Concreto
     public static void generarExpedienteClinico(Paciente pac, List<String[]> historial) {
         String rutaCarpeta = "C:/UES-SALUD/reportes/";
         String nombreArchivo = "Expediente_" + pac.getCarnet() + ".pdf";
@@ -322,7 +324,7 @@ public class GenerarReportePDF {
             Font fuenteNormal = FontFactory.getFont(FontFactory.HELVETICA, 10);
             
             // =================================================================
-            // ENCABEZADO CON LOGO DE LA MINERVA
+            // ENCABEZADO CON LOGO DE LA UES
             // =================================================================
             PdfPTable tablaEncabezado = new PdfPTable(2);
             tablaEncabezado.setWidthPercentage(100);
@@ -410,7 +412,7 @@ public class GenerarReportePDF {
             
             // Cierre e impresión automática
             doc.close();
-            
+            //Abrir automaticamente 
             if (java.awt.Desktop.isDesktopSupported()) {
                 java.awt.Desktop.getDesktop().open(archivoPdf);
             }
@@ -447,7 +449,7 @@ public class GenerarReportePDF {
             Font fuenteNormal = FontFactory.getFont(FontFactory.HELVETICA, 10);
             
             // =================================================================
-            // ENCABEZADO CON LOGO DE LA MINERVA
+            // ENCABEZADO CON LOGO DE LA UES
             // =================================================================
             PdfPTable tablaEncabezado = new PdfPTable(2);
             tablaEncabezado.setWidthPercentage(100);
@@ -530,7 +532,7 @@ public class GenerarReportePDF {
                 doc.add(new Paragraph("\n\n")); // Espacio para el gráfico
                 
                 // =================================================================
-                // 📊 GENERACIÓN GRÁFICA DE BARRAS (JFreeChart)
+                // Generacion de ChartBart
                 // =================================================================
                 DefaultCategoryDataset dataset = new DefaultCategoryDataset();
                 
@@ -573,7 +575,7 @@ public class GenerarReportePDF {
             }
             
             doc.close();
-            
+            //Abrir automaticamente 
             if (java.awt.Desktop.isDesktopSupported()) {
                 java.awt.Desktop.getDesktop().open(archivoPdf);
             }

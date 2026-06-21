@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ues.ues.salud.utils;
 
 import java.io.FileInputStream;
@@ -12,22 +9,27 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
+ * Clase ConfigDB : Encargada de Obtener y Asignar los valores del archivo config.properties 
  * @author Samuel
  */
 public class ConfigDB {
+    //Variables de la clase
     private static Properties properties = new Properties();
-    private static String host;
-    private static String port;
-    private static String database;
-    private static String user;
-    private static String password;
+    private static String host; //Servidor
+    private static String port; //Puerto
+    private static String database; //Nombre de la base de datos
+    private static String user; //Usuario de la base de datos
+    private static String password; //Contraseña
+    
+    //Metodo Estatico para crear el archivo config.properties
     static {
         try{
+            //Creación del archivo en la ruta especificada 
             FileInputStream input
                     = new FileInputStream("C:/UES-SALUD/config.properties");
-            properties.load(input);
+            properties.load(input); //Cargamos el archivo
             
+            //Asignamos valores por Default 
             host = properties.getProperty("host");
             port = properties.getProperty("port");
             database = properties.getProperty("database");
@@ -38,6 +40,8 @@ public class ConfigDB {
         }
         
     }
+    
+    //Setters y Getters de las variables de clase 
     
     public static String getHost(){
             return properties.getProperty("host");
@@ -78,6 +82,7 @@ public class ConfigDB {
         properties.setProperty("password", password);
     }
     
+    //Método para guardar nuevas credenciales en el archivo config.properties
     public static void guardarConfiguracion() throws FileNotFoundException, IOException{
         try (FileOutputStream fos
                 = new FileOutputStream("C:/UES-SALUD/config.properties")) {

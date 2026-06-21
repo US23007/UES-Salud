@@ -1,4 +1,9 @@
-
+/**
+ * Controlador del módulo de búsqueda de pacientes.
+ * Permite consultar registros, realizar búsquedas dinámicas
+ * por carnet y gestionar la desactivación de pacientes.
+ * Autor: Astrid Escobar PE25005 APE115
+ */
 package ues.ues.salud;
 
 import java.io.IOException;
@@ -24,10 +29,14 @@ import ues.ues.salud.Dao.PacienteDao;
 import ues.ues.salud.model.Paciente;
 
 /**
- * FXML Controller class
- *
- * @author su487
+ * 
+ * Clase Busqueda Controller 
+ * @author  Astrid Escobar PE25005 APE115
+ * Fecha : 05/06/2026
  */
+
+// Método ejecutado al cargar la ventana.
+// Inicializa la tabla de pacientes y configura la búsqueda dinámica.
 public class BusquedaController implements Initializable {
 
     @FXML
@@ -43,10 +52,14 @@ public class BusquedaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Cargar Todos los registros al iniciar la ventana
         cargarTodos();
 
+        
         btnBuscar.setVisible(false);
         btnBuscar.setManaged(false);
+        
+        //Evento para cambiar entre tablas 
         txtCarnet.textProperty().addListener((obs, oldValue, newValue) -> {
             
             if(newValue.trim().isEmpty()){
@@ -64,7 +77,8 @@ public class BusquedaController implements Initializable {
         
     }    
     
-    
+    // Realiza una búsqueda de pacientes utilizando el carnet ingresado.
+    // Los resultados encontrados se muestran en una tabla.
     @FXML
     private void Buscar(){
         PacienteDao paciDao = new PacienteDao();
@@ -109,7 +123,8 @@ public class BusquedaController implements Initializable {
 
     }
     
-    
+    // Carga dinámicamente una tabla reutilizable y muestra los datos
+    // recibidos desde la consulta realizada.
     public<T> Parent cargarTabla(String panel,String[] columnas,String[] atributos,List<T> generica,java.util.function.Consumer<T> accionEliminar ){
         FXMLLoader loader = new FXMLLoader(getClass().getResource(panel));
         try {
@@ -131,7 +146,7 @@ public class BusquedaController implements Initializable {
         
         return null;
     }
-    
+    // Carga todos los pacientes activos registrados en el sistema.
     private void cargarTodos(){
         PacienteDao paciDao = new PacienteDao();
         List<Paciente> pacientes = paciDao.listarTodos(null,null);
@@ -141,6 +156,8 @@ public class BusquedaController implements Initializable {
         vBusqueda.getChildren().add(tabla);
     }
 
+    // Solicita confirmación al usuario antes de desactivar un paciente (Popup Eliminar).
+    // Si el usuario acepta, se actualiza el estado del registro.
     private void confirmarYEliminar(Paciente paciente) {
         PacienteDao pacienteDao = new PacienteDao();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

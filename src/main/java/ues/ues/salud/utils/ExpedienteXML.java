@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ues.ues.salud.utils;
 
 import java.io.File;
@@ -74,12 +71,12 @@ public class ExpedienteXML {
         nodeSexo.appendChild(doc.createTextNode(paciente.getSexo()));
         nodoPaciente.appendChild(nodeSexo);
 
-        // Teléfono (CORREGIDO: usando su propia variable)
+        // Teléfono 
         Element nodeTelefono = doc.createElement("telefono");
         nodeTelefono.appendChild(doc.createTextNode(paciente.getTelefono()));
         nodoPaciente.appendChild(nodeTelefono);
 
-        // Dirección (CORREGIDO: usando su propia variable)
+        // Dirección (
         Element nodeDireccion = doc.createElement("direccion");
         nodeDireccion.appendChild(doc.createTextNode(paciente.getDireccion()));
         nodoPaciente.appendChild(nodeDireccion);
@@ -89,26 +86,33 @@ public class ExpedienteXML {
         // Nodo Emergencia
         Element nodoEmergencia = doc.createElement("emergencia");
 
+        //Especialidad
         Element esp = doc.createElement("especialidad");
         esp.appendChild(doc.createTextNode(Especialidad));
         nodoEmergencia.appendChild(esp);
         
+        //Sintomas
         Element sint = doc.createElement("sintomas");
         sint.appendChild(doc.createTextNode(sintomas));
         nodoEmergencia.appendChild(sint);
         
+        //Temperatura 
         Element temp = doc.createElement("temperatura");
         temp.appendChild(doc.createTextNode(temperatura.toString()));
         nodoEmergencia.appendChild(temp);
         
+        //Presion Arterial
         Element pre = doc.createElement("presion");
         pre.appendChild(doc.createTextNode(presion));
         nodoEmergencia.appendChild(pre);
         
+        //Nodo Urgencia
         Element urgencia = doc.createElement("nivel_urgencia");
         urgencia.appendChild(doc.createTextNode(nivelUrgencia));
         nodoEmergencia.appendChild(urgencia);
 
+        
+        //Fecha Atencion
         Element fechaAtencion = doc.createElement("fecha_atencion");
         fechaAtencion.appendChild(doc.createTextNode(java.time.LocalDateTime.now().toString()));
         nodoEmergencia.appendChild(fechaAtencion);
@@ -121,11 +125,11 @@ public class ExpedienteXML {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
-        String ruta = "C:/UES-SALUD/expedientes";
+        String ruta = "C:/UES-SALUD/expedientes"; //Ruta de Guardado
         File carpetaExpediente = new File(ruta);
 
         if (!carpetaExpediente.exists()) {
-            carpetaExpediente.mkdirs(); // mkdirs() asegura crear carpetas intermedias si faltan
+            carpetaExpediente.mkdirs(); // crear carpeta si fallo el Inializar Sistema
         }
 
         DOMSource source = new DOMSource(doc);
@@ -145,39 +149,39 @@ public class ExpedienteXML {
         Document doc = builder.parse(archivoXML);
         doc.getDocumentElement().normalize();
 
-        // 2. Extraer datos del Paciente
+        // Extraer datos del Paciente
         Element pacienteNode = (Element) doc.getElementsByTagName("paciente").item(0);
-        String carnet = pacienteNode.getAttribute("carnet");
-        String nombres = pacienteNode.getElementsByTagName("nombres").item(0).getTextContent();
-        String apellidos = pacienteNode.getElementsByTagName("apellidos").item(0).getTextContent();
-        String fechaNacStr = pacienteNode.getElementsByTagName("fechaNacimiento").item(0).getTextContent();
-        LocalDateTime fechaNacimiento = java.time.LocalDate.parse(fechaNacStr).atStartOfDay();
+        String carnet = pacienteNode.getAttribute("carnet"); //Obtener Carnet
+        String nombres = pacienteNode.getElementsByTagName("nombres").item(0).getTextContent();//Obtener Nombres
+        String apellidos = pacienteNode.getElementsByTagName("apellidos").item(0).getTextContent();//Obtener Apellidos
+        String fechaNacStr = pacienteNode.getElementsByTagName("fechaNacimiento").item(0).getTextContent();//Obtener Fecha de Nacimiento
+        LocalDateTime fechaNacimiento = java.time.LocalDate.parse(fechaNacStr).atStartOfDay();//Convertir Fecha a LocalDateTime
 
-        String sexo = pacienteNode.getElementsByTagName("sexo").item(0).getTextContent();
-        String telefono = pacienteNode.getElementsByTagName("telefono").item(0).getTextContent();
-        String direccion = pacienteNode.getElementsByTagName("direccion").item(0).getTextContent();
-        // 3. Extraer datos de la Emergencia
-        Element emergenciaNode = (Element) doc.getElementsByTagName("emergencia").item(0);
-        String sintomas = emergenciaNode.getElementsByTagName("sintomas").item(0).getTextContent();
-        String nivelUrgencia = emergenciaNode.getElementsByTagName("nivel_urgencia").item(0).getTextContent();
-        String temperatura = emergenciaNode.getElementsByTagName("temperatura").item(0).getTextContent();
-        String especialidad = emergenciaNode.getElementsByTagName("especialidad").item(0).getTextContent();
-        String presion = emergenciaNode.getElementsByTagName("presion").item(0).getTextContent();
+        String sexo = pacienteNode.getElementsByTagName("sexo").item(0).getTextContent();//Obtener Sexo
+        String telefono = pacienteNode.getElementsByTagName("telefono").item(0).getTextContent();//Obtener Telefono
+        String direccion = pacienteNode.getElementsByTagName("direccion").item(0).getTextContent();//Obtener Direccion
+        // Datos de la Emergencia
+        Element emergenciaNode = (Element) doc.getElementsByTagName("emergencia").item(0);//Obtener Emergencia
+        String sintomas = emergenciaNode.getElementsByTagName("sintomas").item(0).getTextContent();//Obtener Sintomas
+        String nivelUrgencia = emergenciaNode.getElementsByTagName("nivel_urgencia").item(0).getTextContent();//Obtener Nivel de Urgencias
+        String temperatura = emergenciaNode.getElementsByTagName("temperatura").item(0).getTextContent();//Obtener Temperatura
+        String especialidad = emergenciaNode.getElementsByTagName("especialidad").item(0).getTextContent();//Obtener Especialidad
+        String presion = emergenciaNode.getElementsByTagName("presion").item(0).getTextContent();//Obtener Presion Arterial
 
-        Especialidad espe = new Especialidad();
-        espe.setNombreEspecialidad(especialidad);
-        Triaje triaje = new Triaje();
-        triaje.setSintomas(sintomas);
-        triaje.setNivel_urgencia(nivelUrgencia);
-        triaje.setPresionArterial(presion);
-        triaje.setTemperatura(Double.parseDouble(temperatura));
+        Especialidad espe = new Especialidad();//Crear una Especialidad
+        espe.setNombreEspecialidad(especialidad);//Asignamos el nombre de la Especialidad
+        Triaje triaje = new Triaje();//Creamos un nuevo Triaje
+        triaje.setSintomas(sintomas);//Asignamos los sintomas
+        triaje.setNivel_urgencia(nivelUrgencia);//Asignamos el nivel de Urgencia
+        triaje.setPresionArterial(presion);//Asignamos la presion arterial
+        triaje.setTemperatura(Double.parseDouble(temperatura));//Asignamos la temperatura
         
-        Paciente paciente = new Paciente(nombres, apellidos,carnet,sexo,telefono,fechaNacimiento,direccion);
-        paciente.agregarTriaje(triaje);
-        triaje.agregarEspecialidad(espe);
-        espe.agregarTriaje(triaje);
+        Paciente paciente = new Paciente(nombres, apellidos,carnet,sexo,telefono,fechaNacimiento,direccion);//Creamos un paciente y Asigamos variables en su constructor
+        paciente.agregarTriaje(triaje);//Asignamos un Triaje al Paciente
+        triaje.agregarEspecialidad(espe);//Asignamos una Especialidad al Triaje 
+        espe.agregarTriaje(triaje);//Asignamos un Triaje a Una especialidad 
         
-        return paciente;
+        return paciente;//Retornamos el Paciente con su Triaje y Especialidad
         
         
     }
